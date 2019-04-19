@@ -1,0 +1,10 @@
+{
+    "name": "EReader",
+    "references": [
+        "Common"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

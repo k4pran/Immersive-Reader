@@ -1,0 +1,12 @@
+{
+    "name": "Bridge",
+    "references": [
+        "EReader",
+        "Unity.TextMeshPro",
+        "Unity.TextMeshPro.Editor"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
