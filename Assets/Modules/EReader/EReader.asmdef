@@ -1,7 +1,8 @@
 {
     "name": "EReader",
     "references": [
-        "Common"
+        "Common",
+        "YamlDotNet"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
