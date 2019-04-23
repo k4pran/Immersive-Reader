@@ -18,7 +18,8 @@ namespace EReader {
         private static readonly string APP_NAME = "VReader";
         private static readonly string CONFIG_NAME = "config.yaml";
 
-        public string test { get; private set; }
+        public bool backupOnImport { get; private set; }
+        public string libraryPath { get; private set; }
 
         public Config() {
             if (instance != null){
@@ -50,7 +51,9 @@ namespace EReader {
                 var serializer = new SerializerBuilder().Build();                
                 
                 Config config = new Config();
-                config.test = "blah";
+                config.backupOnImport = true;
+                config.libraryPath = Path.Combine(appDir, "library.yaml");
+                
                 var yaml = serializer.Serialize(config);
                 File.WriteAllText(configPath, yaml);
             }
@@ -61,13 +64,13 @@ namespace EReader {
             string appDir = Path.Combine(APP_PARENT_DIR, APP_NAME);
             string configPath = Path.Combine(appDir, "config.yaml");
             
-            string configStr;
+            string configContent;
             FileStream fileStream = new FileStream(configPath, FileMode.Open, FileAccess.Read);
             using (StreamReader streamReader = new StreamReader(fileStream, Encoding.UTF8)) {
-                configStr = streamReader.ReadToEnd();
+                configContent = streamReader.ReadToEnd();
             }
             
-            StringReader yamlInput = new StringReader(configStr);
+            StringReader yamlInput = new StringReader(configContent);
             Deserializer deserializer = new DeserializerBuilder()
                 .WithNamingConvention(new CamelCaseNamingConvention())
                 .Build();
