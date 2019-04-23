@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using Common;
-using UnityEngine.UI;
 
 namespace EReader {
-    public class BookLoader<T> {
+    
+    public class BookImporter<T> {
         
         public T contents { get; private set; }
-
 
         public void loadFromLocal(String path) {
             String fileExt = FileUtils.getFileExt(path);
@@ -40,7 +37,7 @@ namespace EReader {
         }
         
         public void loadPdf(String path) {
-            // todo
+            PdfConversion.toJpegs(path, "");
         }
     }
 
