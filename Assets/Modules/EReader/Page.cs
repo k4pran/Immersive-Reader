@@ -1,15 +1,19 @@
-﻿namespace EReader {
+﻿using System;
+
+namespace EReader {
     
-    public abstract class Page<T> {
+    public abstract class Page : IDynamicContent {
+        protected Page() {}
+
+        public abstract string pageName { get; set; }
+        public abstract int pageNb { get; set; }
         
-        public abstract string pageName { get; }
-        public abstract double pageNb { get; }
+        public abstract double topMargin { get; set; }
+        public abstract double bottomMargin { get; set; }
+        public abstract double rightMargin { get; set; }
+        public abstract double leftMargin { get; set; }
         
-        public abstract double topMargin { get; }
-        public abstract double bottomMargin { get; }
-        public abstract double rightMargin { get; }
-        public abstract double leftMargin { get; }
-        
-        public abstract T getContent();
+        public abstract Object getContent();
+        public abstract Type getContentType();
     }
 }

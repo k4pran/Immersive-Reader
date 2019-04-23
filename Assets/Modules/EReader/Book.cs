@@ -1,17 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EReader {
     
-    public abstract class Book<T> {
+    public abstract class Book {
+        protected Book() {}
 
-        public abstract BookMetaInfo BookMetaInfo { get; }
-        public abstract Binding binding { get; }
+        protected string generateId() {
+            return Guid.NewGuid().ToString("D");
+        }
 
+        public abstract string bookId { get; protected set; }
+        public abstract BookMetaInfo bookMetaInfo { get; set; }
+        public abstract Binding binding { get; protected set; }
+        
         public abstract void nextPage();
         public abstract void previousPage();
         public abstract void goTo(int index);
-        public abstract List<Page<T>> getAllPages();
-        public abstract List<Page<T>> getDisplayedPages();
+        public abstract List<Page> getAllPages();
+        public abstract List<Page> getDisplayedPages();
         public abstract int getPageCount();
+
+        public abstract int getPageNumber();
     }
 }
