@@ -9,7 +9,7 @@ namespace Bridge {
     
     public class PageTextMeshpBridge : MonoBehaviour {
 
-        public GameObject tmpGuiFromPage(Page<string[]> page) {
+        public GameObject tmpGuiFromPage(Page page) {
             GameObject pageObj = createTmpGuiObj(page.pageName + page.pageNb);
             TextMeshProUGUI tmp = pageObj.GetComponent<TextMeshProUGUI>();
 
@@ -18,7 +18,7 @@ namespace Bridge {
             return pageObj;
         }
         
-        public Image imgGuiFromPage(Page<Image> page) {
+        public Image imgGuiFromPage(Page page) {
             // todo
             throw new NotImplementedException();
         }
