@@ -8,8 +8,8 @@ namespace EReader.Tests {
 
         [Test]
         public void LoadingTextFilesReadAsLines() {
-            BookLoader<string[]> bookLoader = new BookLoader<string[]>();
-            string[] contents = bookLoader.loadText("Assets/Modules/EReader/Tests/Resources/dracula.txt");
+            BookImporter<string[]> bookImporter = new BookImporter<string[]>();
+            string[] contents = bookImporter.loadText("Assets/Modules/EReader/Tests/Resources/dracula.txt");
             Assert.Greater(contents.Length, 0);
         }
         
