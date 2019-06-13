@@ -20,7 +20,8 @@ namespace Bridge {
                     return ContentType.IMAGE;
                 
                 default:
-                    // todo throw exception
+                    throw new ContentTypeException("Unable to resolve content type. It may be the case that" +
+                                                   "this content is not yet supported.");
             }
         }
         
