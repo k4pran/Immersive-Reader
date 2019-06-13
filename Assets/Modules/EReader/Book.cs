@@ -19,7 +19,10 @@ namespace EReader {
         public abstract void goTo(int index);
         public abstract List<Page> getAllPages();
         public abstract List<Page> getDisplayedPages();
+        public abstract Page getPage(int pageNum);
         public abstract int getPageCount();
+        
+        public abstract BookFormat getBookFormat();
 
         public abstract int getPageNumber();
     }

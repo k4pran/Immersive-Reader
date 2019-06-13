@@ -14,25 +14,29 @@ namespace EReader {
         public List<Page> pages { get; set; }
         
         private int pageIndex;
+
+        private BookFormat bookFormat;
         
         public BasicBook() {}
 
-        public BasicBook(BookMetaInfo bookMetaInfo, int linesPerPage) {
+        public BasicBook(BookMetaInfo bookMetaInfo, int linesPerPage, BookFormat bookFormat) {
             bookId = generateId();
             this.linesPerPage = linesPerPage;
             this.bookMetaInfo = bookMetaInfo;
             binding = Binding.DOUBLE_PAGED;
             pages = new List<Page>();
             pageIndex = 0;
+            this.bookFormat = bookFormat;
         }
         
-        public BasicBook(BookMetaInfo bookMetaInfo, List<Page> pages, int linesPerPage) {
+        public BasicBook(BookMetaInfo bookMetaInfo, List<Page> pages, int linesPerPage, BookFormat bookFormat) {
             bookId = generateId();
             this.linesPerPage = linesPerPage;
             this.bookMetaInfo = bookMetaInfo;
             binding = Binding.DOUBLE_PAGED;
             this.pages = pages;
             pageIndex = 0;
+            this.bookFormat = bookFormat;
         }
 
         public void addPageAt(Page page, int index) {
@@ -63,6 +67,10 @@ namespace EReader {
             return pages;
         }
 
+        public override Page getPage(int pageNum) {
+            return pages[pageNum];
+        }
+
         public override List<Page> getDisplayedPages() {
             if (pageIndex % 2 == 0) return pages.GetRange(pageIndex, 2);
             else return pages.GetRange(pageIndex - 1, 2);
@@ -70,6 +78,10 @@ namespace EReader {
 
         public override int getPageCount() {
             return pages.Count;
+        }
+
+        public override BookFormat getBookFormat() {
+            return bookFormat;
         }
 
         public override int getPageNumber() {

@@ -6,7 +6,7 @@ namespace EReader {
     public class BookBuilder {
 
         public static Book buildBasicBook(string[] lines, int linesPerPage, BookMetaInfo bookMetaInfo) {
-            BasicBook basicBook = new BasicBook(bookMetaInfo, linesPerPage);
+            BasicBook basicBook = new BasicBook(bookMetaInfo, linesPerPage, BookFormat.TEXT);
 
             string[] pageLines = new string[linesPerPage];
             int currentPageLine = 0;
