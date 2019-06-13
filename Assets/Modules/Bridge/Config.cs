@@ -5,7 +5,7 @@ using UnityEditor;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace EReader {
+namespace Bridge {
     
     public class Config {
 
@@ -20,6 +20,7 @@ namespace EReader {
 
         public bool backupOnImport { get; private set; }
         public string libraryPath { get; private set; }
+        public int linesPerPage { get; private set; }
 
         public Config() {
             if (instance != null){
@@ -48,11 +49,14 @@ namespace EReader {
             string configPath = Path.Combine(appDir, "config.yaml");
 
             if (!File.Exists(configPath)) {
-                var serializer = new SerializerBuilder().Build();                
+                var serializer = new SerializerBuilder()
+                    .EmitDefaults()
+                    .Build();                
                 
                 Config config = new Config();
                 config.backupOnImport = true;
                 config.libraryPath = Path.Combine(appDir, "library.yaml");
+                config.linesPerPage = 27;
                 
                 var yaml = serializer.Serialize(config);
                 File.WriteAllText(configPath, yaml);
