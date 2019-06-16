@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
-using EReader;
+using Modules.EReader;
+using UnityEngine;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Bridge {
+namespace Modules.Bridge {
     
     public class Library {
         
@@ -15,6 +18,8 @@ namespace Bridge {
 
         public List<Shelf> shelves { get; set; }
         public Dictionary<string, Book> books { get; set; }
+        
+        public string currentBookId { get; set; }
                 
         public Library() {
             if (instance != null){
@@ -32,6 +37,10 @@ namespace Bridge {
                     return instance;
                 }
             }
+        }
+
+        public void init() {
+            Debug.Log("Library initialization requested...");
         }
 
         private static void initialize() {
@@ -73,15 +82,28 @@ namespace Bridge {
             instance = deserializer.Deserialize<Library>(yamlInput);
         }
 
+        public List<Book> retrieveAllBooks() {
+            return books.Values.ToList();
+        }
+
         public Book retrieveBook(string bookId) {
-            if (!doesLibraryContain(bookId)) {
+            if (!doesLibraryContainId(bookId)) {
                 throw new BookNotFoundException("Unable to find book with id " + bookId);
             }
             return books[bookId];
         }
 
-        public bool doesLibraryContain(string bookId) {
+        public bool doesLibraryContainId(string bookId) {
             return books.ContainsKey(bookId);
+        }
+        
+        public bool doesLibraryContainTitle(string title) {
+            foreach(KeyValuePair<string, Book> book in books) {
+                if (book.Value.bookMetaInfo.title == title) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void addShelf(Shelf shelf) {
