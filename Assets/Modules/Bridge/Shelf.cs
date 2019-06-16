@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
-using EReader;
+using Modules.EReader;
 using UnityEngine;
 
-namespace Bridge {
+namespace Modules.Bridge {
     
     public class Shelf {
-        
+
+        public static Shelf allBooks;
+                
         public string shelfName { get; set; }
         public HashSet<string> bookIds { get; set; }
         

@@ -5,8 +5,7 @@
         "Unity.TextMeshPro",
         "Unity.TextMeshPro.Editor",
         "YamlDotNet",
-        "Common",
-        "VirtualBook"
+        "Common"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -1,10 +1,8 @@
-using System;
 using System.Text;
-using Bridge;
 using TMPro;
 using UnityEngine;
 
-namespace VirtualBook {
+namespace Modules.VirtualBook {
     
     public class VirtualPaperAppender : MonoBehaviour {
 

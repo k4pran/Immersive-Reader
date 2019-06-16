@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EReader {
+namespace Modules.EReader {
     
     public abstract class Book {
         protected Book() {}

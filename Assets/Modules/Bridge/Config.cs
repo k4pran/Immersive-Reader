@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using UnityEditor;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Bridge {
+namespace Modules.Bridge {
     
     public class Config {
 

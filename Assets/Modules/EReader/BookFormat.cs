@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EReader {
+namespace Modules.EReader {
     public enum BookFormat {
         TEXT,
         PDF

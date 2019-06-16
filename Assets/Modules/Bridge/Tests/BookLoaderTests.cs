@@ -1,16 +1,25 @@
-﻿using System;
-using NUnit.Framework;
-using Common;
+﻿using NUnit.Framework;
+using Modules.Bridge;
+using Modules.Common;
+using Modules.EReader;
 
-namespace EReader.Tests {
+namespace Modules.Bridge.Tests {
 
     public class BookLoaderTests {
 
         [Test]
-        public void LoadingTextFilesReadAsLines() {
+        public void LoadingTextFilesAddBasicPages() {
             BookImporter<string[]> bookImporter = new BookImporter<string[]>();
-            string[] contents = bookImporter.loadText("Assets/Modules/EReader/Tests/Resources/dracula.txt");
-            Assert.Greater(contents.Length, 0);
+            Book book = bookImporter.loadDotText("Assets/Modules/EReader/Tests/Resources/dracula.txt");
+            Assert.Greater(book.getPageCount(), 0);
+            Assert.AreEqual(typeof(BasicPage), book.getAllPages()[0].GetType());
+        }
+        
+        [Test]
+        public void LoadingTextFilesGetAddedToLibrary() {
+            BookImporter<string[]> bookImporter = new BookImporter<string[]>();
+            Book book = bookImporter.loadDotText("Assets/Modules/EReader/Tests/Resources/dracula.txt");
+            Assert.True(Library.Instance.doesLibraryContainId(book.bookId));
         }
         
         [Test]

@@ -1,11 +1,18 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-namespace EReader {
+namespace Modules.EReader {
     
     public class BookMetaInfo {
+        
+        public string title { get; set; }
+        public string author { get; set; }
+        public string publisher { get; set; } 
+        public string language { get; set; }
+        public string description { get; set; }
+        public string category { get; set; }
+        public string[] tags { get; set; }
+        public DateTime publicationDate { get; set; }
+        public int pageCount { get; set; }
         
         public BookMetaInfo() {}
 
@@ -21,15 +28,5 @@ namespace EReader {
             this.publicationDate = publicationDate;
             this.pageCount = pageCount;
         }
-
-        public string title { get; set; }
-        public string author { get; set; }
-        public string publisher { get; set; } 
-        public string language { get; set; }
-        public string description { get; set; }
-        public string category { get; set; }
-        public string[] tags { get; set; }
-        public DateTime publicationDate { get; set; }
-        public int pageCount { get; set; }
     }
 }

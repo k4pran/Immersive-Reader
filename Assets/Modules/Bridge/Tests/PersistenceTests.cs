@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
+using Modules.EReader;
 using NUnit.Framework;
-using UnityEngine;
 
-namespace EReader.Tests {
+namespace Modules.Bridge.Tests {
     public class PersistenceTests {
         
         [Test]
         public void serializingLibrary() {
             BookImporter<string[]> bookImporter = new BookImporter<string[]>();
-            string[] contents = bookImporter.loadText("Assets/Modules/EReader/Tests/Resources/dracula.txt");
             BookMetaInfo bookMetaInfo = new BookMetaInfo();
             bookMetaInfo.title = "Dracula";
             bookMetaInfo.author = "Bram Stoker";
@@ -20,17 +19,17 @@ namespace EReader.Tests {
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
             bookMetaInfo.category = "Gothic horror";
             bookMetaInfo.tags = new[] {"gothic", "horror", "vampires", "classic"};
-            Book book = BookBuilder.buildBasicBook(contents, 27, bookMetaInfo);
+            Book book = bookImporter.loadDotText("Assets/Modules/EReader/Tests/Resources/dracula.txt", bookMetaInfo);
             
-            Shelf shelf = new Shelf(new List<Book>(){book}, "test shelf");
-            Library library = new Library(new List<Shelf>(){shelf});
-            library.serialize();
+            Shelf shelf = new Shelf("test shelf", new HashSet<string>{book.bookId});
+            Library.Instance.addShelf(shelf);
+            Library.Instance.serialize();
         }
 
         [Test]
         public void deserializeLibrary() {
-            Library library = Library.Deserialize();
-            Debug.Log(library);
+            Library library = Library.Instance;
+            Assert.NotNull(library);
         }
         
     }

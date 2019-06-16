@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using Modules.Bridge;
+using UnityEngine;
 
-
-namespace VirtualBook {
+namespace Modules.VirtualBook {
         
     public class VirtualBookEntity : MonoBehaviour {
+        
         private BookPro bookPro;
         public int pageCount { get; private set; }
 
         VirtualBookEntity(string bookId) {
-            Bridge.Librarian.requestPageCount(bookId);
+            Librarian.requestPageCount(bookId);
         }
 
         public void appendPage(Paper paper) {

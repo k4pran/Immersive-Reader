@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using UnityEngine.UIElements;
-
-namespace EReader {
+namespace Modules.EReader {
     
     public class BookBuilder {
 

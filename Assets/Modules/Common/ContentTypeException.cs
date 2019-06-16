@@ -1,6 +1,6 @@
 using System;
 
-namespace VirtualBook {
+namespace Modules.Common {
     public class ContentTypeException : Exception {
         public ContentTypeException() {
         }

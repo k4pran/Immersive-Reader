@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EReader {
+namespace Modules.EReader {
     
     public class BasicPage : Page {
         public override string pageName { get; set; }

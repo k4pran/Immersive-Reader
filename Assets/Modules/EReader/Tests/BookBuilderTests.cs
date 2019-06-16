@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
-using UnityEngine;
 
-namespace EReader.Tests {
+namespace Modules.EReader.Tests {
     
     public class BookBuilderTests {
         
         [Test]
         public void buildingBasicBook() {
-            BookImporter<string[]> bookImporter = new BookImporter<string[]>();
-            string[] contents = bookImporter.loadText("Assets/Modules/EReader/Tests/Resources/dracula.txt");
+            string[] lines = File.ReadAllLines("Assets/Modules/EReader/Tests/Resources/dracula.txt");
+
             BookMetaInfo bookMetaInfo = new BookMetaInfo();
             bookMetaInfo.title = "Dracula";
             bookMetaInfo.author = "Bram Stoker";
@@ -21,8 +20,8 @@ namespace EReader.Tests {
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
             bookMetaInfo.category = "Gothic horror";
             bookMetaInfo.tags = new[] {"gothic", "horror", "vampires", "classic"};
-            BookBuilder.buildBasicBook(contents, 27, bookMetaInfo);
-            Debug.Log(contents);
+            Book book = BookBuilder.buildBasicBook(lines, 27, bookMetaInfo);
+            Assert.AreEqual(typeof(BasicBook), book.GetType());
         }
     }
 }

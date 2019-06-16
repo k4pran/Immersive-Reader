@@ -645,7 +645,6 @@ public class Paper
     public GameObject Back;
 }
 
-
 public static class BookUtility
 {
     /// <summary>

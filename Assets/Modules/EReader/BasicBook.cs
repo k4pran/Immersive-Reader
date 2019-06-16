@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 
-namespace EReader {
+namespace Modules.EReader {
     
     public class BasicBook : Book, IDynamicPages {
         public override string bookId { get; protected set; }

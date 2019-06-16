@@ -2,7 +2,7 @@
 using System.IO;
 using Debug = UnityEngine.Debug;
 
-namespace EReader {
+namespace Modules.EReader {
     public class PdfConversion {
 
         private static readonly string BINARY_DIR = "Assets/Modules/EReader/bin";

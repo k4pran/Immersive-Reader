@@ -1,25 +1,26 @@
-﻿using System;
+using System;
 using System.IO;
-using Common;
+using Modules.Common;
+using Modules.EReader;
 
-namespace EReader {
+namespace Modules.Bridge {
     
     public class BookImporter<T> {
         
         public T contents { get; private set; }
 
-        public void loadFromLocal(String path) {
-            String fileExt = FileUtils.getFileExt(path);
+        public void loadFromLocal(String path, BookMetaInfo bookMetaInfo=null) {
+            string fileExt = FileUtils.getFileExt(path);
             BookFormat bookFormat = BookFormatUtils.fromString(fileExt);
 
             switch(bookFormat) {
                     
                 case BookFormat.TEXT:
-                    loadText(path);
+                    loadDotText(path, bookMetaInfo);
                     break;
                 
                 case BookFormat.PDF:
-                    loadPdf(path);
+                    loadPdf(path, bookMetaInfo);
                     break;
                 
                 default:
@@ -32,12 +33,19 @@ namespace EReader {
             // todo
         }
 
-        public String[] loadText(String path) {
-            return File.ReadAllLines(path);
+        public Book loadDotText(String path, BookMetaInfo bookMetaInfo=null) {
+            String[] lines = File.ReadAllLines(path);
+            Book book = BookBuilder.buildBasicBook(lines, Config.Instance.linesPerPage, bookMetaInfo);
+            Library.Instance.addBook(book);
+            return book;
         }
         
-        public void loadPdf(String path) {
+        public void loadPdf(String path, BookMetaInfo bookMetaInfo=null) {
             PdfConversion.toJpegs(path, "");
+        }
+
+        public void addToLibrary(Book book) {
+            Library.Instance.addBook(book);
         }
     }
 

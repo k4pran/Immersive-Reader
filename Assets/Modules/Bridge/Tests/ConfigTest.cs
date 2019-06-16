@@ -1,11 +1,11 @@
 ﻿using NUnit.Framework;
 
-namespace EReader.Tests {
+namespace Modules.Bridge.Tests {
     public class ConfigTest {
         
         [Test]
         public void ConfigAccess() {
-            Config c = Config.Instance;
+            Config config = Config.Instance;
         }
         
     }

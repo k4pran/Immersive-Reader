@@ -1,0 +1,19 @@
+{
+    "name": "VirtualBookTests",
+    "references": [
+        "GUID:5076a06c72dcb4851a8ae2fa34b8970a",
+        "GUID:7fe85fcfe0e3b49549aff10f607e31d0",
+        "GUID:a5ddf70e329c349b2a516ec9bcb8d696"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

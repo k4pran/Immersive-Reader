@@ -1,4 +1,4 @@
-﻿namespace EReader {
+﻿namespace Modules.EReader {
     public class Cover {
         
         
