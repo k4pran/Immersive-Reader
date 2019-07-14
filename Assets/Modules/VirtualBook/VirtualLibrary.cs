@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Modules.Bridge;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Modules.VirtualBook {
     public class VirtualLibrary : MonoBehaviour {
@@ -33,6 +35,11 @@ namespace Modules.VirtualBook {
                 virtualBookMeta.pageCount = Librarian.requestPageCount(book.Key);
                 virtualBookMetas[book.Key] = virtualBookMeta;
             }
+        }
+
+        public string randomBookId() {
+            Random random = new Random();
+            return books.ElementAt(random.Next(0, books.Count)).Key;
         }
     }
 }
