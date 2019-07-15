@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using Modules.Bridge;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Modules.VirtualBook {
         
     public class VirtualBook : MonoBehaviour {
 
         public List<VirtualPage> virtualPages;
-
+        public VirtualPage currentPage;
+        public int currentPageNumber;
+        
+        
         [ReadOnly] 
         public string title;
         [ReadOnly] 
         public int pageCount;
+
 
         public static void createFromId(string bookId) {
             String bookName = Librarian.requestTitle(bookId);
@@ -44,12 +49,24 @@ namespace Modules.VirtualBook {
                     virtualPageObj.GetComponent<VirtualPage>().addContent(rightContent, false);
                     virtualPageObj.GetComponent<VirtualPage>().setPositions(virtualBookObj);
                 }
+                virtualPageObj.SetActive(false);
 
                 virtualBook.appendPage(virtualPageObj.GetComponent<VirtualPage>());
                 isLeft = !isLeft;
             }
-            
-            
+            virtualBook.setCurentPage(0);
+        }
+
+        private void setCurentPage(int pageNum) {
+            if (currentPage != null) {
+                currentPage.gameObject.SetActive(false);
+            }
+                
+            if (pageNum < virtualPages.Count) {
+                currentPageNumber = pageNum;
+                currentPage = virtualPages[currentPageNumber];
+                currentPage.gameObject.SetActive(true);
+            }
         }
 
         private void initBookInfo(string bookId) {
@@ -64,6 +81,52 @@ namespace Modules.VirtualBook {
         
         public void appendPage(VirtualPage virtualPage) {
             virtualPages.Add(virtualPage);
+        }
+
+        public void next() {
+            if (currentPageNumber == virtualPages.Count - 1) {
+                return;
+            }
+            
+            if (currentPageNumber % 2 == 0) {
+                setCurentPage(currentPageNumber + 2);
+            }
+            else {
+                setCurentPage(currentPageNumber + 1);
+            }
+        }
+
+        public void Previous() {
+            if (currentPageNumber <= 1) {
+                setCurentPage(0);
+                return;
+            }
+            
+            if (currentPageNumber % 2 == 0) {
+                setCurentPage(currentPageNumber - 1);
+            }
+            else {
+                setCurentPage(currentPageNumber - 2);
+            }
+        }
+
+        public void goTo(int pageNumber) {
+            // convert to zero-indexed
+            Debug.Log(pageNumber);
+            pageNumber--;
+            if (pageNumber < 0) {
+                setCurentPage(0);
+            }
+            else if (pageNumber >= virtualPages.Count) {
+                setCurentPage(virtualPages.Count - 1);
+            }
+            else {
+                setCurentPage(pageNumber);
+            }
+        }
+
+        public int getDisplayableCurrentPage() {
+            return currentPageNumber + 1;
         }
     }
 }

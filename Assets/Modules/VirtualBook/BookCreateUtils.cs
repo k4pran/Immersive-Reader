@@ -18,7 +18,8 @@ namespace Modules.VirtualBook {
             return page;
         }
         
-        public static void fitPageContainer(GameObject parent, GameObject pageContainer, Boolean isLeftPage){
+        public static void fitPageContainer(GameObject parent, GameObject pageContainer, Boolean isLeftPage,
+                float marginTop=0, float marginRight=0, float marginBottom=0, float marginLeft=0, float zOffset=-20) {
         
             RectTransform pageRect = pageContainer.GetComponent<RectTransform>();
             float canvasHalfWidth = parent.GetComponent<RectTransform>().rect.width / 2;
@@ -27,17 +28,20 @@ namespace Modules.VirtualBook {
             pageRect.anchorMax = new Vector2(1, 1);
 
             if (isLeftPage) {
-                SetLeft(pageContainer, 0);
-                SetRight(pageContainer, canvasHalfWidth);
-                SetTop(pageContainer, 0);
-                SetBottom(pageContainer, 0);
+                SetTop(pageContainer, marginTop);
+                SetRight(pageContainer, canvasHalfWidth + marginRight);
+                SetBottom(pageContainer, marginBottom);
+                SetLeft(pageContainer, marginLeft);
             }
             else {
-                SetLeft(pageContainer, canvasHalfWidth);
-                SetRight(pageContainer, 0);
-                SetTop(pageContainer, 0);
-                SetBottom(pageContainer, 0);
+                SetTop(pageContainer, marginTop);
+                SetRight(pageContainer, marginRight);
+                SetBottom(pageContainer, marginBottom);
+                SetLeft(pageContainer, canvasHalfWidth + marginLeft);
             }
+
+            Vector3 currentPosition = pageContainer.transform.position;
+            pageRect.transform.position = new Vector3(currentPosition.x, currentPosition.y, zOffset);
         }
         
         public static void SetLeft(GameObject targetObject, float left) {
@@ -66,10 +70,14 @@ namespace Modules.VirtualBook {
             rectTransform.anchorMax = new Vector2(1, 1);
         }
 
-        public static void stretchToParent(GameObject child) {
+        public static void stretchToParent(GameObject child, 
+                float topMargin=0, float rightMargin=0, float bottomMargin=0, float leftMargin=0) {
+            
             RectTransform pageRect = child.GetComponent<RectTransform>();
-            pageRect.offsetMax = new Vector2(0, 0);
-            pageRect.offsetMin = new Vector2(0, 0);
+            SetTop(child, topMargin);
+            SetRight(child, rightMargin);
+            SetBottom(child, bottomMargin);
+            SetLeft(child, leftMargin);
             pageRect.anchorMin = new Vector2(0, 0);
             pageRect.anchorMax = new Vector2(1, 1);
         }

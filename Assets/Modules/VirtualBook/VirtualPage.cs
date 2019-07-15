@@ -34,8 +34,10 @@ namespace Modules.VirtualBook {
 
         public void setPositions(GameObject parent) {
             BookCreateUtils.stretchToParent(gameObject);
-            BookCreateUtils.fitPageContainer(parent, left, true);
-            BookCreateUtils.fitPageContainer(parent, right, false);
+            BookCreateUtils.fitPageContainer(parent, left, true,
+                20, 20, 20, 20);
+            BookCreateUtils.fitPageContainer(parent, right, false,
+                20, 20, 20, 20);
         }
     }
 }

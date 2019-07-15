@@ -1,11 +1,19 @@
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
+using UnityEngine;
 
 namespace Modules.VirtualBook {
     public class PageContentTextMesh : PageContent {
 
         public TMP_Text tmpText;
+
+        private void Awake() {
+            tmpText.fontSizeMin = 8;
+            tmpText.fontSizeMax = 200;
+            tmpText.color = Color.black;
+            tmpText.enableAutoSizing = true;
+        }
 
         public void setText(List<string> lines) {
             
