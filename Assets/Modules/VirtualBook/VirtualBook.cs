@@ -31,17 +31,18 @@ namespace Modules.VirtualBook {
 
                     List<string> lines = (List<string>) Librarian.requestPageContent(bookId, pageNum);
                     virtualPageObj.GetComponent<VirtualPage>().addContent(lines);
-                    
+                    virtualPageObj.GetComponent<VirtualPage>().setPositions(virtualBookObj);
                 }
                 else {
                     virtualPageObj = VirtualPage.CreateVirtualPaper(
                         virtualBook.transform, "Page " + pageNum, "Page " + (pageNum + 1));
                     
-                    List<string> frontContent = (List<string>) Librarian.requestPageContent(bookId, pageNum);
-                    List<string> backContent = (List<string>) Librarian.requestPageContent(bookId, pageNum + 1);
+                    List<string> leftContent = (List<string>) Librarian.requestPageContent(bookId, pageNum);
+                    List<string> rightContent = (List<string>) Librarian.requestPageContent(bookId, pageNum + 1);
 
-                    virtualPageObj.GetComponent<VirtualPage>().addContent(frontContent);
-                    virtualPageObj.GetComponent<VirtualPage>().addContent(backContent, false);
+                    virtualPageObj.GetComponent<VirtualPage>().addContent(leftContent);
+                    virtualPageObj.GetComponent<VirtualPage>().addContent(rightContent, false);
+                    virtualPageObj.GetComponent<VirtualPage>().setPositions(virtualBookObj);
                 }
 
                 virtualBook.appendPage(virtualPageObj.GetComponent<VirtualPage>());
@@ -54,7 +55,6 @@ namespace Modules.VirtualBook {
         private void initBookInfo(string bookId) {
             title = Librarian.requestTitle(bookId);
             initPageCount(Librarian.requestPageCount(bookId));
-
         }
 
         private void initPageCount(int pageCount) {

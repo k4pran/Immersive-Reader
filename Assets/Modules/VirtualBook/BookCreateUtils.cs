@@ -18,10 +18,10 @@ namespace Modules.VirtualBook {
             return page;
         }
         
-        public static void fitPageContainer(GameObject canvas, GameObject pageContainer, Boolean isLeftPage){
+        public static void fitPageContainer(GameObject parent, GameObject pageContainer, Boolean isLeftPage){
         
             RectTransform pageRect = pageContainer.GetComponent<RectTransform>();
-            float canvasHalfWidth = canvas.GetComponent<RectTransform>().rect.width / 2;
+            float canvasHalfWidth = parent.GetComponent<RectTransform>().rect.width / 2;
         
             pageRect.anchorMin = new Vector2(0, 0);
             pageRect.anchorMax = new Vector2(1, 1);
