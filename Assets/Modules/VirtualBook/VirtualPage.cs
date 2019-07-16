@@ -4,39 +4,36 @@ using UnityEngine;
 namespace Modules.VirtualBook {
     public class VirtualPage : MonoBehaviour {
         
-        private GameObject left;
-        private GameObject right;
+        public GameObject content { get; private set; }
+        public bool isLeft { get; private set; }
 
-        private string LEFT_NAME = "Left Content";
-        private string RIGHT_NAME = "Right Content";
-
-        public static GameObject CreateVirtualPaper(Transform parentTransform, string frontSideName, string backSideName) {
+        public static GameObject CreateVirtualPaper(Transform parentTransform, string pageName) {
             GameObject virtualPageObj = BookCreateUtils.GetPagePrefab(
-                "Virtual Page - [" + frontSideName + " - " + backSideName + "]", parentTransform);
+                "Virtual Page - [" + pageName + "]", parentTransform);
             
             virtualPageObj.transform.parent = parentTransform;
             return virtualPageObj;
         }
 
-        public void addContent(List<string> lines, bool isLeftContent=true) {
-            GameObject contentPrefab = (GameObject) Resources.Load("Prefabs/PageContentTMP", typeof(GameObject));
-            GameObject content = Instantiate(contentPrefab, transform);
-            content.name = isLeftContent ? LEFT_NAME : RIGHT_NAME;
-            content.GetComponent<PageContentTextMesh>().setText(lines);
+        public static GameObject createBlank(Transform parentTransform) {
+            GameObject virtualPageObj = BookCreateUtils.GetPagePrefab(
+                "Virtual Page - [BLANK]", parentTransform);
+            
+            virtualPageObj.transform.parent = parentTransform;
+            return virtualPageObj;
+        }
 
-            if (isLeftContent) {
-                left = content;
-            }
-            else {
-                right = content;
-            }
+        public void addContent(List<string> lines, bool isLeft=true) {
+            GameObject contentPrefab = (GameObject) Resources.Load("Prefabs/PageContentTMP", typeof(GameObject));
+            content = Instantiate(contentPrefab, transform);
+            content.name = "content";
+            content.GetComponent<PageContentTextMesh>().setText(lines);
+            this.isLeft = isLeft;
         }
 
         public void setPositions(GameObject parent) {
             BookCreateUtils.stretchToParent(gameObject);
-            BookCreateUtils.fitPageContainer(parent, left, true,
-                20, 20, 20, 20);
-            BookCreateUtils.fitPageContainer(parent, right, false,
+            BookCreateUtils.fitPageContainer(parent, content, isLeft,
                 20, 20, 20, 20);
         }
     }

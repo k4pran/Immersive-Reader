@@ -19,7 +19,7 @@ namespace Modules.VirtualBook {
         }
         
         public static void fitPageContainer(GameObject parent, GameObject pageContainer, Boolean isLeftPage,
-                float marginTop=0, float marginRight=0, float marginBottom=0, float marginLeft=0, float zOffset=-20) {
+                float marginTop=0, float marginRight=0, float marginBottom=0, float marginLeft=0, float zOffset=-30) {
         
             RectTransform pageRect = pageContainer.GetComponent<RectTransform>();
             float canvasHalfWidth = parent.GetComponent<RectTransform>().rect.width / 2;

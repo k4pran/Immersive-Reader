@@ -1,15 +1,16 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using Modules.Bridge;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Modules.VirtualBook {
         
     public class VirtualBook : MonoBehaviour {
 
-        public List<VirtualPage> virtualPages;
-        public VirtualPage currentPage;
+        [FormerlySerializedAs("virtualPageGroups")] public List<VirtualPage> virtualPages;
+        [FormerlySerializedAs("currentPageGroup")] public VirtualPage currentPage;
         public int currentPageNumber;
         
         
@@ -25,47 +26,54 @@ namespace Modules.VirtualBook {
             VirtualBook virtualBook = virtualBookObj.GetComponent<VirtualBook>();
 
             virtualBook.initBookInfo(bookId);
-            bool isLeft = false;
+            bool isLeft = true;
             
             // todo fix number 10 below vvv
-            for(int pageNum = 0; pageNum < 10; pageNum += 2) {
+            for(int pageNum = 0; pageNum < 11; pageNum += 1) {
                 GameObject virtualPageObj;
-                if (pageNum >= virtualBook.pageCount) {
-                    virtualPageObj = VirtualPage.CreateVirtualPaper(
-                        virtualBook.transform, "Page " + pageNum, "blank");
 
-                    List<string> lines = (List<string>) Librarian.requestPageContent(bookId, pageNum);
-                    virtualPageObj.GetComponent<VirtualPage>().addContent(lines);
-                    virtualPageObj.GetComponent<VirtualPage>().setPositions(virtualBookObj);
-                }
-                else {
-                    virtualPageObj = VirtualPage.CreateVirtualPaper(
-                        virtualBook.transform, "Page " + pageNum, "Page " + (pageNum + 1));
-                    
-                    List<string> leftContent = (List<string>) Librarian.requestPageContent(bookId, pageNum);
-                    List<string> rightContent = (List<string>) Librarian.requestPageContent(bookId, pageNum + 1);
+                virtualPageObj = VirtualPage.CreateVirtualPaper(
+                    virtualBook.transform, "Page " + pageNum);
+                
+                List<string> content = (List<string>) Librarian.requestPageContent(bookId, pageNum);
 
-                    virtualPageObj.GetComponent<VirtualPage>().addContent(leftContent);
-                    virtualPageObj.GetComponent<VirtualPage>().addContent(rightContent, false);
+                virtualPageObj.GetComponent<VirtualPage>().addContent(content, isLeft);
                     virtualPageObj.GetComponent<VirtualPage>().setPositions(virtualBookObj);
-                }
                 virtualPageObj.SetActive(false);
 
                 virtualBook.appendPage(virtualPageObj.GetComponent<VirtualPage>());
                 isLeft = !isLeft;
             }
-            virtualBook.setCurentPage(0);
+
+            if (virtualBook.virtualPages.Count % 2 == 1) {
+                GameObject blank = VirtualPage.createBlank(virtualBook.transform);
+                blank.GetComponent<VirtualPage>().addContent(new List<string>(), false);
+                virtualBook.appendPage(blank.GetComponent<VirtualPage>());
+            }
+            
+            virtualBook.setCurrentPage(0);
         }
 
-        private void setCurentPage(int pageNum) {
+        private void setCurrentPage(int pageNum) {
             if (currentPage != null) {
                 currentPage.gameObject.SetActive(false);
+                setSiblingPage(false);
             }
                 
             if (pageNum < virtualPages.Count) {
                 currentPageNumber = pageNum;
                 currentPage = virtualPages[currentPageNumber];
                 currentPage.gameObject.SetActive(true);
+            }
+            setSiblingPage(true);
+        }
+
+        private void setSiblingPage(bool active) {
+            if (currentPage.isLeft) {
+                virtualPages[currentPageNumber + 1].gameObject.SetActive(active);
+            }
+            else {
+                virtualPages[currentPageNumber - 1].gameObject.SetActive(active);
             }
         }
 
@@ -84,30 +92,21 @@ namespace Modules.VirtualBook {
         }
 
         public void next() {
-            if (currentPageNumber == virtualPages.Count - 1) {
+            int targetPageumber = currentPage.isLeft ? currentPageNumber + 1 : currentPageNumber;
+            if (targetPageumber >= virtualPages.Count - 1) {
+                setCurrentPage(virtualPages.Count - 1);
                 return;
             }
-            
-            if (currentPageNumber % 2 == 0) {
-                setCurentPage(currentPageNumber + 2);
-            }
-            else {
-                setCurentPage(currentPageNumber + 1);
-            }
+            setCurrentPage(targetPageumber + 1);
         }
 
         public void Previous() {
-            if (currentPageNumber <= 1) {
-                setCurentPage(0);
+            int targetPageumber = currentPage.isLeft ? currentPageNumber : currentPageNumber - 1;
+            if (targetPageumber <= 1) {
+                setCurrentPage(0);
                 return;
             }
-            
-            if (currentPageNumber % 2 == 0) {
-                setCurentPage(currentPageNumber - 1);
-            }
-            else {
-                setCurentPage(currentPageNumber - 2);
-            }
+            setCurrentPage(targetPageumber - 1);
         }
 
         public void goTo(int pageNumber) {
@@ -115,13 +114,13 @@ namespace Modules.VirtualBook {
             Debug.Log(pageNumber);
             pageNumber--;
             if (pageNumber < 0) {
-                setCurentPage(0);
+                setCurrentPage(0);
             }
             else if (pageNumber >= virtualPages.Count) {
-                setCurentPage(virtualPages.Count - 1);
+                setCurrentPage(virtualPages.Count - 1);
             }
             else {
-                setCurentPage(pageNumber);
+                setCurrentPage(pageNumber);
             }
         }
 
