@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace Modules.VirtualBook {
-    public class TestVirtualBook : MonoBehaviour {
+    public class TestBasicBook : MonoBehaviour {
         private void Start() {
             GameObject virtualLibraryObject = new GameObject("VirtualLib");
             virtualLibraryObject.AddComponent<VirtualLibrary>();
