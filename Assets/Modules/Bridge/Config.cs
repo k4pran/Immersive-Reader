@@ -13,10 +13,13 @@ namespace Modules.Bridge {
         private static readonly object padlock = new object();
         
         // Defaults
-        private static readonly string APP_PARENT_DIR = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static readonly string CONFIG_DIR = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static readonly string APP_NAME = "VReader";
         private static readonly string CONFIG_NAME = "config.yaml";
+        private static readonly string APP_PARENT_DIR = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        
 
+        public string appDir { get; private set; }
         public bool backupOnImport { get; private set; }
         public string libraryPath { get; private set; }
         public int linesPerPage { get; private set; }
@@ -40,7 +43,7 @@ namespace Modules.Bridge {
         }
 
         private static void initialize() {
-            string appDir = Path.Combine(APP_PARENT_DIR, APP_NAME);
+            string appDir = Path.Combine(CONFIG_DIR, APP_NAME);
             if (!Directory.Exists(appDir)) {
                 Directory.CreateDirectory(appDir);
             }
@@ -64,7 +67,7 @@ namespace Modules.Bridge {
 
         private static Config Deserialize() {
             
-            string appDir = Path.Combine(APP_PARENT_DIR, APP_NAME);
+            string appDir = Path.Combine(CONFIG_DIR, APP_NAME);
             string configPath = Path.Combine(appDir, "config.yaml");
             
             string configContent;
@@ -80,6 +83,10 @@ namespace Modules.Bridge {
 
             Config config = deserializer.Deserialize<Config>(yamlInput);
             return config;
+        }
+
+        public string getAppDir() {
+            return APP_PARENT_DIR + "/" + APP_NAME;
         }
     }
 }
