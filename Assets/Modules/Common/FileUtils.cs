@@ -8,9 +8,12 @@ namespace Modules.Common {
     
     public static class FileUtils {
 
-        public static String getFileExt(String path) {
+        public static string getFileExt(string path) {
             return Path.GetExtension(path);
         }
-    
+
+        public static string getFileNameFromPath(string path) {
+            return Path.GetFileNameWithoutExtension(path);
+        }
     }
 }
