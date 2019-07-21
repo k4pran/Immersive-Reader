@@ -10,7 +10,9 @@ namespace Modules.Bridge.Tests {
         [Test]
         public void LoadingTextFilesAddBasicPages() {
             BookImporter<string[]> bookImporter = new BookImporter<string[]>();
-            Book book = bookImporter.loadDotText("Assets/Modules/EReader/Tests/Resources/dracula.txt");
+            Book book = new BasicBook("Assets/Modules/EReader/Tests/Resources/dracula.txt");
+
+            bookImporter.loadDotText(book);
             Assert.Greater(book.getPageCount(), 0);
             Assert.AreEqual(typeof(BasicPage), book.getAllPages()[0].GetType());
         }
@@ -18,7 +20,7 @@ namespace Modules.Bridge.Tests {
         [Test]
         public void LoadingTextFilesGetAddedToLibrary() {
             BookImporter<string[]> bookImporter = new BookImporter<string[]>();
-            Book book = bookImporter.loadDotText("Assets/Modules/EReader/Tests/Resources/dracula.txt");
+            Book book = new BasicBook("Assets/Modules/EReader/Tests/Resources/dracula.txt");
             Assert.True(Library.Instance.doesLibraryContainId(book.bookId));
         }
         

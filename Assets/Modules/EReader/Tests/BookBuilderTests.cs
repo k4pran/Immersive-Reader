@@ -8,7 +8,6 @@ namespace Modules.EReader.Tests {
         
         [Test]
         public void buildingBasicBook() {
-            string[] lines = File.ReadAllLines("Assets/Modules/EReader/Tests/Resources/dracula.txt");
 
             BookMetaInfo bookMetaInfo = new BookMetaInfo();
             bookMetaInfo.title = "Dracula";
@@ -20,7 +19,7 @@ namespace Modules.EReader.Tests {
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
             bookMetaInfo.category = "Gothic horror";
             bookMetaInfo.tags = new[] {"gothic", "horror", "vampires", "classic"};
-            Book book = BookBuilder.buildBasicBook(lines, 27, bookMetaInfo);
+            Book book = new BasicBook("Assets/Modules/EReader/Tests/Resources/dracula.txt");
             Assert.AreEqual(typeof(BasicBook), book.GetType());
         }
     }

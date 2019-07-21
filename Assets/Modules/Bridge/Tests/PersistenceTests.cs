@@ -19,7 +19,8 @@ namespace Modules.Bridge.Tests {
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
             bookMetaInfo.category = "Gothic horror";
             bookMetaInfo.tags = new[] {"gothic", "horror", "vampires", "classic"};
-            Book book = bookImporter.loadDotText("Assets/Modules/EReader/Tests/Resources/dracula.txt", bookMetaInfo);
+            Book book = new BasicBook("Assets/Modules/EReader/Tests/Resources/dracula.txt", 
+                bookMetaInfo, Config.Instance.linesPerPage, BookFormat.TEXT);
             
             Shelf shelf = new Shelf("test shelf", new HashSet<string>{book.bookId});
             Library.Instance.addShelf(shelf);

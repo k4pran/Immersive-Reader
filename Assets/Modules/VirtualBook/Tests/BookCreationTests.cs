@@ -6,13 +6,21 @@ namespace Modules.VirtualBook.Tests {
     public class BookCreationTests {
         
         [Test]
-        public void GeneratingVirtualBookFromBookId() {
+        public void GeneratingTxtVirtualBookFromBookId() {
             GameObject virtualLibraryObject = new GameObject("VirtualLib");
             virtualLibraryObject.AddComponent<VirtualLibrary>();
             VirtualLibrary virtualLibrary = virtualLibraryObject.GetComponent<VirtualLibrary>();
             string bookId = virtualLibrary.randomBookId();
             VirtualBook.createFromId(bookId);
            
+        }
+
+        [Test]
+        public void GeneratingPdfVirtualBookFromBookId() {
+            GameObject virtualLibraryObject = new GameObject("VirtualLib");
+            virtualLibraryObject.AddComponent<VirtualLibrary>();
+            VirtualLibrary virtualLibrary = virtualLibraryObject.GetComponent<VirtualLibrary>();
+            VirtualBook.createFromTitle("atari");
         }
     }
 }
