@@ -4,26 +4,25 @@ using Modules.Common;
 
 namespace Modules.EReader {
     
-    public class BasicPage : Page {
+    public class ImagePage : Page {
         public override string pageName { get; set; }
         public override int pageNb { get; set; }
+        public string imagePath { get; set; }
 
-        public List<string> lines { get; set; }
-
-        public BasicPage() {}
-
-        public BasicPage(string[] lines, int pageNb) {
-            this.lines = new List<string>(lines);
+        
+        public ImagePage() {}
+        
+        public ImagePage(string imagePath, int pageNb) {
+            this.imagePath = imagePath;
             this.pageNb = pageNb;
-            pageName = pageNb.ToString();
-        } 
+        }
 
         public override object getContent() {
-            return lines;
+            return imagePath;
         }
 
         public override ContentType getContentType() {
-            return ContentType.TEXT_ONLY;
+            return ContentType.IMAGE;
         }
     }
 }

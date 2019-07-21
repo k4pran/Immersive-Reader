@@ -7,34 +7,41 @@ namespace Modules.EReader {
         public override BookMetaInfo bookMetaInfo { get; set; }
         public override Binding binding { get; protected set; }
 
+        private string originUrl;
         public int linesPerPage;
         
         public List<Page> pages { get; set; }
         
-        private int pageIndex;
-
         private BookFormat bookFormat;
         
         public BasicBook() {}
 
-        public BasicBook(BookMetaInfo bookMetaInfo, int linesPerPage, BookFormat bookFormat) {
+        public BasicBook(string originUrl) {
+            this.originUrl = originUrl;
+        }
+
+        public BasicBook(string originUrl, BookMetaInfo bookMetaInfo, int linesPerPage, BookFormat bookFormat) {
+            this.originUrl = originUrl;
             bookId = generateId();
             this.linesPerPage = linesPerPage;
             this.bookMetaInfo = bookMetaInfo;
             binding = Binding.DOUBLE_PAGED;
             pages = new List<Page>();
-            pageIndex = 0;
             this.bookFormat = bookFormat;
         }
         
-        public BasicBook(BookMetaInfo bookMetaInfo, List<Page> pages, int linesPerPage, BookFormat bookFormat) {
+        public BasicBook(string originUrl, BookMetaInfo bookMetaInfo, List<Page> pages, int linesPerPage, BookFormat bookFormat) {
+            this.originUrl = originUrl;
             bookId = generateId();
             this.linesPerPage = linesPerPage;
             this.bookMetaInfo = bookMetaInfo;
             binding = Binding.DOUBLE_PAGED;
             this.pages = pages;
-            pageIndex = 0;
             this.bookFormat = bookFormat;
+        }
+        
+        public void appendPage(Page page) {
+            pages.Add(page);
         }
 
         public void addPageAt(Page page, int index) {
@@ -45,22 +52,10 @@ namespace Modules.EReader {
             pages.RemoveAt(index);
         }
 
-        public override void nextPage() {
-            if (pageIndex % 2 == 0) goTo(pageIndex + 2);
-            else goTo(pageIndex + 1);
+        public override string getOriginUrl() {
+            return originUrl;
         }
-
-        public override void previousPage() {
-            if (pageIndex % 2 == 0) goTo(pageIndex - 1);
-            else goTo(pageIndex - 2);
-        }
-
-        public override void goTo(int index) {
-            if (index < 0) pageIndex = 0;
-            else if (index > pages.Count) pageIndex = pages.Count;
-            else pageIndex = index;
-        }
-
+        
         public override List<Page> getAllPages() {
             return pages;
         }
@@ -69,21 +64,12 @@ namespace Modules.EReader {
             return pages[pageNum];
         }
 
-        public override List<Page> getDisplayedPages() {
-            if (pageIndex % 2 == 0) return pages.GetRange(pageIndex, 2);
-            else return pages.GetRange(pageIndex - 1, 2);
-        }
-
         public override int getPageCount() {
             return pages.Count;
         }
 
         public override BookFormat getBookFormat() {
             return bookFormat;
-        }
-
-        public override int getPageNumber() {
-            return pageIndex + 1;
         }
     }
 }
