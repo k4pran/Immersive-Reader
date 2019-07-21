@@ -9,22 +9,22 @@ namespace Modules.Bridge {
         
         public T contents { get; private set; }
 
-        public void loadFromLocal(String path, BookMetaInfo bookMetaInfo=null) {
-            string fileExt = FileUtils.getFileExt(path);
+        public void loadFromLocal(Book book) {
+            string fileExt = FileUtils.getFileExt(book.getOriginUrl());
             BookFormat bookFormat = BookFormatUtils.fromString(fileExt);
 
             switch(bookFormat) {
                     
                 case BookFormat.TEXT:
-                    loadDotText(path, bookMetaInfo);
+                    loadDotText(book);
                     break;
                 
                 case BookFormat.PDF:
-                    loadPdf(path, bookMetaInfo);
+                    loadPdf(book);
                     break;
                 
                 default:
-                    throw new BookLoadException("Failed to load book from path " + path + ".\n" +
+                    throw new BookLoadException("Failed to load book from path " + book.getOriginUrl() + ".\n" +
                                                 "Did not match a known book format");
             }
         }
@@ -33,20 +33,65 @@ namespace Modules.Bridge {
             // todo
         }
 
-        public Book loadDotText(String path, BookMetaInfo bookMetaInfo=null) {
-            String[] lines = File.ReadAllLines(path);
-            Book book = BookBuilder.buildBasicBook(lines, Config.Instance.linesPerPage, bookMetaInfo);
-            Library.Instance.addBook(book);
+        public Book loadDotText(Book book) {
+            book = loadContent((BasicBook) book);
+            addToLibrary(book);
             return book;
         }
         
-        public void loadPdf(String path, BookMetaInfo bookMetaInfo=null) {
-            PdfConversion.toJpegs(path, "");
+        public void loadPdf(Book book) {
+            string dirName;
+            if (book.bookMetaInfo != null && book.bookMetaInfo.title.Length > 0) {
+                dirName = book.bookMetaInfo.title.ToLower();
+            }
+            else {
+                dirName = FileUtils.getFileNameFromPath(book.getOriginUrl()).ToLower();
+            }
+
+            string outputDir = Config.Instance.getAppDir() + "/" + dirName;
+            Directory.CreateDirectory(outputDir);
+            PdfConversion.toJpegs(book.getOriginUrl(), outputDir);
+
+            loadContent((PdfBasicBook) book, outputDir);
+            addToLibrary(book);
         }
 
         public void addToLibrary(Book book) {
             Library.Instance.addBook(book);
         }
+        
+        public static Book loadContent(BasicBook book) {
+            string[] lines = File.ReadAllLines(book.getOriginUrl());
+            string[] pageLines = new string[book.linesPerPage];
+            int currentPageLine = 0;
+            int pageCount = 0;
+            for(int i = 0; i < lines.Length; i++) {
+                
+                if (currentPageLine >= book.linesPerPage) {
+                    currentPageLine = 0;
+                    book.addPageAt(new BasicPage(pageLines, pageCount + 1), pageCount);
+                    pageCount++;
+                    pageLines = new string[book.linesPerPage];
+                }
+                pageLines[currentPageLine] = lines[i];
+                currentPageLine++;
+            }
+            return book;
+        }
+        
+        public static Book loadContent(PdfBasicBook book, string imgOutputPath) {
+            int pageNb = 0;
+
+            string[] filePaths = Directory.GetFiles(imgOutputPath);
+            foreach(string filePath in filePaths) {
+                Page page = new ImagePage(filePath, pageNb);
+                book.appendPage(page);
+                pageNb++;
+            }
+
+            return book;
+        }
+        
     }
 
     public class BookLoadException : Exception {
