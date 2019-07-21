@@ -57,10 +57,13 @@ namespace Modules.Bridge {
             var serializer = new SerializerBuilder()
                 .WithTagMapping("!basicBook", typeof(BasicBook))
                 .WithTagMapping("!basicPage", typeof(BasicPage))
+                .WithTagMapping("!pdfBasicBook", typeof(PdfBasicBook))
+                .WithTagMapping("!imagePage", typeof(ImagePage))
                 .EmitDefaults()
                 .DisableAliases()
-                .Build();            
-            var yaml = serializer.Serialize(Instance);
+                .Build();   
+            
+            var yaml = serializer.Serialize(this);
             File.WriteAllText(Config.Instance.libraryPath, yaml);
         }
 
@@ -77,6 +80,8 @@ namespace Modules.Bridge {
                 .WithNamingConvention(new CamelCaseNamingConvention())
                 .WithTagMapping("!basicBook", typeof(BasicBook))
                 .WithTagMapping("!basicPage", typeof(BasicPage))
+                .WithTagMapping("!pdfBasicBook", typeof(PdfBasicBook))
+                .WithTagMapping("!imagePage", typeof(ImagePage))
                 .Build();
 
             instance = deserializer.Deserialize<Library>(yamlInput);
@@ -108,10 +113,12 @@ namespace Modules.Bridge {
 
         public void addShelf(Shelf shelf) {
             shelves.Add(shelf);
+            serialize();
         }
         
         public void addBook(Book book) {
             books.Add(book.bookId, book);
+            serialize();
         }
     }
 
