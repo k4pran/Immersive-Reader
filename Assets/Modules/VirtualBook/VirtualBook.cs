@@ -9,8 +9,8 @@ namespace Modules.VirtualBook {
         
     public class VirtualBook : MonoBehaviour {
 
-        [FormerlySerializedAs("virtualPageGroups")] public List<VirtualPage> virtualPages;
-        [FormerlySerializedAs("currentPageGroup")] public VirtualPage currentPage;
+        [FormerlySerializedAs("virtualPage")] public List<VirtualPage> virtualPages;
+        [FormerlySerializedAs("currentPage")] public VirtualPage currentPage;
         public int currentPageNumber;
         
         
@@ -19,6 +19,9 @@ namespace Modules.VirtualBook {
         [ReadOnly] 
         public int pageCount;
 
+        public static void createFromTitle(string bookTitle) {
+            // todo
+        }
 
         public static void createFromId(string bookId) {
             String bookName = Librarian.requestTitle(bookId);
@@ -48,6 +51,8 @@ namespace Modules.VirtualBook {
             if (virtualBook.virtualPages.Count % 2 == 1) {
                 GameObject blank = VirtualPage.createBlank(virtualBook.transform);
                 blank.GetComponent<VirtualPage>().addContent(new List<string>(), false);
+                blank.GetComponent<VirtualPage>().setPositions(virtualBookObj);
+                blank.SetActive(false);
                 virtualBook.appendPage(blank.GetComponent<VirtualPage>());
             }
             

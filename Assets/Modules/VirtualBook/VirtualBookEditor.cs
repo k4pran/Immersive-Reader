@@ -20,17 +20,21 @@ namespace Modules.VirtualBook {
             EditorGUILayout.LabelField("Book Control", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Current Page", virtualBook.getDisplayableCurrentPage().ToString());
 
-            if (GUILayout.Button("Next")) {
-                virtualBook.next();
-            }
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Previous")) {
                 virtualBook.Previous();
             }
+            if (GUILayout.Button("Next")) {
+                virtualBook.next();
+            }
+            EditorGUILayout.EndHorizontal();
 
+            EditorGUILayout.BeginHorizontal();
             pageNumber = EditorGUILayout.IntField("Page number", pageNumber);
             if (GUILayout.Button("Go To Page")) {
                 virtualBook.goTo(pageNumber);
             }
+            EditorGUILayout.EndHorizontal();
         }
     }
 }

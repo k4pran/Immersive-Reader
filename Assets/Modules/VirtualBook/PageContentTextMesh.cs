@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Modules.VirtualBook {
     public class PageContentTextMesh : PageContent {
 
-        public TMP_Text tmpText;
+        public TextMeshProUGUI tmpText;
 
         private void Awake() {
             tmpText.fontSizeMin = 8;
