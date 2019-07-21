@@ -25,6 +25,10 @@ namespace Modules.Bridge {
             return Library.Instance.doesLibraryContainTitle(title);
         }
 
+        public static string requestId(string title) {
+            return getBookIdFromTitle(title);
+        }
+
         public static string requestTitle(string bookId) {
             return getBookById(bookId).bookMetaInfo.title;
         }
@@ -78,6 +82,23 @@ namespace Modules.Bridge {
         
         public static Object requestPageContent(string bookId, int pageNum) {
             return Library.Instance.retrieveBook(bookId).getPage(pageNum).getContent();
+        }
+
+        private static string getBookIdFromTitle(string title) {
+            foreach(KeyValuePair<string, Book> entry in Library.Instance.books) {
+                if (entry.Value.bookMetaInfo != null && entry.Value.bookMetaInfo.title == title) {
+                    return entry.Key;
+                }
+                else if (FileUtils.getFileNameFromPath(entry.Value.getOriginUrl()) == title) {
+                    return entry.Key;
+                }
+            }
+            throw new BookNotFoundException("No book with title " + title + " found");
+        }
+
+        private static Book getBookByTitle(string title) {
+            string bookId = getBookIdFromTitle(title);
+            return getBookById(bookId);
         }
 
         private static Book getBookById(string bookId) {
