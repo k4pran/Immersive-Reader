@@ -1,11 +1,10 @@
-﻿using System;
 using Modules.Common;
 
 namespace Modules.EReader {
-    
-    public interface IDynamicContent {
+    public interface IDynamicContent<T> {
         
-        Object getContent();
+        T getContent();
+        
         ContentType getContentType();
     }
 }

@@ -4,20 +4,17 @@ using Modules.Common;
 
 namespace Modules.EReader {
     
-    public class ImagePage : Page {
-        public override string pageName { get; set; }
-        public override int pageNb { get; set; }
-        public string imagePath { get; set; }
+    public class ImagePage : Page<Content> {
+        
+        public ImageLocation imagePath { get; }
 
         
-        public ImagePage() {}
-        
-        public ImagePage(string imagePath, int pageNb) {
-            this.imagePath = imagePath;
-            this.pageNb = pageNb;
-        }
+        public ImagePage(string pageName, int pageNb, string imagePath)
+            : base (pageName, pageNb) {
+            this.imagePath = new ImageLocation(imagePath);
+        } 
 
-        public override object getContent() {
+        public override Content getContent() {
             return imagePath;
         }
 

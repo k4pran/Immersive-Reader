@@ -1,55 +1,43 @@
 using System.Collections.Generic;
 
 namespace Modules.EReader {
-    public class PdfBasicBook : Book {
-        
-        public override string bookId { get; protected set; }
-        public override BookMetaInfo bookMetaInfo { get; set; }
-        public override Binding binding { get; protected set; }
+    
+    public class PdfBasicBook : Book<ImageLocation> {
 
-        private string originUrl;
-        public List<Page> pages { get; set; }
-        private int pageIndex;
+        public List<Page<ImageLocation>> pages { get; }
         private BookFormat bookFormat;
-
-        public PdfBasicBook() {
-        }
-
-        public PdfBasicBook(string originUrl) {
-            this.originUrl = originUrl;
-        }
         
-        public PdfBasicBook(string originUrl, BookMetaInfo bookMetaInfo) {
-            this.originUrl = originUrl;
-            bookId = generateId();
-            this.bookMetaInfo = bookMetaInfo;
-            binding = Binding.DOUBLE_PAGED;
-            pages = new List<Page>();
-            bookFormat = BookFormat.PDF;
+        public PdfBasicBook(string originUrl, BookMetaInfo bookMetaInfo)
+            : base(originUrl, Binding.DOUBLE_PAGED, BookFormat.PDF) {
+            setBookMetaInfo(bookMetaInfo);
         }
 
-        public override string getOriginUrl() {
-            return originUrl;
+        public override void appendPage(Page<ImageLocation> page) {
+            pages.Add(page);
         }
 
-        public override List<Page> getAllPages() {
+        public override void addPageAt(Page<ImageLocation> page, int index) {
+            pages.Insert(index, page);
+        }
+
+        public override bool removePage(Page<ImageLocation> page) {
+            return pages.Remove(page);
+        }
+
+        public override void removePageAt(int index) {
+            pages.RemoveAt(index);
+        }
+
+        public override List<Page<ImageLocation>> getPages() {
             return pages;
         }
 
-        public override Page getPage(int pageNum) {
+        public override Page<ImageLocation> getPage(int pageNum) {
             return pages[pageNum];
         }
 
         public override int getPageCount() {
             return pages.Count;
-        }
-
-        public void appendPage(Page page) {
-            pages.Add(page);
-        }
-
-        public override BookFormat getBookFormat() {
-            return bookFormat;
         }
     }
 }

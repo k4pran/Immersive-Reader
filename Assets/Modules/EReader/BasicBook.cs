@@ -1,75 +1,50 @@
+using System;
 using System.Collections.Generic;
 
 namespace Modules.EReader {
     
-    public class BasicBook : Book, IDynamicPages {
-        public override string bookId { get; protected set; }
-        public override BookMetaInfo bookMetaInfo { get; set; }
-        public override Binding binding { get; protected set; }
-
-        private string originUrl;
+    public class BasicBook : Book<PageLines> {
+        
+        public List<Page<PageLines>> pages;
         public int linesPerPage;
         
-        public List<Page> pages { get; set; }
-        
-        private BookFormat bookFormat;
-        
-        public BasicBook() {}
-
-        public BasicBook(string originUrl) {
-            this.originUrl = originUrl;
+        public BasicBook(string originUrl) 
+                : base(originUrl, Binding.DOUBLE_PAGED, BookFormat.TEXT) {
         }
 
-        public BasicBook(string originUrl, BookMetaInfo bookMetaInfo, int linesPerPage, BookFormat bookFormat) {
-            this.originUrl = originUrl;
-            bookId = generateId();
+        public BasicBook(string originUrl, BookMetaInfo bookMetaInfo, int linesPerPage)
+                : base(originUrl, Binding.DOUBLE_PAGED, BookFormat.TEXT) {
             this.linesPerPage = linesPerPage;
-            this.bookMetaInfo = bookMetaInfo;
-            binding = Binding.DOUBLE_PAGED;
-            pages = new List<Page>();
-            this.bookFormat = bookFormat;
+            setBookMetaInfo(bookMetaInfo);
+            pages = new List<Page<PageLines>>();
         }
-        
-        public BasicBook(string originUrl, BookMetaInfo bookMetaInfo, List<Page> pages, int linesPerPage, BookFormat bookFormat) {
-            this.originUrl = originUrl;
-            bookId = generateId();
-            this.linesPerPage = linesPerPage;
-            this.bookMetaInfo = bookMetaInfo;
-            binding = Binding.DOUBLE_PAGED;
-            this.pages = pages;
-            this.bookFormat = bookFormat;
-        }
-        
-        public void appendPage(Page page) {
+
+        public override void appendPage(Page<PageLines> page) {
             pages.Add(page);
         }
 
-        public void addPageAt(Page page, int index) {
+        public override void addPageAt(Page<PageLines> page, int index) {
             pages.Insert(index, page);
         }
 
-        public void removePage(int index) {
+        public override bool removePage(Page<PageLines> page) {
+            return pages.Remove(page);
+        }
+
+        public override void removePageAt(int index) {
             pages.RemoveAt(index);
         }
 
-        public override string getOriginUrl() {
-            return originUrl;
-        }
-        
-        public override List<Page> getAllPages() {
+        public override List<Page<PageLines>> getPages() {
             return pages;
         }
 
-        public override Page getPage(int pageNum) {
+        public override Page<PageLines> getPage(int pageNum) {
             return pages[pageNum];
         }
 
         public override int getPageCount() {
             return pages.Count;
-        }
-
-        public override BookFormat getBookFormat() {
-            return bookFormat;
         }
     }
 }
