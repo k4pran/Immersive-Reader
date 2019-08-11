@@ -2,9 +2,9 @@
     "name": "VirtualBook",
     "references": [
         "GUID:a5ddf70e329c349b2a516ec9bcb8d696",
-        "GUID:efa3e7d9a42d04a70b8ca009e4017a5a",
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:6546d7765b4165b40850b3667f981c26"
+        "GUID:6546d7765b4165b40850b3667f981c26",
+        "GUID:7fe85fcfe0e3b49549aff10f607e31d0"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -9,7 +9,7 @@ namespace Modules.VirtualBook {
             
             virtualLibraryObject.AddComponent<VirtualLibrary>();
             VirtualLibrary virtualLibrary = virtualLibraryObject.GetComponent<VirtualLibrary>();
-            VirtualBook.createFromTitle("atari");
+            VirtualBook.createFromTitle("Atari");
         }
     }
 }

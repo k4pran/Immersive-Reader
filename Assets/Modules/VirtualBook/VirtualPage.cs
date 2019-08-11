@@ -23,12 +23,11 @@ namespace Modules.VirtualBook {
             return virtualPageObj;
         }
 
-        public void addContent(List<string> lines, bool isLeft=true) {
-            GameObject contentPrefab = (GameObject) Resources.Load("Prefabs/PageContentTMP", typeof(GameObject));
+        public PageContent addContent(GameObject contentPrefab, bool isLeft=true) {
             content = Instantiate(contentPrefab, transform);
             content.name = "content";
-            content.GetComponent<PageContentTextMesh>().setText(lines);
             this.isLeft = isLeft;
+            return content.GetComponent<PageContent>();
         }
 
         public void setPositions(GameObject parent) {

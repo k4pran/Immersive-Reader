@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="JsonDotNet" t="Include">
+          <e p="link.xml" t="Include" />
+        </e>
+        <e p="Modules" t="Include">
+          <e p="Book" t="Include">
+            <e p="BasicBook.cs" t="Include" />
+            <e p="Binding.cs" t="Include" />
+            <e p="Book.cs" t="Include" />
+            <e p="BookFormat.cs" t="Include" />
+            <e p="BookMetaInfo.cs" t="Include" />
+            <e p="EReader.asmdef" t="Include" />
+            <e p="IBook.cs" t="Include" />
+            <e p="IDynamicContent.cs" t="Include" />
+            <e p="ImagePage.cs" t="Include" />
+            <e p="IPage.cs" t="Include" />
+            <e p="Page.cs" t="Include" />
+            <e p="PdfBasicBook.cs" t="Include" />
+            <e p="Tests" t="Include">
+              <e p="BookBuilderTests.cs" t="Include" />
+              <e p="EReaderTests.asmdef" t="Include" />
+              <e p="Resources" t="Include">
+                <e p="dracula.txt" t="Include" />
+              </e>
+            </e>
+            <e p="TextPage.cs" t="Include" />
+          </e>
+          <e p="Common" t="Include">
+            <e p="Common.asmdef" t="Include" />
+            <e p="ContentType.cs" t="Include" />
+            <e p="ContentTypeException.cs" t="Include" />
+            <e p="FileUtils.cs" t="Include" />
+          </e>
+          <e p="Library" t="Include">
+            <e p="BookImporter.cs" t="Include" />
+            <e p="Bridge.asmdef" t="Include" />
+            <e p="Config.cs" t="Include" />
+            <e p="Librarian.cs" t="Include" />
+            <e p="Library.cs" t="Include" />
+            <e p="PdfConversion.cs" t="Include" />
+            <e p="Shelf.cs" t="Include" />
+            <e p="SqlConn.cs" t="Include" />
+            <e p="Tests" t="Include">
+              <e p="BookImporterTests.cs" t="Include" />
+              <e p="BookLoaderTests.cs" t="Include" />
+              <e p="BridgeTests.asmdef" t="Include" />
+              <e p="ConfigTest.cs" t="Include" />
+              <e p="PersistenceTests.cs" t="Include" />
+            </e>
+          </e>
+          <e p="PdfReader" t="Include">
+            <e p="BookMetrics.cs" t="Include" />
+            <e p="CharMetrics.cs" t="Include" />
+            <e p="ChunkMetrics.cs" t="Include" />
+            <e p="Color.cs" t="Include" />
+            <e p="ImageMetrics.cs" t="Include" />
+            <e p="LineMetrics.cs" t="Include" />
+            <e p="PageMetrics.cs" t="Include" />
+            <e p="PdfReader.asmdef" t="Include" />
+            <e p="Rect.cs" t="Include" />
+            <e p="Styler.cs" t="Include" />
+            <e p="WordMetrics.cs" t="Include" />
+          </e>
+          <e p="VirtualBook" t="Include">
+            <e p="BookCreateUtils.cs" t="Include" />
+            <e p="PageContent.cs" t="Include" />
+            <e p="PageContentTextMesh.cs" t="Include" />
+            <e p="ReadOnlyAttribute.cs" t="Include" />
+            <e p="ReadOnlyDrawer.cs" t="Include" />
+            <e p="TestBasicBook.cs" t="Include" />
+            <e p="TestPdfBook.cs" t="Include" />
+            <e p="Tests" t="Include">
+              <e p="BookCreationTests.cs" t="Include" />
+              <e p="BookSelectionTests.cs" t="Include" />
+              <e p="InitializationTests.cs" t="Include" />
+              <e p="VirtualBookTests.asmdef" t="Include" />
+            </e>
+            <e p="VirtualBook.asmdef" t="Include" />
+            <e p="VirtualBook.cs" t="Include" />
+            <e p="VirtualBookEditor.cs" t="Include" />
+            <e p="VirtualBookMeta.cs" t="Include" />
+            <e p="VirtualLibrary.cs" t="Include" />
+            <e p="VirtualPage.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Plugins" t="Include">
+          <e p="crosstales" t="Include">
+            <e p="Common" t="Include">
+              <e p="Editor" t="Include">
+                <e p="Task" t="Include">
+                  <e p="BaseCompileDefines.cs" t="Include" />
+                  <e p="BaseSetupResources.cs" t="Include" />
+                  <e p="NYCheck.cs" t="Include" />
+                  <e p="SetupResources.cs" t="Include" />
+                </e>
+                <e p="Util" t="Include">
+                  <e p="BaseEditorHelper.cs" t="Include" />
+                  <e p="BaseGAApi.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Readme.txt" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="ExtensionMethods.cs" t="Include" />
+                <e p="Model" t="Include">
+                  <e p="Enum" t="Include">
+                    <e p="Platform.cs" t="Include" />
+                  </e>
+                </e>
+                <e p="Tool" t="Include">
+                  <e p="TakeScreenshot.cs" t="Include" />
+                </e>
+                <e p="Util" t="Include">
+                  <e p="BaseConstants.cs" t="Include" />
+                  <e p="BaseHelper.cs" t="Include" />
+                  <e p="CTPlayerPrefs.cs" t="Include" />
+                  <e p="CTWebClient.cs" t="Include" />
+                  <e p="PlatformController.cs" t="Include" />
+                  <e p="RandomColor.cs" t="Include" />
+                  <e p="RandomRotator.cs" t="Include" />
+                  <e p="RandomScaler.cs" t="Include" />
+                  <e p="SerializableDictionary.cs" t="Include" />
+                  <e p="XmlHelper.cs" t="Include" />
+                </e>
+              </e>
+              <e p="UI" t="Include">
+                <e p="Colors.txt" t="Include" />
+                <e p="Scripts" t="Include">
+                  <e p="Social.cs" t="Include" />
+                  <e p="StaticManager.cs" t="Include" />
+                  <e p="UIDrag.cs" t="Include" />
+                  <e p="UIFocus.cs" t="Include" />
+                  <e p="UIHint.cs" t="Include" />
+                  <e p="UIResize.cs" t="Include" />
+                  <e p="UIWindowManager.cs" t="Include" />
+                  <e p="Util" t="Include">
+                    <e p="FPSDisplay.cs" t="Include" />
+                    <e p="ScrollRectHandler.cs" t="Include" />
+                  </e>
+                  <e p="WindowManager.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+            <e p="FileBrowser" t="Include">
+              <e p="Demo" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="Examples.cs" t="Include" />
+                  <e p="GUIMain.cs" t="Include" />
+                  <e p="GUIScenes.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Documentation" t="Include">
+                <e p="id" t="Include">
+                  <e p="62455202-c9ff-4b04-b6c3-1d4b836a5fff.txt" t="Include" />
+                </e>
+                <e p="VERSIONS.txt" t="Include" />
+              </e>
+              <e p="Editor" t="Include">
+                <e p="Integration" t="Include">
+                  <e p="ConfigBase.cs" t="Include" />
+                  <e p="ConfigPreferences.cs" t="Include" />
+                  <e p="ConfigWindow.cs" t="Include" />
+                </e>
+                <e p="Task" t="Include">
+                  <e p="AAAConfigLoader.cs" t="Include" />
+                  <e p="CompileDefines.cs" t="Include" />
+                  <e p="ReminderCheck.cs" t="Include" />
+                  <e p="ReminderCT.cs" t="Include" />
+                  <e p="SetApiLevel.cs" t="Include" />
+                  <e p="SetupResources.cs" t="Include" />
+                  <e p="Tracer.cs" t="Include" />
+                  <e p="UpdateCheck.cs" t="Include" />
+                  <e p="ZInstaller.cs" t="Include" />
+                </e>
+                <e p="Util" t="Include">
+                  <e p="EditorConfig.cs" t="Include" />
+                  <e p="EditorConstants.cs" t="Include" />
+                  <e p="EditorHelper.cs" t="Include" />
+                  <e p="GAApi.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Readme.txt" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="FileBrowser.cs" t="Include" />
+                <e p="Util" t="Include">
+                  <e p="Config.cs" t="Include" />
+                  <e p="Constants.cs" t="Include" />
+                  <e p="Helper.cs" t="Include" />
+                </e>
+                <e p="Wrapper" t="Include">
+                  <e p="FileBrowserBase.cs" t="Include" />
+                  <e p="FileBrowserEditor.cs" t="Include" />
+                  <e p="FileBrowserGeneric.cs" t="Include" />
+                  <e p="FileBrowserLinux.cs" t="Include" />
+                  <e p="FileBrowserMac.cs" t="Include" />
+                  <e p="FileBrowserWindows.cs" t="Include" />
+                  <e p="IFileBrowser.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+          </e>
+          <e p="YamlDotNet" t="Include">
+            <e p="Core" t="Include">
+              <e p="AnchorNotFoundException.cs" t="Include" />
+              <e p="CharacterAnalyzer.cs" t="Include" />
+              <e p="Constants.cs" t="Include" />
+              <e p="Cursor.cs" t="Include" />
+              <e p="Emitter.cs" t="Include" />
+              <e p="EmitterState.cs" t="Include" />
+              <e p="Events" t="Include">
+                <e p="AnchorAlias.cs" t="Include" />
+                <e p="Comment.cs" t="Include" />
+                <e p="DocumentEnd.cs" t="Include" />
+                <e p="DocumentStart.cs" t="Include" />
+                <e p="EventType.cs" t="Include" />
+                <e p="IParsingEventVisitor.cs" t="Include" />
+                <e p="MappingEnd.cs" t="Include" />
+                <e p="MappingStart.cs" t="Include" />
+                <e p="MappingStyle.cs" t="Include" />
+                <e p="NodeEvent.cs" t="Include" />
+                <e p="ParsingEvent.cs" t="Include" />
+                <e p="Scalar.cs" t="Include" />
+                <e p="SequenceEnd.cs" t="Include" />
+                <e p="SequenceStart.cs" t="Include" />
+                <e p="SequenceStyle.cs" t="Include" />
+                <e p="StreamEnd.cs" t="Include" />
+                <e p="StreamStart.cs" t="Include" />
+              </e>
+              <e p="FakeList.cs" t="Include" />
+              <e p="ForwardAnchorNotSupportedException.cs" t="Include" />
+              <e p="HashCode.cs" t="Include" />
+              <e p="IEmitter.cs" t="Include" />
+              <e p="ILookAheadBuffer.cs" t="Include" />
+              <e p="InsertionQueue.cs" t="Include" />
+              <e p="IParser.cs" t="Include" />
+              <e p="IScanner.cs" t="Include" />
+              <e p="LookAheadBuffer.cs" t="Include" />
+              <e p="Mark.cs" t="Include" />
+              <e p="MaximumRecursionLevelReachedException.cs" t="Include" />
+              <e p="MergingParser.cs" t="Include" />
+              <e p="Parser.cs" t="Include" />
+              <e p="ParserExtensions.cs" t="Include" />
+              <e p="ParserState.cs" t="Include" />
+              <e p="RecursionLevel.cs" t="Include" />
+              <e p="ScalarStyle.cs" t="Include" />
+              <e p="Scanner.cs" t="Include" />
+              <e p="SemanticErrorException.cs" t="Include" />
+              <e p="SimpleKey.cs" t="Include" />
+              <e p="StringLookAheadBuffer.cs" t="Include" />
+              <e p="SyntaxErrorException.cs" t="Include" />
+              <e p="TagDirectiveCollection.cs" t="Include" />
+              <e p="Tokens" t="Include">
+                <e p="Anchor.cs" t="Include" />
+                <e p="AnchorAlias.cs" t="Include" />
+                <e p="BlockEnd.cs" t="Include" />
+                <e p="BlockEntry.cs" t="Include" />
+                <e p="BlockMappingStart.cs" t="Include" />
+                <e p="BlockSequenceStart.cs" t="Include" />
+                <e p="Comment.cs" t="Include" />
+                <e p="DocumentEnd.cs" t="Include" />
+                <e p="DocumentStart.cs" t="Include" />
+                <e p="FlowEntry.cs" t="Include" />
+                <e p="FlowMappingEnd.cs" t="Include" />
+                <e p="FlowMappingStart.cs" t="Include" />
+                <e p="FlowSequenceEnd.cs" t="Include" />
+                <e p="FlowSequenceStart.cs" t="Include" />
+                <e p="Key.cs" t="Include" />
+                <e p="Scalar.cs" t="Include" />
+                <e p="StreamEnd.cs" t="Include" />
+                <e p="StreamStart.cs" t="Include" />
+                <e p="Tag.cs" t="Include" />
+                <e p="TagDirective.cs" t="Include" />
+                <e p="Token.cs" t="Include" />
+                <e p="Value.cs" t="Include" />
+                <e p="VersionDirective.cs" t="Include" />
+              </e>
+              <e p="Version.cs" t="Include" />
+              <e p="YamlException.cs" t="Include" />
+            </e>
+            <e p="Examples" t="Include">
+              <e p="ConvertYamlToJson.cs" t="Include" />
+              <e p="DeserializeObjectGraph.cs" t="Include" />
+              <e p="DeserializingMultipleDocuments.cs" t="Include" />
+              <e p="Helpers" t="Include">
+                <e p="ExampleRunner.cs" t="Include" />
+                <e p="SampleAttribute.cs" t="Include" />
+                <e p="TestOutputHelperExtensions.cs" t="Include" />
+              </e>
+              <e p="LoadingAYamlStream.cs" t="Include" />
+              <e p="SerializeObjectGraph.cs" t="Include" />
+            </e>
+            <e p="Helpers" t="Include">
+              <e p="ExpressionExtensions.cs" t="Include" />
+              <e p="GenericCollectionToNonGenericAdapter.cs" t="Include" />
+              <e p="GenericDictionaryToNonGenericAdapter.cs" t="Include" />
+              <e p="ITestOutputHelper.cs" t="Include" />
+              <e p="Portability.cs" t="Include" />
+            </e>
+            <e p="Readme.txt" t="Include" />
+            <e p="RepresentationModel" t="Include">
+              <e p="DocumentLoadingState.cs" t="Include" />
+              <e p="EmitterState.cs" t="Include" />
+              <e p="IYamlVisitor.cs" t="Include" />
+              <e p="YamlAliasNode.cs" t="Include" />
+              <e p="YamlDocument.cs" t="Include" />
+              <e p="YamlMappingNode.cs" t="Include" />
+              <e p="YamlNode.cs" t="Include" />
+              <e p="YamlNodeIdentityEqualityComparer.cs" t="Include" />
+              <e p="YamlNodeType.cs" t="Include" />
+              <e p="YamlScalarNode.cs" t="Include" />
+              <e p="YamlSequenceNode.cs" t="Include" />
+              <e p="YamlStream.cs" t="Include" />
+              <e p="YamlVisitor.cs" t="Include" />
+              <e p="YamlVisitorBase.cs" t="Include" />
+            </e>
+            <e p="Serialization" t="Include">
+              <e p="BuilderSkeleton.cs" t="Include" />
+              <e p="Converters" t="Include">
+                <e p="DateTimeConverter.cs" t="Include" />
+                <e p="GuidConverter.cs" t="Include" />
+              </e>
+              <e p="Deserializer.cs" t="Include" />
+              <e p="DeserializerBuilder.cs" t="Include" />
+              <e p="EmissionPhaseObjectGraphVisitorArgs.cs" t="Include" />
+              <e p="EventEmitters" t="Include">
+                <e p="ChainedEventEmitter.cs" t="Include" />
+                <e p="CustomTagEventEmitter.cs" t="Include" />
+                <e p="JsonEventEmitter.cs" t="Include" />
+                <e p="TypeAssigningEventEmitter.cs" t="Include" />
+                <e p="WriterEventEmitter.cs" t="Include" />
+              </e>
+              <e p="EventInfo.cs" t="Include" />
+              <e p="IAliasProvider.cs" t="Include" />
+              <e p="IEventEmitter.cs" t="Include" />
+              <e p="INamingConvention.cs" t="Include" />
+              <e p="INodeDeserializer.cs" t="Include" />
+              <e p="INodeTypeResolver.cs" t="Include" />
+              <e p="IObjectDescriptor.cs" t="Include" />
+              <e p="IObjectFactory.cs" t="Include" />
+              <e p="IObjectGraphTraversalStrategy.cs" t="Include" />
+              <e p="IObjectGraphVisitor.cs" t="Include" />
+              <e p="IPropertyDescriptor.cs" t="Include" />
+              <e p="IRegistrationLocationSelectionSyntax.cs" t="Include" />
+              <e p="ITypeInspector.cs" t="Include" />
+              <e p="ITypeResolver.cs" t="Include" />
+              <e p="IValueDeserializer.cs" t="Include" />
+              <e p="IValuePromise.cs" t="Include" />
+              <e p="IValueSerializer.cs" t="Include" />
+              <e p="IYamlConvertible.cs" t="Include" />
+              <e p="IYamlSerializable.cs" t="Include" />
+              <e p="IYamlTypeConverter.cs" t="Include" />
+              <e p="LazyComponentRegistrationList.cs" t="Include" />
+              <e p="LazyComponentRegistrationListExtensions.cs" t="Include" />
+              <e p="NamingConventions" t="Include">
+                <e p="CamelCaseNamingConvention.cs" t="Include" />
+                <e p="HyphenatedNamingConvention.cs" t="Include" />
+                <e p="NullNamingConvention.cs" t="Include" />
+                <e p="PascalCaseNamingConvention.cs" t="Include" />
+                <e p="UnderscoredNamingConvention.cs" t="Include" />
+              </e>
+              <e p="NodeDeserializers" t="Include">
+                <e p="ArrayNodeDeserializer.cs" t="Include" />
+                <e p="CollectionNodeDeserializer.cs" t="Include" />
+                <e p="DictionaryNodeDeserializer.cs" t="Include" />
+                <e p="EnumerableNodeDeserializer.cs" t="Include" />
+                <e p="NullNodeDeserializer.cs" t="Include" />
+                <e p="ObjectNodeDeserializer.cs" t="Include" />
+                <e p="ScalarNodeDeserializer.cs" t="Include" />
+                <e p="TypeConverterNodeDeserializer.cs" t="Include" />
+                <e p="YamlConvertibleNodeDeserializer.cs" t="Include" />
+                <e p="YamlSerializableNodeDeserializer.cs" t="Include" />
+              </e>
+              <e p="NodeTypeResolvers" t="Include">
+                <e p="DefaultContainersNodeTypeResolver.cs" t="Include" />
+                <e p="TagNodeTypeResolver.cs" t="Include" />
+                <e p="TypeNameInTagNodeTypeResolver.cs" t="Include" />
+                <e p="YamlConvertibleTypeResolver.cs" t="Include" />
+                <e p="YamlSerializableTypeResolver.cs" t="Include" />
+              </e>
+              <e p="Nothing.cs" t="Include" />
+              <e p="ObjectDescriptor.cs" t="Include" />
+              <e p="ObjectFactories" t="Include">
+                <e p="DefaultObjectFactory.cs" t="Include" />
+                <e p="LambdaObjectFactory.cs" t="Include" />
+              </e>
+              <e p="ObjectGraphTraversalStrategies" t="Include">
+                <e p="FullObjectGraphTraversalStrategy.cs" t="Include" />
+                <e p="RoundtripObjectGraphTraversalStrategy.cs" t="Include" />
+              </e>
+              <e p="ObjectGraphVisitors" t="Include">
+                <e p="AnchorAssigner.cs" t="Include" />
+                <e p="AnchorAssigningObjectGraphVisitor.cs" t="Include" />
+                <e p="ChainedObjectGraphVisitor.cs" t="Include" />
+                <e p="CustomSerializationObjectGraphVisitor.cs" t="Include" />
+                <e p="DefaultExclusiveObjectGraphVisitor.cs" t="Include" />
+                <e p="EmittingObjectGraphVisitor.cs" t="Include" />
+                <e p="PreProcessingPhaseObjectGraphVisitorSkeleton.cs" t="Include" />
+              </e>
+              <e p="PropertyDescriptor.cs" t="Include" />
+              <e p="SerializationOptions.cs" t="Include" />
+              <e p="Serializer.cs" t="Include" />
+              <e p="SerializerBuilder.cs" t="Include" />
+              <e p="StreamFragment.cs" t="Include" />
+              <e p="TagMappings.cs" t="Include" />
+              <e p="TypeInspectors" t="Include">
+                <e p="CachedTypeInspector.cs" t="Include" />
+                <e p="NamingConventionTypeInspector.cs" t="Include" />
+                <e p="ReadableAndWritablePropertiesTypeInspector.cs" t="Include" />
+                <e p="ReadablePropertiesTypeInspector.cs" t="Include" />
+                <e p="TypeInspectorSkeleton.cs" t="Include" />
+              </e>
+              <e p="TypeResolvers" t="Include">
+                <e p="DynamicTypeResolver.cs" t="Include" />
+                <e p="StaticTypeResolver.cs" t="Include" />
+              </e>
+              <e p="Utilities" t="Include">
+                <e p="IPostDeserializationCallback.cs" t="Include" />
+                <e p="ObjectAnchorCollection.cs" t="Include" />
+                <e p="ReflectionUtility.cs" t="Include" />
+                <e p="SerializerState.cs" t="Include" />
+                <e p="StringExtensions.cs" t="Include" />
+                <e p="TypeConverter.cs" t="Include" />
+              </e>
+              <e p="ValueDeserializers" t="Include">
+                <e p="AliasValueDeserializer.cs" t="Include" />
+                <e p="NodeValueDeserializer.cs" t="Include" />
+              </e>
+              <e p="YamlAttributeOverrides.cs" t="Include" />
+              <e p="YamlAttributeOverridesInspector.cs" t="Include" />
+              <e p="YamlAttributesTypeInspector.cs" t="Include" />
+              <e p="YamlFormatter.cs" t="Include" />
+              <e p="YamlIgnoreAttribute.cs" t="Include" />
+              <e p="YamlMember.cs" t="Include" />
+            </e>
+            <e p="YamlDotNet.asmdef" t="Include" />
+            <e p="YamlDotNet.license.txt" t="Include" />
+          </e>
+        </e>
+        <e p="TEST_ONLY" t="Include">
+          <e p="TEST_SCRIPTS" t="Include">
+            <e p="TextEventDelegate.cs" t="Include" />
+            <e p="TextEventListener.cs" t="Include" />
+          </e>
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Examples &amp; Extras" t="Include">
+            <e p="Fonts" t="Include">
+              <e p="Anton OFL.txt" t="Include" />
+              <e p="Bangers - OFL.txt" t="Include" />
+              <e p="LiberationSans - OFL.txt" t="Include" />
+              <e p="Oswald-Bold - OFL.txt" t="Include" />
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="Benchmark01.cs" t="Include" />
+              <e p="Benchmark01_UGUI.cs" t="Include" />
+              <e p="Benchmark02.cs" t="Include" />
+              <e p="Benchmark03.cs" t="Include" />
+              <e p="Benchmark04.cs" t="Include" />
+              <e p="CameraController.cs" t="Include" />
+              <e p="ChatController.cs" t="Include" />
+              <e p="EnvMapAnimator.cs" t="Include" />
+              <e p="ObjectSpin.cs" t="Include" />
+              <e p="ShaderPropAnimator.cs" t="Include" />
+              <e p="SimpleScript.cs" t="Include" />
+              <e p="SkewTextExample.cs" t="Include" />
+              <e p="TeleType.cs" t="Include" />
+              <e p="TextConsoleSimulator.cs" t="Include" />
+              <e p="TextMeshProFloatingText.cs" t="Include" />
+              <e p="TextMeshSpawner.cs" t="Include" />
+              <e p="TMP_DigitValidator.cs" t="Include" />
+              <e p="TMP_ExampleScript_01.cs" t="Include" />
+              <e p="TMP_FrameRateCounter.cs" t="Include" />
+              <e p="TMP_PhoneNumberValidator.cs" t="Include" />
+              <e p="TMP_TextEventCheck.cs" t="Include" />
+              <e p="TMP_TextEventHandler.cs" t="Include" />
+              <e p="TMP_TextInfoDebugTool.cs" t="Include" />
+              <e p="TMP_TextSelector_A.cs" t="Include" />
+              <e p="TMP_TextSelector_B.cs" t="Include" />
+              <e p="TMP_UiFrameRateCounter.cs" t="Include" />
+              <e p="TMPro_InstructionOverlay.cs" t="Include" />
+              <e p="VertexColorCycler.cs" t="Include" />
+              <e p="VertexJitter.cs" t="Include" />
+              <e p="VertexShakeA.cs" t="Include" />
+              <e p="VertexShakeB.cs" t="Include" />
+              <e p="VertexZoom.cs" t="Include" />
+              <e p="WarpTextExample.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Bridge.csproj" t="IncludeRecursive" />
+      <e p="BridgeTests.csproj" t="IncludeRecursive" />
+      <e p="Common.csproj" t="IncludeRecursive" />
+      <e p="EReader.csproj" t="IncludeRecursive" />
+      <e p="EReaderTests.csproj" t="IncludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="PdfReader.csproj" t="IncludeRecursive" />
+      <e p="Temp/bin" t="ExcludeRecursive" />
+      <e p="VirtualBook.csproj" t="IncludeRecursive" />
+      <e p="VirtualBookTests.csproj" t="IncludeRecursive" />
+      <e p="VReader_2.sln" t="IncludeFlat" />
+      <e p="YamlDotNet.csproj" t="IncludeRecursive" />
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_VReader_2.2119936999.00" t="ExcludeRecursive" />
+  </component>
+</project>

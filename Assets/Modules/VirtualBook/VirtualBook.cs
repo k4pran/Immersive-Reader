@@ -1,7 +1,8 @@
 ﻿﻿using System;
 using System.Collections.Generic;
 using Modules.Bridge;
-using UnityEngine;
+ using Modules.Common;
+ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -20,15 +21,34 @@ namespace Modules.VirtualBook {
         public int pageCount;
 
         public static void createFromTitle(string bookTitle) {
-            // todo
+            createFromId(Librarian.requestId(bookTitle));
         }
 
         public static void createFromId(string bookId) {
             String bookName = Librarian.requestTitle(bookId);
             GameObject virtualBookObj = BookCreateUtils.GetVirtualBookPrefab(bookName);
             VirtualBook virtualBook = virtualBookObj.GetComponent<VirtualBook>();
+            ContentType contentType = Librarian.requestContentType(bookId);
 
+            switch(contentType) {
+                
+                case ContentType.TEXT_ONLY:
+                    createAsTextContent(virtualBook, virtualBookObj, bookId);
+                    break;
+                
+                case ContentType.IMAGE:
+                    createAsImageContent(virtualBook, virtualBookObj, bookId);
+                    break;
+                
+                default:
+                    throw new ContentTypeException("Content type " + contentType + " not recognised");
+                
+            }
+            
             virtualBook.initBookInfo(bookId);
+        }
+
+        private static void createAsTextContent(VirtualBook virtualBook, GameObject virtualBookObj, string bookId) {
             bool isLeft = true;
             
             // todo fix number 10 below vvv
@@ -38,10 +58,14 @@ namespace Modules.VirtualBook {
                 virtualPageObj = VirtualPage.CreateVirtualPaper(
                     virtualBook.transform, "Page " + pageNum);
                 
-                List<string> content = (List<string>) Librarian.requestPageContent(bookId, pageNum);
+                List<string> lines = (List<string>) Librarian.requestPageContent(bookId, pageNum);
+                
+                GameObject contentPrefab = (GameObject) Resources.Load("Prefabs/PageContentTMP", typeof(GameObject));
 
-                virtualPageObj.GetComponent<VirtualPage>().addContent(content, isLeft);
-                    virtualPageObj.GetComponent<VirtualPage>().setPositions(virtualBookObj);
+
+                PageContentTextMesh pageContent = (PageContentTextMesh) virtualPageObj.GetComponent<VirtualPage>().addContent(contentPrefab, isLeft);
+                pageContent.setText(lines);
+                virtualPageObj.GetComponent<VirtualPage>().setPositions(virtualBookObj);
                 virtualPageObj.SetActive(false);
 
                 virtualBook.appendPage(virtualPageObj.GetComponent<VirtualPage>());
@@ -50,13 +74,18 @@ namespace Modules.VirtualBook {
 
             if (virtualBook.virtualPages.Count % 2 == 1) {
                 GameObject blank = VirtualPage.createBlank(virtualBook.transform);
-                blank.GetComponent<VirtualPage>().addContent(new List<string>(), false);
+                GameObject contentPrefab = (GameObject) Resources.Load("Prefabs/PageContentTMP", typeof(GameObject));
+                blank.GetComponent<VirtualPage>().addContent(contentPrefab, false);
                 blank.GetComponent<VirtualPage>().setPositions(virtualBookObj);
                 blank.SetActive(false);
                 virtualBook.appendPage(blank.GetComponent<VirtualPage>());
             }
             
             virtualBook.setCurrentPage(0);
+        }
+
+        private static void createAsImageContent(VirtualBook virtualBook, GameObject virtualBookObj, string bookId) {
+  
         }
 
         private void setCurrentPage(int pageNum) {
