@@ -1,7 +1,6 @@
-using Modules.Bridge;
 using UnityEngine;
 
-namespace Modules.VirtualBook {
+namespace Modules.VirtualBook.Tests {
     public class TestPdfBook : MonoBehaviour {
 
         public void Start() {

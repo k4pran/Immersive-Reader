@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using Modules.Common;
+using Modules.Book.Tests.Common;
 using Debug = UnityEngine.Debug;
 
-namespace Modules.Book {
+namespace Modules.Library {
     public class PdfConversion {
 
         private static readonly string BINARY_DIR = "Assets/Modules/Book/bin";

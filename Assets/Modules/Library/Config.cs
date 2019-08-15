@@ -4,7 +4,7 @@ using System.Text;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Modules.Bridge {
+namespace Modules.Library {
     
     public class Config {
 

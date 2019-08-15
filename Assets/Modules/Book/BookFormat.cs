@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Modules.Book {
+namespace Modules.Book.Tests.Book {
     public enum BookFormat {
         TEXT,
         PDF

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Modules.Common;
+using Modules.Book.Tests.Common;
 
-namespace Modules.Book {
+namespace Modules.Book.Tests.Book {
     
     public class TextPage : Page<List<string>> {
 

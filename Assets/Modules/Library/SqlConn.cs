@@ -2,8 +2,7 @@ using System;
 using UnityEngine;
 using System.Data;
 using Mono.Data.Sqlite;
-using System.IO;
-using Modules.Book;
+using Modules.Book.Tests.Book;
 
 namespace Modules.Library {
     
@@ -20,6 +19,7 @@ namespace Modules.Library {
             dbConn.Open();
             
             initBooksTable();
+            initMetaInfoTable();
         }
 
         private void initBooksTable() {
@@ -33,8 +33,7 @@ namespace Modules.Library {
                         book_id VARCHAR,
                         origin_url VARCHAR,
                         binding VARCHAR,
-                        format VARCHAR
-                )";
+                        format VARCHAR)";
   
             dbcmd.CommandText = query;
             reader = dbcmd.ExecuteReader();
@@ -49,7 +48,7 @@ namespace Modules.Library {
             string query = 
                 @"CREATE TABLE IF NOT EXISTS my_table (
                         id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                        book_id = VARCHAR,
+                        book_id VARCHAR,
                         title VARCHAR,
                         author VARCHAR,
                         publisher VARCHAR,
@@ -58,9 +57,8 @@ namespace Modules.Library {
                         category VARCHAR,
                         tags VARCHAR,
                         publication_date DATE,
-                        page_count INTEGER
-                        FOREIGN KEY(book_id) REFERENCES " + BOOKS_TABLE_NAME + @"(book_id)
-                )";
+                        page_count INTEGER,
+                        FOREIGN KEY(book_id) REFERENCES " + BOOKS_TABLE_NAME + "(book_id))";
   
             dbcmd.CommandText = query;
             reader = dbcmd.ExecuteReader();

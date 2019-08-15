@@ -1,7 +1,7 @@
 using System;
-using Modules.Common;
+using Modules.Book.Tests.Common;
 
-namespace Modules.Book {
+namespace Modules.Book.Tests.Book {
     
     public interface IPage {
 

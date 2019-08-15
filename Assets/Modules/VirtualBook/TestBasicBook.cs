@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Modules.VirtualBook {
+namespace Modules.VirtualBook.Test {
     public class TestBasicBook : MonoBehaviour {
         private void Start() {
             GameObject virtualLibraryObject = new GameObject("VirtualLib");

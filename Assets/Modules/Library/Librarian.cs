@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Modules.Common;
-using Modules.Book;
+using Modules.Book.Tests.Book;
+using Modules.Book.Tests.Common;
 
-namespace Modules.Bridge {
+namespace Modules.Library {
     
     public static class Librarian {
 
@@ -59,8 +59,8 @@ namespace Modules.Bridge {
             throw new NotImplementedException();
         }
 
-        public static ContentType requestContentType<T>(String bookId) {
-            BookFormat bookFormat = Library.Instance.retrieveBook<T>(bookId).getBookFormat();
+        public static ContentType requestContentType(String bookId) {
+            BookFormat bookFormat = Library.Instance.retrieveBookFormat(bookId);
             switch(bookFormat) {
                 case BookFormat.TEXT:
                     return ContentType.TEXT_ONLY;
@@ -74,7 +74,7 @@ namespace Modules.Bridge {
             }
         }
         
-        public static Book<T> requestPageContent<T>(string bookId, int pageNum) {
+        public static T requestPageContent<T>(string bookId, int pageNum) {
             throw new NotImplementedException();
         }
 

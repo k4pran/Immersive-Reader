@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using Modules.Book;
-using Modules.EReader;
+using Modules.Book.Tests.Book;
 using NUnit.Framework;
-using UnityEngine.UI;
 
-namespace Modules.Bridge.Tests {
+namespace Modules.Library.Tests {
     public class BookImporterTests {
 
         [Test]
@@ -19,8 +17,8 @@ namespace Modules.Bridge.Tests {
             bookMetaInfo.category = "Technical";
             bookMetaInfo.description = "Deepminds experiments with atari and RL";
             
-            Book<string> book = new PdfBasicBook("/Users/ryan/Documents/Books/atari.pdf", bookMetaInfo);
-            bookImporter.loadFromLocal(book);
+            PdfBasicBook book = new PdfBasicBook("/Users/ryan/Documents/Books/atari.pdf", bookMetaInfo);
+            bookImporter.importFromLocal(book);
         }
     }
 }

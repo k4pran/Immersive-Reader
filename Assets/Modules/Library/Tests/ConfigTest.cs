@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Modules.Bridge.Tests {
+namespace Modules.Library.Tests {
     public class ConfigTest {
         
         [Test]

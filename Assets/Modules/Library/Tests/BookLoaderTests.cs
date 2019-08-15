@@ -1,27 +1,26 @@
-﻿using NUnit.Framework;
-using Modules.Bridge;
-using Modules.Common;
-using Modules.EReader;
+﻿using Modules.Book.Tests.Book;
+using Modules.Book.Tests.Common;
+using NUnit.Framework;
 
-namespace Modules.Bridge.Tests {
+namespace Modules.Library.Tests {
 
     public class BookLoaderTests {
 
         [Test]
         public void LoadingTextFilesAddBasicPages() {
             BookImporter<string[]> bookImporter = new BookImporter<string[]>();
-            Book book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt");
+            BasicBook book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt");
 
-            bookImporter.loadDotText(book);
+            bookImporter.importFromLocal(book);
             Assert.Greater(book.getPageCount(), 0);
-            Assert.AreEqual(typeof(TextPage), book.getAllPages()[0].GetType());
+            Assert.AreEqual(typeof(TextPage), book.getPages()[0].GetType());
         }
         
         [Test]
         public void LoadingTextFilesGetAddedToLibrary() {
             BookImporter<string[]> bookImporter = new BookImporter<string[]>();
-            Book book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt");
-            Assert.True(Library.Instance.doesLibraryContainId(book.bookId));
+            BasicBook book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt");
+            Assert.True(Library.Instance.doesLibraryContainId(book.getBookId()));
         }
         
         [Test]
@@ -40,5 +39,4 @@ namespace Modules.Bridge.Tests {
             PdfConversion.toSvgs("Assets/Modules/Book/Tests/Resources/atari.pdf", "Assets/Modules/Book/Tests/Output/atari");
         }
     }
-
 }

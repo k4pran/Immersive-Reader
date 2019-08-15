@@ -1,6 +1,6 @@
 using System;
 
-namespace Modules.Common {
+namespace Modules.Book.Tests.Common {
     public class ContentTypeException : Exception {
         public ContentTypeException() {
         }

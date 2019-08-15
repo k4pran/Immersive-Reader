@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Modules.Book {
+namespace Modules.Book.Tests.Book {
     
     public class PdfBasicBook : Book<string> {
 

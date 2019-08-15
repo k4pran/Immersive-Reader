@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using Modules.Book;
-using Modules.Library;
+using Modules.Book.Tests.Book;
 using UnityEngine;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Modules.Bridge {
+namespace Modules.Library {
     
     public class Library {
         
@@ -94,6 +92,10 @@ namespace Modules.Bridge {
             if (!doesLibraryContainId(bookId)) {
                 throw new BookNotFoundException("Unable to find book with id " + bookId);
             }
+            throw new NotImplementedException();
+        }
+
+        public BookFormat retrieveBookFormat(string bookId) {
             throw new NotImplementedException();
         }
 

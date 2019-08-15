@@ -13,10 +13,10 @@
           <e p="Book" t="Include">
             <e p="BasicBook.cs" t="Include" />
             <e p="Binding.cs" t="Include" />
+            <e p="Book.asmdef" t="Include" />
             <e p="Book.cs" t="Include" />
             <e p="BookFormat.cs" t="Include" />
             <e p="BookMetaInfo.cs" t="Include" />
-            <e p="EReader.asmdef" t="Include" />
             <e p="IBook.cs" t="Include" />
             <e p="IDynamicContent.cs" t="Include" />
             <e p="ImagePage.cs" t="Include" />
@@ -25,7 +25,7 @@
             <e p="PdfBasicBook.cs" t="Include" />
             <e p="Tests" t="Include">
               <e p="BookBuilderTests.cs" t="Include" />
-              <e p="EReaderTests.asmdef" t="Include" />
+              <e p="BookTests.asmdef" t="Include" />
               <e p="Resources" t="Include">
                 <e p="dracula.txt" t="Include" />
               </e>
@@ -40,9 +40,9 @@
           </e>
           <e p="Library" t="Include">
             <e p="BookImporter.cs" t="Include" />
-            <e p="Bridge.asmdef" t="Include" />
             <e p="Config.cs" t="Include" />
             <e p="Librarian.cs" t="Include" />
+            <e p="Library.asmdef" t="Include" />
             <e p="Library.cs" t="Include" />
             <e p="PdfConversion.cs" t="Include" />
             <e p="Shelf.cs" t="Include" />
@@ -50,9 +50,10 @@
             <e p="Tests" t="Include">
               <e p="BookImporterTests.cs" t="Include" />
               <e p="BookLoaderTests.cs" t="Include" />
-              <e p="BridgeTests.asmdef" t="Include" />
               <e p="ConfigTest.cs" t="Include" />
+              <e p="LibraryTests.asmdef" t="Include" />
               <e p="PersistenceTests.cs" t="Include" />
+              <e p="SqlTests.cs" t="Include" />
             </e>
           </e>
           <e p="PdfReader" t="Include">
@@ -517,11 +518,11 @@
           </e>
         </e>
       </e>
-      <e p="Bridge.csproj" t="IncludeRecursive" />
-      <e p="BridgeTests.csproj" t="IncludeRecursive" />
+      <e p="Book.csproj" t="IncludeRecursive" />
+      <e p="BookTests.csproj" t="IncludeRecursive" />
       <e p="Common.csproj" t="IncludeRecursive" />
-      <e p="EReader.csproj" t="IncludeRecursive" />
-      <e p="EReaderTests.csproj" t="IncludeRecursive" />
+      <e p="Library.csproj" t="IncludeRecursive" />
+      <e p="LibraryTests.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="PdfReader.csproj" t="IncludeRecursive" />

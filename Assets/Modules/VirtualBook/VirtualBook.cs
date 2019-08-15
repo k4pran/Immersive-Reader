@@ -1,10 +1,9 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
-using Modules.Bridge;
- using Modules.Common;
- using UnityEngine;
+using Modules.Book.Tests.Common;
+using Modules.Library;
+using UnityEngine;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace Modules.VirtualBook {
         
@@ -58,7 +57,7 @@ namespace Modules.VirtualBook {
                 virtualPageObj = VirtualPage.CreateVirtualPaper(
                     virtualBook.transform, "Page " + pageNum);
                 
-                List<string> lines = (List<string>) Librarian.requestPageContent(bookId, pageNum);
+                List<string> lines = Librarian.requestPageContent<List<string>>(bookId, pageNum);
                 
                 GameObject contentPrefab = (GameObject) Resources.Load("Prefabs/PageContentTMP", typeof(GameObject));
 

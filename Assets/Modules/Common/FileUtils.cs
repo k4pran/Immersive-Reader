@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace Modules.Common {
+namespace Modules.Book.Tests.Common {
     
     public static class FileUtils {
 

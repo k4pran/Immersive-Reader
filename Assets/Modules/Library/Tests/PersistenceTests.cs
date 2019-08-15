@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Modules.EReader;
+using Modules.Book.Tests.Book;
 using NUnit.Framework;
 
-namespace Modules.Bridge.Tests {
+namespace Modules.Library.Tests {
     public class PersistenceTests {
         
         [Test]
@@ -19,10 +19,10 @@ namespace Modules.Bridge.Tests {
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
             bookMetaInfo.category = "Gothic horror";
             bookMetaInfo.tags = new[] {"gothic", "horror", "vampires", "classic"};
-            Book book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt", 
-                bookMetaInfo, Config.Instance.linesPerPage, BookFormat.TEXT);
+            BasicBook book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt", 
+                bookMetaInfo, Config.Instance.linesPerPage);
             
-            Shelf shelf = new Shelf("test shelf", new HashSet<string>{book.bookId});
+            Shelf shelf = new Shelf("test shelf", new HashSet<string>{book.getBookId()});
             Library.Instance.addShelf(shelf);
             Library.Instance.serialize();
         }

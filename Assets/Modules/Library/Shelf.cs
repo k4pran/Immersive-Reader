@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Modules.Book;
+using Modules.Book.Tests.Book;
 using UnityEngine;
 
-namespace Modules.Bridge {
+namespace Modules.Library {
     
     public class Shelf {
 

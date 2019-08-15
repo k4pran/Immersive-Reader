@@ -1,8 +1,9 @@
 using System;
 using System.IO;
+using Modules.Book.Tests.Book;
 using NUnit.Framework;
 
-namespace Modules.EReader.Tests {
+namespace Modules.Book.Tests.EReader.Tests {
     
     public class BookBuilderTests {
         
@@ -19,7 +20,7 @@ namespace Modules.EReader.Tests {
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
             bookMetaInfo.category = "Gothic horror";
             bookMetaInfo.tags = new[] {"gothic", "horror", "vampires", "classic"};
-            Book<PageLinesContent> book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt");
+            BasicBook book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt");
             Assert.AreEqual(typeof(BasicBook), book.GetType());
         }
     }
