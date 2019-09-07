@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Modules.Book.Tests.Book;
+using Modules.Book;
 using UnityEngine;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -45,7 +45,6 @@ namespace Modules.Library {
             if (!File.Exists(libraryPath)) {
                 Library library = new Library();
                 library.shelves = new List<Shelf>();
-                library.sqlConn = new SqlConn();
                 library.serialize();
             }
         }
@@ -54,8 +53,8 @@ namespace Modules.Library {
             var serializer = new SerializerBuilder()
                 .WithTagMapping("!basicBook", typeof(BasicBook))
                 .WithTagMapping("!basicPage", typeof(TextPage))
-                .WithTagMapping("!pdfBasicBook", typeof(PdfBasicBook))
-                .WithTagMapping("!imagePage", typeof(ImagePage))
+                .WithTagMapping("!pdfBasicBook", typeof(PdfSvgBook))
+                .WithTagMapping("!imagePage", typeof(SvgImagePage))
                 .EmitDefaults()
                 .DisableAliases()
                 .Build();   
@@ -77,11 +76,12 @@ namespace Modules.Library {
                 .WithNamingConvention(new CamelCaseNamingConvention())
                 .WithTagMapping("!basicBook", typeof(BasicBook))
                 .WithTagMapping("!basicPage", typeof(TextPage))
-                .WithTagMapping("!pdfBasicBook", typeof(PdfBasicBook))
-                .WithTagMapping("!imagePage", typeof(ImagePage))
+                .WithTagMapping("!pdfBasicBook", typeof(PdfSvgBook))
+                .WithTagMapping("!imagePage", typeof(SvgImagePage))
                 .Build();
 
             instance = deserializer.Deserialize<Library>(yamlInput);
+            instance.sqlConn = new SqlConn();
         }
 
         public List<object> retrieveAllBooks() {
@@ -113,12 +113,12 @@ namespace Modules.Library {
         }
         
         public void addBook(BasicBook book) {
-            sqlConn.insertIntoBooks(book);
+            sqlConn.insertIntoBook(book);
             serialize();
         }
         
-        public void addBook(PdfBasicBook book) {
-            sqlConn.insertIntoBooks(book);
+        public void addBook(PdfSvgBook book) {
+            sqlConn.insertIntoBook(book);
             serialize();
         }
     }

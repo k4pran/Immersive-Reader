@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Modules.Book.Tests.Book;
+using Modules.Book;
 using Modules.Book.Tests.Common;
 
 namespace Modules.Library {
@@ -66,7 +66,7 @@ namespace Modules.Library {
                     return ContentType.TEXT_ONLY;
                 
                 case BookFormat.PDF:
-                    return ContentType.IMAGE;
+                    return ContentType.SVG;
                 
                 default:
                     throw new ContentTypeException("Unable to resolve content type. It may be the case that" +

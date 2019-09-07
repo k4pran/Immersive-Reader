@@ -19,7 +19,8 @@ namespace Modules.Library {
 
         public static void toSvgs(string inputPath, string outputPath) {
             string absPath = resolvePath(Path.Combine(BINARY_DIR, SVG_EXECUTABLE_NAME));
-            string absOutPath = resolvePath(outputPath);
+            // Handle pdfcairo quirk by adding dir name twice - one for directory and second for file naming
+            string absOutPath = resolvePath(outputPath) + "/" + FileUtils.getFileNameFromPath(outputPath);
             convert(absPath, inputPath, "'" + inputPath + "' '" + absOutPath + "-%d.svg' all");
         }
 

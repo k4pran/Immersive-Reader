@@ -1,4 +1,4 @@
-﻿using Modules.Book.Tests.Book;
+﻿using Modules.Book;
 using Modules.Book.Tests.Common;
 using NUnit.Framework;
 

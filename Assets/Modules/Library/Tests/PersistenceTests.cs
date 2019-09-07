@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Modules.Book.Tests.Book;
+using Modules.Book;
 using NUnit.Framework;
 
 namespace Modules.Library.Tests {

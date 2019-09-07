@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Modules.Book.Tests.Book {
+namespace Modules.Book {
     
     public class BookMetaInfo {
         
+        private static readonly char COLLAPSE_DELIMITER = '|';
+
         public string title { get; set; }
         public string author { get; set; }
         public string publisher { get; set; } 
@@ -27,6 +31,14 @@ namespace Modules.Book.Tests.Book {
             this.tags = tags;
             this.publicationDate = publicationDate;
             this.pageCount = pageCount;
+        }
+
+        public string collapseTags() {
+            return String.Join(COLLAPSE_DELIMITER.ToString(), tags);
+        }
+
+        private List<string> splitTags(string lines) {
+            return lines.Split(COLLAPSE_DELIMITER).ToList();
         }
     }
 }

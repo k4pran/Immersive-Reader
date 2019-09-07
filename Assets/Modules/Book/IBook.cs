@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Modules.Book.Tests.Book {
+namespace Modules.Book {
 
     public interface IBook<T> {
 

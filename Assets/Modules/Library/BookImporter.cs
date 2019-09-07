@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using Modules.Book.Tests.Book;
+using Modules.Book;
 using Modules.Book.Tests.Common;
 
 
@@ -18,24 +17,21 @@ namespace Modules.Library {
             Library.Instance.addBook(basicBook);
         }
         
-        public void importFromLocal(PdfBasicBook pdfBasicBook) {
-            string fileExt = FileUtils.getFileExt(pdfBasicBook.getOriginUrl());
-            BookFormat bookFormat = BookFormatUtils.fromString(fileExt);
-
+        public void importFromLocal(PdfSvgBook pdfSvgBook) {
             string dirName;
-            if (pdfBasicBook.getBookMetaInfo() != null && pdfBasicBook.getBookMetaInfo().title.Length > 0) {
-                dirName = pdfBasicBook.getBookMetaInfo().title.ToLower();
+            if (pdfSvgBook.getBookMetaInfo() != null && pdfSvgBook.getBookMetaInfo().title.Length > 0) {
+                dirName = pdfSvgBook.getBookMetaInfo().title.ToLower();
             }
             else {
-                dirName = FileUtils.getFileNameFromPath(pdfBasicBook.getOriginUrl()).ToLower();
+                dirName = FileUtils.getFileNameFromPath(pdfSvgBook.getOriginUrl()).ToLower();
             }
 
             string outputDir = Config.Instance.getAppDir() + "/" + dirName;
             Directory.CreateDirectory(outputDir);
-            PdfConversion.toJpegs(pdfBasicBook.getOriginUrl(), outputDir);
+            PdfConversion.toSvgs(pdfSvgBook.getOriginUrl(), outputDir);
 
-            loadContent(pdfBasicBook, outputDir);
-            Library.Instance.addBook(pdfBasicBook);
+            loadContent(pdfSvgBook, outputDir);
+            Library.Instance.addBook(pdfSvgBook);
         }
         
         public static void loadContent(BasicBook book) {
@@ -48,7 +44,7 @@ namespace Modules.Library {
                 
                 if (currentPageLine >= book.linesPerPage) {
                     currentPageLine = 0;
-                    book.addPageAt(new TextPage("Page " + (pageCount + 1), pageCount + 1, lines), pageCount);
+                    book.addPageAt(new TextPage("Page " + (pageCount + 1), pageCount + 1, pageLines), pageCount);
                     pageCount++;
                     pageLines = new string[book.linesPerPage];
                 }
@@ -57,12 +53,12 @@ namespace Modules.Library {
             }
         }
         
-        public static void loadContent(PdfBasicBook book, string imgOutputPath) {
+        public static void loadContent(PdfSvgBook book, string imgOutputPath) {
             int pageNb = 0;
 
-            string[] filePaths = Directory.GetFiles(imgOutputPath);
-            foreach(string filePath in filePaths) {
-                ImagePage page = new ImagePage(filePath, pageNb, book.getOriginUrl());
+            List<string> svgs = FileUtils.readAllSvgFiles(imgOutputPath);
+            foreach(string svg in svgs) {
+                SvgImagePage page = new SvgImagePage(pageNb.ToString(), pageNb, svg);
                 book.appendPage(page);
                 pageNb++;
             }

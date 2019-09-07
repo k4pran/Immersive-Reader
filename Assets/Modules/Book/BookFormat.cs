@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace Modules.Book.Tests.Book {
+namespace Modules.Book {
     public enum BookFormat {
         TEXT,
-        PDF
+        PDF,
+        UNKNOWN
     }
 
     public static class BookFormatUtils {

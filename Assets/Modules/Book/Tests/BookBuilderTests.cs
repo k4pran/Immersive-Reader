@@ -1,9 +1,7 @@
 using System;
-using System.IO;
-using Modules.Book.Tests.Book;
 using NUnit.Framework;
 
-namespace Modules.Book.Tests.EReader.Tests {
+namespace Modules.Book.Tests {
     
     public class BookBuilderTests {
         

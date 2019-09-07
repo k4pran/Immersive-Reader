@@ -1,18 +1,20 @@
 using System.Collections.Generic;
 
-namespace Modules.Book.Tests.Book {
+namespace Modules.Book {
     
-    public class PdfBasicBook : Book<string> {
+    public class PdfSvgBook : Book<string> {
 
         public List<Page<string>> pages { get; }
         private BookFormat bookFormat;
         
-        public PdfBasicBook(string originUrl, BookMetaInfo bookMetaInfo)
+        public PdfSvgBook(string originUrl, BookMetaInfo bookMetaInfo)
             : base(originUrl, Binding.DOUBLE_PAGED, BookFormat.PDF) {
             setBookMetaInfo(bookMetaInfo);
+            pages = new List<Page<string>>();
+            setBookMetaInfo(new BookMetaInfo());
         }
         
-        public PdfBasicBook(Book<object> book)
+        public PdfSvgBook(Book<string> book)
             : base(book.getOriginUrl(), Binding.DOUBLE_PAGED, BookFormat.PDF) {
             setBookMetaInfo(book.getBookMetaInfo());
         }

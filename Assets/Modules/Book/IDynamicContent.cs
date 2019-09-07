@@ -1,6 +1,6 @@
 using Modules.Book.Tests.Common;
 
-namespace Modules.Book.Tests.Book {
+namespace Modules.Book {
     public interface IDynamicContent<out T> {
         
         T getContent();

@@ -1,26 +1,32 @@
 using System.Collections.Generic;
 
-namespace Modules.Book.Tests.Book {
+namespace Modules.Book {
     
     public class BasicBook : Book<List<string>> {
-        
+
+        public readonly int LINES_PER_PAGE_DEFAULT = 27;
+        public readonly int LINES_PER_PAGE_MIN = 21;
+
         public List<Page<List<string>>> pages;
         public int linesPerPage;
         
         public BasicBook(string originUrl) 
                 : base(originUrl, Binding.DOUBLE_PAGED, BookFormat.TEXT) {
+            pages = new List<Page<List<string>>>();
+            linesPerPage = LINES_PER_PAGE_DEFAULT;
+            setBookMetaInfo(new BookMetaInfo());
         }
 
         public BasicBook(string originUrl, BookMetaInfo bookMetaInfo, int linesPerPage)
                 : base(originUrl, Binding.DOUBLE_PAGED, BookFormat.TEXT) {
-            this.linesPerPage = linesPerPage;
+            this.linesPerPage = linesPerPage < LINES_PER_PAGE_MIN ? LINES_PER_PAGE_MIN : linesPerPage;
             setBookMetaInfo(bookMetaInfo);
             pages = new List<Page<List<string>>>();
         }
 
         public BasicBook(Book<object> book, int linesPerPage)
                 : base(book.getOriginUrl(), Binding.DOUBLE_PAGED, BookFormat.TEXT) {
-            this.linesPerPage = linesPerPage;
+            this.linesPerPage = linesPerPage < LINES_PER_PAGE_MIN ? LINES_PER_PAGE_MIN : linesPerPage;
             setBookMetaInfo(book.getBookMetaInfo());
             pages = new List<Page<List<string>>>();
         }

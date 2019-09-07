@@ -1,6 +1,6 @@
 ﻿using Modules.Book.Tests.Common;
 
-namespace Modules.Book.Tests.Book {
+namespace Modules.Book {
     
     public abstract class Page<T> : IPage, IDynamicContent<T> {
 

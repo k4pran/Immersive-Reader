@@ -35,7 +35,7 @@ namespace Modules.VirtualBook {
                     createAsTextContent(virtualBook, virtualBookObj, bookId);
                     break;
                 
-                case ContentType.IMAGE:
+                case ContentType.SVG:
                     createAsImageContent(virtualBook, virtualBookObj, bookId);
                     break;
                 
