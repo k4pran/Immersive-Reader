@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Modules.Book;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace Modules.Library.Tests {
     public class BookImporterTests {
@@ -18,9 +19,13 @@ namespace Modules.Library.Tests {
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
             bookMetaInfo.category = "Gothic horror";
             bookMetaInfo.tags = new[] {"gothic", "horror", "vampires", "classic"};
-            BasicBook book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt", bookMetaInfo, 27);
+            BasicBook book = new BasicBook("/Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Book/Tests/Resources/dracula.txt", bookMetaInfo, 27);
             BookImporter<BasicBook> bookImporter = new BookImporter<BasicBook>();
             bookImporter.importFromLocal(book);
+            VirtualFileLibrary vfl = new VirtualFileLibrary();
+            vfl.setup();
+            vfl.importBook(new Uri("file:///Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Book/Tests/Resources/dracula.txt"), bookMetaInfo);
+            Debug.Log("");
         }
 
         [Test]

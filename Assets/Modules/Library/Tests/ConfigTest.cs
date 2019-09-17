@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 
 namespace Modules.Library.Tests {
+    
     public class ConfigTest {
         
         [Test]

@@ -13,9 +13,7 @@ namespace Modules.Library {
         
         private static Library instance;
         private static readonly object padlock = new object();
-
-        public List<Shelf> shelves { get; set; }
-        public SqlConn sqlConn;
+        
         public string currentBookId { get; set; }
                 
         public Library() {
@@ -44,7 +42,6 @@ namespace Modules.Library {
             string libraryPath = Config.Instance.libraryPath;
             if (!File.Exists(libraryPath)) {
                 Library library = new Library();
-                library.shelves = new List<Shelf>();
                 library.serialize();
             }
         }
@@ -81,7 +78,6 @@ namespace Modules.Library {
                 .Build();
 
             instance = deserializer.Deserialize<Library>(yamlInput);
-            instance.sqlConn = new SqlConn();
         }
 
         public List<object> retrieveAllBooks() {
@@ -105,21 +101,6 @@ namespace Modules.Library {
         
         public bool doesLibraryContainTitle(string title) {
             throw new NotImplementedException();
-        }
-
-        public void addShelf(Shelf shelf) {
-            shelves.Add(shelf);
-            serialize();
-        }
-        
-        public void addBook(BasicBook book) {
-            sqlConn.insertIntoBook(book);
-            serialize();
-        }
-        
-        public void addBook(PdfSvgBook book) {
-            sqlConn.insertIntoBook(book);
-            serialize();
         }
     }
 

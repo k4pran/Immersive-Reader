@@ -9,7 +9,17 @@ namespace Modules.Book {
 
         public List<Page<List<string>>> pages;
         public int linesPerPage;
-        
+
+        public BasicBook(string originUrl, 
+                         Binding binding, 
+                         BookFormat bookFormat, 
+                         List<Page<List<string>>> pages, 
+                         int linesPerPage) 
+            : base(originUrl, binding, bookFormat) {
+            this.pages = pages;
+            this.linesPerPage = linesPerPage;
+        }
+
         public BasicBook(string originUrl) 
                 : base(originUrl, Binding.DOUBLE_PAGED, BookFormat.TEXT) {
             pages = new List<Page<List<string>>>();

@@ -1,5 +1,5 @@
 ﻿using Modules.Book;
-using Modules.Book.Tests.Common;
+using Modules.Common;
 using NUnit.Framework;
 
 namespace Modules.Library.Tests {

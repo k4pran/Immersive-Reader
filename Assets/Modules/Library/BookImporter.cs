@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Modules.Book;
-using Modules.Book.Tests.Common;
+using Modules.Common;
 
 
 namespace Modules.Library {
@@ -14,7 +14,7 @@ namespace Modules.Library {
             string fileExt = FileUtils.getFileExt(basicBook.getOriginUrl());
             BookFormat bookFormat = BookFormatUtils.fromString(fileExt);
             loadContent(basicBook);
-            Library.Instance.addBook(basicBook);
+//            Library.Instance.addBook(basicBook);
         }
         
         public void importFromLocal(PdfSvgBook pdfSvgBook) {
@@ -31,7 +31,7 @@ namespace Modules.Library {
             PdfConversion.toSvgs(pdfSvgBook.getOriginUrl(), outputDir);
 
             loadContent(pdfSvgBook, outputDir);
-            Library.Instance.addBook(pdfSvgBook);
+//            Library.Instance.addBook(pdfSvgBook);
         }
         
         public static void loadContent(BasicBook book) {

@@ -1,4 +1,5 @@
-﻿using Modules.Book.Tests.Common;
+﻿
+using Modules.Common;
 
 namespace Modules.Book {
     

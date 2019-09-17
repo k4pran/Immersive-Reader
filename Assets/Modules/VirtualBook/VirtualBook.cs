@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Modules.Book.Tests.Common;
 using Modules.Library;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -27,22 +26,22 @@ namespace Modules.VirtualBook {
             String bookName = Librarian.requestTitle(bookId);
             GameObject virtualBookObj = BookCreateUtils.GetVirtualBookPrefab(bookName);
             VirtualBook virtualBook = virtualBookObj.GetComponent<VirtualBook>();
-            ContentType contentType = Librarian.requestContentType(bookId);
+//            ContentType contentType = Librarian.requestContentType(bookId);
 
-            switch(contentType) {
-                
-                case ContentType.TEXT_ONLY:
-                    createAsTextContent(virtualBook, virtualBookObj, bookId);
-                    break;
-                
-                case ContentType.SVG:
-                    createAsImageContent(virtualBook, virtualBookObj, bookId);
-                    break;
-                
-                default:
-                    throw new ContentTypeException("Content type " + contentType + " not recognised");
-                
-            }
+//            switch(contentType) {
+//                
+//                case ContentType.TEXT_ONLY:
+//                    createAsTextContent(virtualBook, virtualBookObj, bookId);
+//                    break;
+//                
+//                case ContentType.SVG:
+//                    createAsImageContent(virtualBook, virtualBookObj, bookId);
+//                    break;
+//                
+//                default:
+//                    throw new ContentTypeException("Content type " + contentType + " not recognised");
+//                
+//            }
             
             virtualBook.initBookInfo(bookId);
         }
@@ -63,7 +62,7 @@ namespace Modules.VirtualBook {
 
 
                 PageContentTextMesh pageContent = (PageContentTextMesh) virtualPageObj.GetComponent<VirtualPage>().addContent(contentPrefab, isLeft);
-                pageContent.setText(lines);
+//                pageContent.setText(lines);
                 virtualPageObj.GetComponent<VirtualPage>().setPositions(virtualBookObj);
                 virtualPageObj.SetActive(false);
 

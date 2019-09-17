@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 
 namespace Modules.VirtualBook {
@@ -60,15 +59,15 @@ namespace Modules.VirtualBook {
             targetObject.GetComponent<RectTransform>().offsetMin = new Vector2(targetObject.GetComponent<RectTransform>().offsetMin.x, bottom);
         }
 
-        public static void fitTMP(TextMeshProUGUI textMeshProUgui, 
-            float paddingTop, float paddingBottom, float paddingLeft, float paddingRight) {
-            RectTransform rectTransform = textMeshProUgui.GetComponent<RectTransform>();
-
-            rectTransform.offsetMax = new Vector2(-paddingLeft, -paddingTop);
-            rectTransform.offsetMin = new Vector2(paddingRight, paddingBottom);
-            rectTransform.anchorMin = new Vector2(0, 0);
-            rectTransform.anchorMax = new Vector2(1, 1);
-        }
+//        public static void fitTMP(TextMeshProUGUI textMeshProUgui, 
+//            float paddingTop, float paddingBottom, float paddingLeft, float paddingRight) {
+//            RectTransform rectTransform = textMeshProUgui.GetComponent<RectTransform>();
+//
+//            rectTransform.offsetMax = new Vector2(-paddingLeft, -paddingTop);
+//            rectTransform.offsetMin = new Vector2(paddingRight, paddingBottom);
+//            rectTransform.anchorMin = new Vector2(0, 0);
+//            rectTransform.anchorMax = new Vector2(1, 1);
+//        }
 
         public static void stretchToParent(GameObject child, 
                 float topMargin=0, float rightMargin=0, float bottomMargin=0, float leftMargin=0) {

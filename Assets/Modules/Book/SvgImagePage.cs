@@ -1,4 +1,4 @@
-using Modules.Book.Tests.Common;
+using Modules.Common;
 using UnityEngine.UI;
 
 namespace Modules.Book {

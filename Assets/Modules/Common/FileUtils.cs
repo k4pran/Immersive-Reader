@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Modules.Book.Tests.Common {
+namespace Modules.Common {
     
     public static class FileUtils {
 

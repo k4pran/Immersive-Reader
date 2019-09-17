@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Modules.Book;
 using NUnit.Framework;
 
@@ -21,9 +20,7 @@ namespace Modules.Library.Tests {
             bookMetaInfo.tags = new[] {"gothic", "horror", "vampires", "classic"};
             BasicBook book = new BasicBook("Assets/Modules/Book/Tests/Resources/dracula.txt", 
                 bookMetaInfo, Config.Instance.linesPerPage);
-            
-            Shelf shelf = new Shelf("test shelf", new HashSet<string>{book.getBookId()});
-            Library.Instance.addShelf(shelf);
+            ;
             Library.Instance.serialize();
         }
 

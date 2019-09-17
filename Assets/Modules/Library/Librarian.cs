@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Modules.Book;
-using Modules.Book.Tests.Common;
 
 namespace Modules.Library {
     
@@ -59,20 +58,20 @@ namespace Modules.Library {
             throw new NotImplementedException();
         }
 
-        public static ContentType requestContentType(String bookId) {
-            BookFormat bookFormat = Library.Instance.retrieveBookFormat(bookId);
-            switch(bookFormat) {
-                case BookFormat.TEXT:
-                    return ContentType.TEXT_ONLY;
-                
-                case BookFormat.PDF:
-                    return ContentType.SVG;
-                
-                default:
-                    throw new ContentTypeException("Unable to resolve content type. It may be the case that" +
-                                                   "this content is not yet supported.");
-            }
-        }
+//        public static ContentType requestContentType(String bookId) {
+//            BookFormat bookFormat = Library.Instance.retrieveBookFormat(bookId);
+//            switch(bookFormat) {
+//                case BookFormat.TEXT:
+//                    return ContentType.TEXT_ONLY;
+//                
+//                case BookFormat.PDF:
+//                    return ContentType.SVG;
+//                
+//                default:
+//                    throw new ContentTypeException("Unable to resolve content type. It may be the case that" +
+//                                                   "this content is not yet supported.");
+//            }
+//        }
         
         public static T requestPageContent<T>(string bookId, int pageNum) {
             throw new NotImplementedException();
