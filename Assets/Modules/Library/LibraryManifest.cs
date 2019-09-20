@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using DefaultNamespace;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -19,10 +18,25 @@ namespace Modules.Library {
         }
 
         public void addEntry(BookManifest bookManifest) {
-            if (bookManifest.bookID.Length == 0) {
-                throw new InvalidBookIDException("Found empty ID in book manifest. This is not allowed");
+            if (bookManifest.bookId.Length == 0) {
+                throw new InvalidBookIdException("Found empty ID in book manifest. This is not allowed");
             }
-            bookManifests.Add(bookManifest.bookID, bookManifest);
+            bookManifests.Add(bookManifest.bookId, bookManifest);
+        }
+
+        public bool bookIdExists(string bookId) {
+            return bookManifests.ContainsKey(bookId);
+        }
+
+        public BookManifest getBookById(string bookId) {
+            if (bookIdExists(bookId)) {
+                return bookManifests[bookId];
+            }
+            throw new BookNotFoundException("Book with id " + bookId + " not found");
+        }
+
+        public int getBookCount() {
+            return bookManifests.Count;
         }
 
         public string serialize() {

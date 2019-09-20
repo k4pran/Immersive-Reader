@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEngine;
 using YamlDotNet.Serialization;
@@ -6,8 +7,8 @@ using YamlDotNet.Serialization.NamingConventions;
 namespace Modules.Library {
     
     public class BookManifest {
-        
-        public string bookID { get; private set; }
+
+        public string bookId { get; private set; }
         public string bookTitle { get; private set; }
         public string bookLocation { get; private set; }
         public string metaInfoLocation { get; private set; }
@@ -15,14 +16,14 @@ namespace Modules.Library {
         public BookManifest() {}
 
         public BookManifest(string bookId, string bookTitle, string bookLocation, string metaInfoLocation) {
-            bookID = bookId;
+            this.bookId = bookId;
             this.bookTitle = bookTitle;
             this.bookLocation = bookLocation;
             this.metaInfoLocation = metaInfoLocation;
         }
 
         public string Serialize() {
-            Debug.Log("Serializing book manifest: [" + bookTitle + " : " + bookID + "]");
+            Debug.Log("Serializing book manifest: [" + bookTitle + " : " + bookId + "]");
             Serializer serializer = new SerializerBuilder()
                 .WithNamingConvention(new CamelCaseNamingConvention())
                 .JsonCompatible()
