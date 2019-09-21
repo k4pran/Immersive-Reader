@@ -1,50 +1,43 @@
-﻿﻿using System;
-using System.Collections.Generic;
- using Modules.Common;
- using YamlDotNet.Serialization;
+﻿using System.Collections.Generic;
 
- namespace Modules.Book {
+namespace Modules.Book {
+    
+    public abstract class Book<T> : IBook<T> where T : Page {
+        
+        private BookMetaInfo bookMetaInfo;
+        private Binding binding;
+        private BookFormat bookFormat;
+        
+        protected Book(BookMetaInfo bookMetaInfo, Binding binding, BookFormat bookFormat) {
+            this.bookMetaInfo = bookMetaInfo;
+            this.binding = binding;
+            this.bookFormat = bookFormat;
+        }
 
-     public abstract class Book<T> : IBook<T> where T : Page {
+        public BookMetaInfo getBookMetaInfo() {
+            return bookMetaInfo;
+        }
 
-         private BookMetaInfo bookMetaInfo;
-         private Binding binding;
-         private BookFormat bookFormat;
+        public Binding getBinding() {
+            return binding;
+        }
 
+        public BookFormat getBookFormat() {
+            return bookFormat;
+        }
 
-         protected Book(Binding binding, BookFormat bookFormat) {
-             this.binding = binding;
-             this.bookFormat = bookFormat;
-         }
+        public abstract T getPage(int pageNum);
 
-         public BookMetaInfo getBookMetaInfo() {
-             return bookMetaInfo;
-         }
+        public abstract List<T> getPages();
 
-         public Binding getBinding() {
-             return binding;
-         }
+        public abstract int getPageCount();
 
-         public BookFormat getBookFormat() {
-             return bookFormat;
-         }
+        public abstract void appendPage(T page);
 
-         protected void setBookMetaInfo(BookMetaInfo bookMetaInfo) {
-             this.bookMetaInfo = bookMetaInfo;
-         }
-         
-         public abstract T getPage(int pageNum);
+        public abstract void addPageAt(T page, int index);
 
-         public abstract List<T> getPages();
+        public abstract bool removePage(T page);
 
-         public abstract int getPageCount();
-
-         public abstract void appendPage(T page);
-
-         public abstract void addPageAt(T page, int index);
-
-         public abstract bool removePage(T page);
-
-         public abstract void removePageAt(int index);
-     }
- }
+        public abstract void removePageAt(int index);
+    }
+}

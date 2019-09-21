@@ -6,8 +6,8 @@ namespace Modules.Book {
 
         public List<SvgPage> pages { get; }
 
-        public PdfSvgBook(Binding binding, List<SvgPage> pages) 
-            : base(binding, BookFormat.PDF) {
+        public PdfSvgBook(BookMetaInfo bookMetaInfo, Binding binding, List<SvgPage> pages) 
+            : base(bookMetaInfo, binding, BookFormat.PDF) {
             this.pages = pages;
         }
 

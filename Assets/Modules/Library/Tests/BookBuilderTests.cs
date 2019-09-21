@@ -26,12 +26,13 @@ namespace Modules.Library.Tests {
             virtualFileLibrary.importBook(uri, bookMetaInfo).Subscribe(bookManifest => {
                     virtualFileLibrary.readBookAsLines(bookManifest.bookId).Subscribe(content => {
                         BasicBook basicBook = new BasicBookFactory.Builder(content, bookMetaInfo)
-                            .setLinesPerPage(1)
+                            .setLinesPerPage(27)
                             .build();
-                    });
+                        Debug.Log("");
+                    },
+                        error => Debug.Log(error));
                 },
                 error => Debug.Log(error));
-            
         }
         
     }

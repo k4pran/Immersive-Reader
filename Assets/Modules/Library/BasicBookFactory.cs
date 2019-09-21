@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Modules.Book;
+using Modules.Common;
 
 namespace Modules.Library {
     
@@ -19,7 +20,8 @@ namespace Modules.Library {
             }
 
             public Builder setLinesPerPage(int linesPerPage) {
-                this.linesPerPage = linesPerPage;
+                this.linesPerPage = linesPerPage < BasicBook.LINES_PER_PAGE_MIN ? BasicBook.LINES_PER_PAGE_MIN : 
+                                                                                  linesPerPage;
                 return this;
             }
 
@@ -30,14 +32,20 @@ namespace Modules.Library {
 
             public BasicBook build() {
                 List<TextPage> pages = generatePages();
-                return new BasicBook(binding, pages);
+                return new BasicBook(bookMetaInfo, binding, pages);
             }
 
             private List<TextPage> generatePages() {
                 List<TextPage> pages = new List<TextPage>();
                 int pageNb = 1;
                 for (int i = 0; i < content.Length; i += linesPerPage) {
-                    ArraySegment<string> pageContent = new ArraySegment<string>(content, i, linesPerPage);
+                    SubArray<string> pageContent;
+                    if (i + linesPerPage >= content.Length) {
+                        pageContent = new SubArray<string>(content, i, content.Length - i);
+                    }
+                    else {
+                        pageContent = new SubArray<string>(content, i, linesPerPage);
+                    }
                     pages.Add(generatePage(pageNb, pageContent));
                     pageNb++;
                 }
@@ -45,8 +53,10 @@ namespace Modules.Library {
                 return pages;
             }
 
-            private TextPage generatePage(int pageNb, ArraySegment<string> pageContent) {
-                return null;
+            private TextPage generatePage(int pageNb, SubArray<string> pageContent) {
+                string pageName = String.Format("Page {0}", pageNb);
+                string[] lines = pageContent.ToArray();
+                return new TextPage(pageName, pageNb, lines);
             }
         }
     }

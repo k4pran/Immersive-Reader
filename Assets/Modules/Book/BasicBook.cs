@@ -10,14 +10,15 @@ namespace Modules.Book {
         public List<TextPage> pages;
         public int linesPerPage;
         
-        public BasicBook(Binding binding, List<TextPage> pages) 
-            : base(binding, BookFormat.TEXT) {
+        public BasicBook(BookMetaInfo bookMetaInfo, Binding binding, List<TextPage> pages) 
+            : base(bookMetaInfo, binding, BookFormat.TEXT) {
             this.pages = pages;
             linesPerPage = LINES_PER_PAGE_DEFAULT;
         }
 
-        public BasicBook(Binding binding, BookFormat bookFormat, List<TextPage> pages, int linesPerPage)
-            : base(binding, bookFormat) {
+        public BasicBook(BookMetaInfo bookMetaInfo, Binding binding, BookFormat bookFormat, List<TextPage> pages, 
+            int linesPerPage)
+            : base(bookMetaInfo, binding, bookFormat) {
             this.pages = pages;
             this.linesPerPage = linesPerPage < LINES_PER_PAGE_MIN ? LINES_PER_PAGE_MIN : linesPerPage;
         }
