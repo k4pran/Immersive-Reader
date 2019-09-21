@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using JetBrains.Annotations;
 using Modules.Book;
 
@@ -13,6 +14,12 @@ namespace Modules.Library {
         IObservable<BookManifest> retrieveBookManifest(string bookID);
         
         IObservable<BookMetaInfo> retrieveBookMetaInfo(string bookId);
+        
+        IObservable<string> readBookAsString(string bookId);
+        
+        IObservable<string[]> readBookAsLines(string bookId);
+        
+        IObservable<byte[]> readBookAsBytes(string bookId);
 
         IObservable<int> getBookCount();
     }

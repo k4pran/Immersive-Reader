@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace Modules.Book {
     
@@ -39,6 +42,24 @@ namespace Modules.Book {
 
         private List<string> splitTags(string lines) {
             return lines.Split(COLLAPSE_DELIMITER).ToList();
+        }
+        
+        public string serialize() {
+            Serializer serializer = new SerializerBuilder()
+                .WithNamingConvention(new CamelCaseNamingConvention())
+                .JsonCompatible()
+                .Build();
+            
+            return serializer.Serialize(this);
+        }
+
+        public static BookMetaInfo deserialize(string yaml) {
+            StringReader yamlInput = new StringReader(yaml);
+            Deserializer deserializer = new DeserializerBuilder()
+                .WithNamingConvention(new CamelCaseNamingConvention())
+                .Build();
+            
+            return deserializer.Deserialize<BookMetaInfo>(yamlInput);
         }
     }
 }

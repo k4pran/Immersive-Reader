@@ -1,9 +1,10 @@
 ﻿
+using System;
 using Modules.Common;
 
 namespace Modules.Book {
     
-    public abstract class Page<T> : IPage, IDynamicContent<T> {
+    public abstract class Page : IPage, IDynamicContent {
 
         private string pageName;
         private int pageNb;
@@ -21,7 +22,9 @@ namespace Modules.Book {
             return pageNb;
         }
 
-        public abstract T getContent();
+        public abstract T getContent<T>();
+        
+        public abstract Type getContentClassType();
 
         public abstract ContentType getContentType();
     }

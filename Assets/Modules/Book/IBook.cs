@@ -2,27 +2,25 @@ using System.Collections.Generic;
 
 namespace Modules.Book {
 
-    public interface IBook<T> {
-
-        string getBookId();
-
+    public interface IBook<T> where T : Page {
+        
         BookMetaInfo getBookMetaInfo();
         
         BookFormat getBookFormat();
 
         Binding getBinding();
         
-        List<Page<T>> getPages();
+        List<T> getPages();
         
-        Page<T> getPage(int pageNum);
+        T getPage(int pageNum);
         
         int getPageCount();
 
-        void appendPage(Page<T> page);
+        void appendPage(T page);
 
-        void addPageAt(Page<T> page, int index);
+        void addPageAt(T page, int index);
         
-        bool removePage(Page<T> page);
+        bool removePage(T page);
 
         void removePageAt(int index);
     }

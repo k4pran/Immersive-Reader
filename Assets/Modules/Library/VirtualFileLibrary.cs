@@ -9,9 +9,7 @@ using Zio;
 using Zio.FileSystems;
 
 namespace Modules.Library {
-    
     public class VirtualFileLibrary : ILibrary {
-
         private MemoryFileSystem memoryFileSystem;
 
         private readonly string ROOT_DIR = "/VReader Library";
@@ -22,7 +20,7 @@ namespace Modules.Library {
         private readonly UPath libraryManifestPath;
 
         private LibraryManifest libraryManifest;
-            
+
         public VirtualFileLibrary() {
             memoryFileSystem = new MemoryFileSystem();
             libraryManifestPath = new UPath(Path.Combine(ROOT_DIR, LIBRARY_MANIFEST_FILENAME));
@@ -45,6 +43,7 @@ namespace Modules.Library {
                 Debug.Log("No library found. Creating now...");
                 createNewLibrary();
             }
+
             Debug.Log("Library ready");
         }
 
@@ -66,7 +65,7 @@ namespace Modules.Library {
                 return Disposable.Empty;
             });
         }
-        
+
         public IObservable<BookManifest> retrieveBookManifest(string bookId) {
             return Observable.Create<BookManifest>(observer => {
                 try {
@@ -74,13 +73,14 @@ namespace Modules.Library {
                     observer.OnNext(bookManifest);
                     observer.OnCompleted();
                 }
-                catch(Exception e) {
+                catch (Exception e) {
                     observer.OnError(e);
                 }
+
                 return Disposable.Empty;
             });
         }
-        
+
         public IObservable<BookMetaInfo> retrieveBookMetaInfo(string bookId) {
             return Observable.Create<BookMetaInfo>(observer => {
                 try {
@@ -99,10 +99,11 @@ namespace Modules.Library {
                 catch (Exception e) {
                     observer.OnError(e);
                 }
+
                 return Disposable.Empty;
             });
         }
-        
+
         public IObservable<int> getBookCount() {
             return Observable.Create<int>(observer => {
                 observer.OnNext(libraryManifest.getBookCount());
@@ -112,12 +113,12 @@ namespace Modules.Library {
         }
 
         private void addBookToLibraryManifest(BookManifest bookManifest) {
-             libraryManifest.addEntry(bookManifest);
+            libraryManifest.addEntry(bookManifest);
         }
 
         public void saveLibraryManifest() {
             foreach (BookManifest bookManifest in libraryManifest.bookManifests.Values) {
-            UPath uBookPath = asUpath(bookManifest.bookLocation);
+                UPath uBookPath = asUpath(bookManifest.bookLocation);
                 if (!bookExists(uBookPath)) {
                     Debug.Log("Saving book to library [" +
                               bookManifest.bookId + " : " + bookManifest.bookTitle);
@@ -132,12 +133,12 @@ namespace Modules.Library {
                 try {
                     string filename = FileUtils.getFileNameFromPath(bookInputPath.AbsolutePath);
                     string fileContents = readFileAsStringFromNative(bookInputPath);
-                    
+
                     Stream stream = generateStreamFromString(fileContents);
                     UPath bookOutputPath = Path.Combine(ROOT_DIR, BOOK_DIR, filename);
                     saveFile(stream, bookOutputPath);
                     UPath metaInfoLocation = saveBookMetaInfo(bookMetaInfo, bookInputPath.AbsolutePath);
-                    
+
                     BookManifest bookManifest = createBookEntry(bookOutputPath, metaInfoLocation, bookMetaInfo);
                     addBookToLibraryManifest(bookManifest);
                     saveLibraryManifest();
@@ -147,15 +148,64 @@ namespace Modules.Library {
                 catch (Exception e) {
                     observer.OnError(e);
                 }
+
+                return Disposable.Empty;
+            });
+        }
+
+        public IObservable<byte[]> readBookAsBytes(string bookId) {
+            return Observable.Create<byte[]>(observer => {
+                try {
+                    UPath bookUPath = libraryManifest.getBookById(bookId).bookLocation;
+                    byte[] contents = readFileAsBytesFromVfs(bookUPath);
+                    observer.OnNext(contents);
+                    observer.OnCompleted();
+                }
+                catch (Exception e) {
+                    observer.OnError(e);
+                }
+
+                return Disposable.Empty;
+            });
+        }
+
+        public IObservable<string> readBookAsString(string bookId) {
+            return Observable.Create<string>(observer => {
+                try {
+                    UPath bookUPath = libraryManifest.getBookById(bookId).bookLocation;
+                    string contents = readFileAsStringFromVfs(bookUPath);
+                    observer.OnNext(contents);
+                    observer.OnCompleted();
+                }
+                catch (Exception e) {
+                    observer.OnError(e);
+                }
+
                 return Disposable.Empty;
             });
         }
         
-        public UPath saveBookMetaInfo(BookMetaInfo bookMetaInfo, string originPath) {
+        public IObservable<string[]> readBookAsLines(string bookId) {
+            return Observable.Create<string[]>(observer => {
+                try {
+                    UPath bookUPath = libraryManifest.getBookById(bookId).bookLocation;
+                    string[] contents = readFileAsLinesFromVfs(bookUPath);
+                    observer.OnNext(contents);
+                    observer.OnCompleted();
+                }
+                catch (Exception e) {
+                    observer.OnError(e);
+                }
+
+                return Disposable.Empty;
+            });
+        }
+
+        private UPath saveBookMetaInfo(BookMetaInfo bookMetaInfo, string originPath) {
             string bookMetaYaml = bookMetaInfo.serialize();
             Stream fileContents = generateStreamFromString(bookMetaYaml);
             string filename = FileUtils.getFileNameFromPath(
-                originPath, includeExtension: false) + BOOK_META_POSTFIX;
+                                  originPath, includeExtension: false) + BOOK_META_POSTFIX;
             UPath outputPath = Path.Combine(ROOT_DIR, BOOK_META_DIR, filename);
             saveFile(fileContents, outputPath);
             return outputPath;
@@ -171,6 +221,23 @@ namespace Modules.Library {
             if (memoryFileSystem.FileExists(uPath)) {
                 return memoryFileSystem.ReadAllText(uPath);
             }
+
+            throw new FileNotFoundException("File " + uPath + " not found in virtual file system");
+        }
+        
+        private string[] readFileAsLinesFromVfs(UPath uPath) {
+            if (memoryFileSystem.FileExists(uPath)) {
+                return memoryFileSystem.ReadAllLines(uPath);
+            }
+
+            throw new FileNotFoundException("File " + uPath + " not found in virtual file system");
+        }
+
+        private byte[] readFileAsBytesFromVfs(UPath uPath) {
+            if (memoryFileSystem.FileExists(uPath)) {
+                return memoryFileSystem.ReadAllBytes(uPath);
+            }
+
             throw new FileNotFoundException("File " + uPath + " not found in virtual file system");
         }
 
@@ -178,13 +245,14 @@ namespace Modules.Library {
             if (path.IsFile && File.Exists(path.AbsolutePath)) {
                 return File.ReadAllText(path.AbsolutePath);
             }
+
             throw new FileNotFoundException("File " + path + " not found in native file system");
         }
 
         private bool bookExists(UPath uPath) {
             return memoryFileSystem.FileExists(uPath);
         }
-        
+
         private void saveFile(Stream fileInputStream, UPath destinationPath) {
             Stream outputStream = memoryFileSystem.CreateFile(destinationPath);
             fileInputStream.CopyTo(outputStream);
@@ -193,11 +261,11 @@ namespace Modules.Library {
         private UPath asUpath(string path) {
             return new UPath(path);
         }
-        
+
         public string generateId() {
             return Guid.NewGuid().ToString("D");
         }
-        
+
         private static Stream generateStreamFromString(string s) {
             Stream stream = new MemoryStream();
             StreamWriter writer = new StreamWriter(stream);

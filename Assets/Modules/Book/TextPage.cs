@@ -5,7 +5,7 @@ using Modules.Common;
 
 namespace Modules.Book {
     
-    public class TextPage : Page<List<string>> {
+    public class TextPage : Page {
 
         private static readonly char COLLAPSE_DELIMITER = '|';
         public List<string> linesContent { get; }
@@ -22,13 +22,17 @@ namespace Modules.Book {
         private List<string> splitLines(string lines) {
             return lines.Split(COLLAPSE_DELIMITER).ToList();
         }
-        
+
+        public override T getContent<T>() {
+            return (T) Convert.ChangeType(linesContent, typeof(T));
+        }
+
+        public override Type getContentClassType() {
+            return typeof(List<string>);
+        }
+
         public override ContentType getContentType() {
             return ContentType.TEXT_ONLY;
-        }
-        
-        public override List<string> getContent() {
-            return linesContent;
         }
     }
 }

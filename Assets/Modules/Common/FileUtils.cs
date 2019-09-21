@@ -10,8 +10,8 @@ namespace Modules.Common {
             return Path.GetExtension(path);
         }
 
-        public static string getFileNameFromPath(string path) {
-            return Path.GetFileNameWithoutExtension(path);
+        public static string getFileNameFromPath(string path, bool includeExtension=true) {
+            return includeExtension ? Path.GetFileName(path) : Path.GetFileNameWithoutExtension(path);
         }
 
         public static List<string> readAllSvgFiles(string dirPath) {

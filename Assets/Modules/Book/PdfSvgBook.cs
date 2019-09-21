@@ -2,32 +2,24 @@ using System.Collections.Generic;
 
 namespace Modules.Book {
     
-    public class PdfSvgBook : Book<string> {
+    public class PdfSvgBook : Book<SvgPage> {
 
-        public List<Page<string>> pages { get; }
-        private BookFormat bookFormat;
-        
-        public PdfSvgBook(string originUrl, BookMetaInfo bookMetaInfo)
-            : base(originUrl, Binding.DOUBLE_PAGED, BookFormat.PDF) {
-            setBookMetaInfo(bookMetaInfo);
-            pages = new List<Page<string>>();
-            setBookMetaInfo(new BookMetaInfo());
-        }
-        
-        public PdfSvgBook(Book<string> book)
-            : base(book.getOriginUrl(), Binding.DOUBLE_PAGED, BookFormat.PDF) {
-            setBookMetaInfo(book.getBookMetaInfo());
+        public List<SvgPage> pages { get; }
+
+        public PdfSvgBook(Binding binding, List<SvgPage> pages) 
+            : base(binding, BookFormat.PDF) {
+            this.pages = pages;
         }
 
-        public override void appendPage(Page<string> page) {
+        public override void appendPage(SvgPage page) {
             pages.Add(page);
         }
 
-        public override void addPageAt(Page<string> page, int index) {
+        public override void addPageAt(SvgPage page, int index) {
             pages.Insert(index, page);
         }
 
-        public override bool removePage(Page<string> page) {
+        public override bool removePage(SvgPage page) {
             return pages.Remove(page);
         }
 
@@ -35,11 +27,11 @@ namespace Modules.Book {
             pages.RemoveAt(index);
         }
 
-        public override List<Page<string>> getPages() {
+        public override List<SvgPage> getPages() {
             return pages;
         }
 
-        public override Page<string> getPage(int pageNum) {
+        public override SvgPage getPage(int pageNum) {
             return pages[pageNum];
         }
 
