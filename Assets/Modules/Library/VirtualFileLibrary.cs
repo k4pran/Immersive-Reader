@@ -9,53 +9,54 @@ using Zio;
 using Zio.FileSystems;
 
 namespace Modules.Library {
+    
     public class VirtualFileLibrary : ILibrary {
-        private MemoryFileSystem memoryFileSystem;
+        
+        private PhysicalFileSystem physicalFileSystem;
 
-        private readonly string ROOT_DIR = "/VReader Library";
-        private readonly string LIBRARY_MANIFEST_FILENAME = "library";
-        private readonly string BOOK_DIR = "books";
-        private readonly string BOOK_META_DIR = "books";
+        private readonly string APPLICATION_NAME = "VReader";
+        private readonly string ROOT_DIR_NAME = "Library";
+        private readonly string LIBRARY_MANIFEST_FILENAME = "library_manifest";
+        private readonly string BOOKS_LIB_DIR_NAME = "books";
+        private readonly string PAGE_DIR_NAME = "pages";
+        private readonly string META_DIR_NAME = "meta";
         private readonly string BOOK_META_POSTFIX = ".meta";
-        private readonly UPath libraryManifestPath;
 
         private LibraryManifest libraryManifest;
 
         public VirtualFileLibrary() {
-            memoryFileSystem = new MemoryFileSystem();
-            libraryManifestPath = new UPath(Path.Combine(ROOT_DIR, LIBRARY_MANIFEST_FILENAME));
+            physicalFileSystem = new PhysicalFileSystem();
             setup();
         }
 
         private void setup() {
-            memoryFileSystem.CreateDirectory(ROOT_DIR);
-            memoryFileSystem.CreateDirectory(Path.Combine(ROOT_DIR, BOOK_DIR));
+            physicalFileSystem.CreateDirectory(getRootDir());
+            physicalFileSystem.CreateDirectory(getBookLibDir());
             initializeLibrary();
         }
 
         private void initializeLibrary() {
             Debug.Log("Initializing library...");
-            if (memoryFileSystem.FileExists(libraryManifestPath)) {
-                Debug.Log("Library exists at " + libraryManifestPath);
+            if (physicalFileSystem.FileExists(getLibraryManifestPath())) {
+                Debug.Log("Library exists at " + getLibraryManifestPath());
                 loadExistingLibrary();
             }
             else {
                 Debug.Log("No library found. Creating now...");
                 createNewLibrary();
             }
-
             Debug.Log("Library ready");
         }
 
         private void loadExistingLibrary() {
-            string libraryYamlContents = readFileAsStringFromVfs(libraryManifestPath);
+            string libraryYamlContents = readFileAsStringFromVfs(getLibraryManifestPath());
             libraryManifest = LibraryManifest.deserialize(libraryYamlContents);
         }
 
         private void createNewLibrary() {
             libraryManifest = new LibraryManifest();
             string emptyLibraryYaml = libraryManifest.serialize();
-            saveFile(generateStreamFromString(emptyLibraryYaml), libraryManifestPath);
+            saveFile(generateStreamFromString(emptyLibraryYaml), getLibraryManifestPath());
         }
 
         public IObservable<LibraryManifest> retrieveLibraryManifest() {
@@ -86,7 +87,7 @@ namespace Modules.Library {
                 try {
                     string metaInfoPath = libraryManifest.getBookById(bookId).metaInfoLocation;
                     UPath uMetaInfoPath = asUpath(metaInfoPath);
-                    if (memoryFileSystem.FileExists(metaInfoPath)) {
+                    if (physicalFileSystem.FileExists(metaInfoPath)) {
                         String metaInfoYaml = readFileAsStringFromVfs(uMetaInfoPath);
                         BookMetaInfo bookMetaInfo = BookMetaInfo.deserialize(metaInfoYaml);
                         observer.OnNext(bookMetaInfo);
@@ -135,7 +136,8 @@ namespace Modules.Library {
                     string fileContents = readFileAsStringFromNative(bookInputPath);
 
                     Stream stream = generateStreamFromString(fileContents);
-                    UPath bookOutputPath = Path.Combine(ROOT_DIR, BOOK_DIR, filename);
+                    UPath bookDirPath = createBookDir(bookMetaInfo.title);
+                    UPath bookOutputPath = Path.Combine(bookDirPath.ToString(), filename);
                     saveFile(stream, bookOutputPath);
                     UPath metaInfoLocation = saveBookMetaInfo(bookMetaInfo, bookInputPath.AbsolutePath);
 
@@ -201,12 +203,90 @@ namespace Modules.Library {
             });
         }
 
+        public IObservable<Uri> retrievePhysicalFileLocation(string bookId) {
+            return Observable.Create<Uri>(observer => {
+                try {
+                    UPath uPath = libraryManifest.bookManifests[bookId].bookLocation;
+                    observer.OnNext(new Uri(uPath.ToString()));
+                    observer.OnCompleted();
+                }
+                catch (Exception e) {
+                    observer.OnError(e);
+                }
+
+                return Disposable.Empty;
+            });
+        }
+
+        public void indexBook(string bookId, ContentType contentType) {
+            BookManifest bookManifest = libraryManifest.getBookById(bookId);
+            UPath pageDirPath = createPageDir(libraryManifest.getBookById(bookId).bookTitle);
+
+            switch (contentType) {
+                
+                case ContentType.TEXT_ONLY:
+                    break;
+                
+                case ContentType.SVG:
+                    Indexer.asSvgs(new Uri(bookManifest.bookLocation), 
+                        new Uri(pageDirPath.ToString()), bookManifest.bookTitle);
+                    break;
+                
+                default:
+                    throw new ContentTypeException();
+            }
+        }
+
+        private UPath getRootDir() {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                APPLICATION_NAME, ROOT_DIR_NAME);
+        }
+        
+        private UPath getLibraryManifestPath() {
+            return Path.Combine(getRootDir().ToString(), LIBRARY_MANIFEST_FILENAME);
+        }
+
+        private UPath getBookLibDir() {
+            return Path.Combine(getRootDir().ToString(), BOOKS_LIB_DIR_NAME);
+        }
+
+        private UPath getBookDir(string bookTitle) {
+            return Path.Combine(getBookLibDir().ToString(), bookTitle);
+        }
+        
+        private UPath getMetaInfoDir(string bookTitle) {
+            return Path.Combine(getBookDir(bookTitle).ToString(), META_DIR_NAME);
+        }
+        
+        private UPath getPagesDir(string bookTitle) {
+            return Path.Combine(getBookDir(bookTitle).ToString(), PAGE_DIR_NAME);
+        }
+
+        private UPath createBookDir(string bookTitle) {
+            UPath bookDirPath = getBookDir(bookTitle);
+            physicalFileSystem.CreateDirectory(bookDirPath);
+            return bookDirPath;
+        }
+        
+        private UPath createPageDir(string bookTitle) {
+            UPath bookPageDirPath = getPagesDir(bookTitle);
+            physicalFileSystem.CreateDirectory(bookPageDirPath);
+            return bookPageDirPath;
+        }
+        
+        private UPath createMetaInfoDir(string bookTitle) {
+            UPath bookDirPath = getMetaInfoDir(bookTitle);
+            physicalFileSystem.CreateDirectory(bookDirPath);
+            return bookDirPath;
+        }
+        
         private UPath saveBookMetaInfo(BookMetaInfo bookMetaInfo, string originPath) {
+            UPath metaInfoDir = createMetaInfoDir(bookMetaInfo.title);
             string bookMetaYaml = bookMetaInfo.serialize();
             Stream fileContents = generateStreamFromString(bookMetaYaml);
             string filename = FileUtils.getFileNameFromPath(
                                   originPath, includeExtension: false) + BOOK_META_POSTFIX;
-            UPath outputPath = Path.Combine(ROOT_DIR, BOOK_META_DIR, filename);
+            UPath outputPath = Path.Combine(metaInfoDir.ToString(), filename);
             saveFile(fileContents, outputPath);
             return outputPath;
         }
@@ -218,24 +298,23 @@ namespace Modules.Library {
         }
 
         private string readFileAsStringFromVfs(UPath uPath) {
-            if (memoryFileSystem.FileExists(uPath)) {
-                return memoryFileSystem.ReadAllText(uPath);
+            if (physicalFileSystem.FileExists(uPath)) {
+                return physicalFileSystem.ReadAllText(uPath);
             }
-
             throw new FileNotFoundException("File " + uPath + " not found in virtual file system");
         }
         
         private string[] readFileAsLinesFromVfs(UPath uPath) {
-            if (memoryFileSystem.FileExists(uPath)) {
-                return memoryFileSystem.ReadAllLines(uPath);
+            if (physicalFileSystem.FileExists(uPath)) {
+                return physicalFileSystem.ReadAllLines(uPath);
             }
 
             throw new FileNotFoundException("File " + uPath + " not found in virtual file system");
         }
 
         private byte[] readFileAsBytesFromVfs(UPath uPath) {
-            if (memoryFileSystem.FileExists(uPath)) {
-                return memoryFileSystem.ReadAllBytes(uPath);
+            if (physicalFileSystem.FileExists(uPath)) {
+                return physicalFileSystem.ReadAllBytes(uPath);
             }
 
             throw new FileNotFoundException("File " + uPath + " not found in virtual file system");
@@ -250,11 +329,11 @@ namespace Modules.Library {
         }
 
         private bool bookExists(UPath uPath) {
-            return memoryFileSystem.FileExists(uPath);
+            return physicalFileSystem.FileExists(uPath);
         }
 
         private void saveFile(Stream fileInputStream, UPath destinationPath) {
-            Stream outputStream = memoryFileSystem.CreateFile(destinationPath);
+            Stream outputStream = physicalFileSystem.CreateFile(destinationPath);
             fileInputStream.CopyTo(outputStream);
         }
 

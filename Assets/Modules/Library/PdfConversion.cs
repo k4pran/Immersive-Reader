@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using Modules.Common;
+using Zio.FileSystems;
 using Debug = UnityEngine.Debug;
 
 namespace Modules.Library {
+    
     public class PdfConversion {
 
-        private static readonly string BINARY_DIR = "Assets/Modules/Book/bin";
+        private static readonly string BINARY_DIR = "Assets/bin";
         private static readonly string JPEG_EXECUTABLE_NAME = "pdftocairo";
         private static readonly string SVG_EXECUTABLE_NAME = "pdf2svg";
 
@@ -17,15 +19,13 @@ namespace Modules.Library {
             convert(absBinPath, inputPath, "-jpeg '" + inputPath + "' '" + absOutPath + "'");
         }
 
-        public static void toSvgs(string inputPath, string outputPath) {
+        public static void toSvgs(string inputPath, string outputDir, string bookTitle) {
             string absPath = resolvePath(Path.Combine(BINARY_DIR, SVG_EXECUTABLE_NAME));
-            // Handle pdfcairo quirk by adding dir name twice - one for directory and second for file naming
-            string absOutPath = resolvePath(outputPath) + "/" + FileUtils.getFileNameFromPath(outputPath);
-            convert(absPath, inputPath, "'" + inputPath + "' '" + absOutPath + "-%d.svg' all");
+            convert(absPath, inputPath, "'" + inputPath + "' '" + outputDir + "/" + bookTitle + "-%d.svg' all");
         }
 
         private static void convert(string executable, string inputPath, string arguments) {
-            
+
             if (File.Exists(inputPath)){
                 var p = new Process();
                 p.StartInfo.CreateNoWindow = true;
@@ -34,7 +34,6 @@ namespace Modules.Library {
                 p.StartInfo.RedirectStandardError = true;
                 p.StartInfo.RedirectStandardOutput = true;
                 p.StartInfo.Arguments = arguments;
-
 
                 p.Start();
 

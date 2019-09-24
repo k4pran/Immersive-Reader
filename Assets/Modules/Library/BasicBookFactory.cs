@@ -49,7 +49,6 @@ namespace Modules.Library {
                     pages.Add(generatePage(pageNb, pageContent));
                     pageNb++;
                 }
-
                 return pages;
             }
 

@@ -28,12 +28,20 @@ namespace Modules.Library.Tests {
                         BasicBook basicBook = new BasicBookFactory.Builder(content, bookMetaInfo)
                             .setLinesPerPage(27)
                             .build();
-                        Debug.Log("");
+                        Assert.AreEqual(27, basicBook.linesPerPage);
+                        Assert.True(basicBook.pages.Count > 0);
                     },
                         error => Debug.Log(error));
                 },
                 error => Debug.Log(error));
         }
-        
+
+
+        [Test]
+        public void testPdfToSvg() {
+            Uri uri = new Uri(
+                "file:///Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Book/Tests/Resources/atari.pdf");
+            PdfConversion.toSvgs(uri.AbsolutePath, "/Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Library/Tests", "atari");
+        }
     }
 }

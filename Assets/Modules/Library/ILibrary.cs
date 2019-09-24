@@ -9,12 +9,14 @@ namespace Modules.Library {
         
         IObservable<LibraryManifest> retrieveLibraryManifest();
         
-        IObservable<BookManifest> importBook(Uri bookInputPath, [CanBeNull] BookMetaInfo bookMetaInfo=null);
+        IObservable<BookManifest> importBook(Uri bookInputPath, BookMetaInfo bookMetaInfo=null);
         
         IObservable<BookManifest> retrieveBookManifest(string bookID);
         
         IObservable<BookMetaInfo> retrieveBookMetaInfo(string bookId);
-        
+
+        IObservable<Uri> retrievePhysicalFileLocation(string bookId);
+
         IObservable<string> readBookAsString(string bookId);
         
         IObservable<string[]> readBookAsLines(string bookId);

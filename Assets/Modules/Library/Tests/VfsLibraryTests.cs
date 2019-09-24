@@ -1,5 +1,6 @@
 using System;
 using Modules.Book;
+using Modules.Common;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -24,12 +25,33 @@ namespace Modules.Library.Tests {
             Uri uri = new Uri(
                 "file:///Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Book/Tests/Resources/dracula.txt");
             virtualFileLibrary.importBook(uri, bookMetaInfo).Subscribe(bookManifest => {
-                    Debug.Log(bookManifest);
                     Assert.IsNotEmpty(bookManifest.bookId);
                     Assert.IsNotEmpty(bookManifest.bookLocation);
                     Assert.AreEqual(bookMetaInfo.title, bookManifest.bookTitle);
                     Assert.IsNotEmpty(bookManifest.metaInfoLocation);
                     
+                },
+                error => Debug.Log(error));
+        }
+        
+        [Test]
+        public void indexImportedBook() {
+            BookMetaInfo bookMetaInfo = new BookMetaInfo();
+            bookMetaInfo.title = "Atari";
+            bookMetaInfo.author = "Deepmind";
+            bookMetaInfo.publisher = "Deepmind";
+            bookMetaInfo.pageCount = 9;
+            bookMetaInfo.language = "English";
+            bookMetaInfo.description = "A journal on reinforcement learning using atari games";
+            bookMetaInfo.publicationDate = new DateTime(2013, 12, 19);
+            bookMetaInfo.category = "Gothic horror";
+            bookMetaInfo.tags = new[] {"journal", "reinforcement learning", "AI"};
+            
+            VirtualFileLibrary virtualFileLibrary = new VirtualFileLibrary();
+            Uri uri = new Uri(
+                "file:///Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Book/Tests/Resources/atari.pdf");
+            virtualFileLibrary.importBook(uri, bookMetaInfo).Subscribe(bookManifest => {
+                    virtualFileLibrary.indexBook(bookManifest.bookId, ContentType.SVG);
                 },
                 error => Debug.Log(error));
         }
