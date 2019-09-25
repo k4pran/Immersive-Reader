@@ -18,7 +18,6 @@ namespace Modules.Library {
         private readonly string ROOT_DIR_NAME = "Library";
         private readonly string LIBRARY_MANIFEST_FILENAME = "library_manifest";
         private readonly string BOOKS_LIB_DIR_NAME = "books";
-        private readonly string PAGE_DIR_NAME = "pages";
         private readonly string META_DIR_NAME = "meta";
         private readonly string BOOK_META_POSTFIX = ".meta";
 
@@ -117,16 +116,10 @@ namespace Modules.Library {
             libraryManifest.addEntry(bookManifest);
         }
 
-        public void saveLibraryManifest() {
-            foreach (BookManifest bookManifest in libraryManifest.bookManifests.Values) {
-                UPath uBookPath = asUpath(bookManifest.bookLocation);
-                if (!bookExists(uBookPath)) {
-                    Debug.Log("Saving book to library [" +
-                              bookManifest.bookId + " : " + bookManifest.bookTitle);
-                    string contents = bookManifest.Serialize();
-                    saveFile(generateStreamFromString(contents), uBookPath);
-                }
-            }
+        private void saveLibraryManifest() {
+            string libraryYaml = libraryManifest.serialize();
+            Stream libraryStream = generateStreamFromString(libraryYaml);
+            saveFile(libraryStream, getLibraryManifestPath());
         }
 
         public IObservable<BookManifest> importBook(Uri bookInputPath, BookMetaInfo bookMetaInfo) {
@@ -218,25 +211,6 @@ namespace Modules.Library {
             });
         }
 
-        public void indexBook(string bookId, ContentType contentType) {
-            BookManifest bookManifest = libraryManifest.getBookById(bookId);
-            UPath pageDirPath = createPageDir(libraryManifest.getBookById(bookId).bookTitle);
-
-            switch (contentType) {
-                
-                case ContentType.TEXT_ONLY:
-                    break;
-                
-                case ContentType.SVG:
-                    Indexer.asSvgs(new Uri(bookManifest.bookLocation), 
-                        new Uri(pageDirPath.ToString()), bookManifest.bookTitle);
-                    break;
-                
-                default:
-                    throw new ContentTypeException();
-            }
-        }
-
         private UPath getRootDir() {
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 APPLICATION_NAME, ROOT_DIR_NAME);
@@ -257,23 +231,13 @@ namespace Modules.Library {
         private UPath getMetaInfoDir(string bookTitle) {
             return Path.Combine(getBookDir(bookTitle).ToString(), META_DIR_NAME);
         }
-        
-        private UPath getPagesDir(string bookTitle) {
-            return Path.Combine(getBookDir(bookTitle).ToString(), PAGE_DIR_NAME);
-        }
 
         private UPath createBookDir(string bookTitle) {
             UPath bookDirPath = getBookDir(bookTitle);
             physicalFileSystem.CreateDirectory(bookDirPath);
             return bookDirPath;
         }
-        
-        private UPath createPageDir(string bookTitle) {
-            UPath bookPageDirPath = getPagesDir(bookTitle);
-            physicalFileSystem.CreateDirectory(bookPageDirPath);
-            return bookPageDirPath;
-        }
-        
+
         private UPath createMetaInfoDir(string bookTitle) {
             UPath bookDirPath = getMetaInfoDir(bookTitle);
             physicalFileSystem.CreateDirectory(bookDirPath);
