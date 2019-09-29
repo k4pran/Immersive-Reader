@@ -39,7 +39,7 @@ namespace Modules.Library {
             });
         }
 
-        public IObservable<IBook<Page>> RetrieveBookAsObject(string bookId) {
+        public IObservable<IBook<Page>> ReadBookAsObject(string bookId) {
             return Observable.Create<IBook<Page>>(observer => {
                 try {
                     var book = CreateBookWithFactory(bookId);

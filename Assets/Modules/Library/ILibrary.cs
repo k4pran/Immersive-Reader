@@ -18,7 +18,7 @@ namespace Modules.Library {
 
         IObservable<Uri> RetrievePhysicalFileLocation(string bookId);
 
-        IObservable<IBook<Page>> RetrieveBookAsObject(string bookId);
+        IObservable<IBook<Page>> ReadBookAsObject(string bookId);
 
         IObservable<string> ReadBookAsString(string bookId);
 

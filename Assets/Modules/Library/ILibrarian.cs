@@ -1,6 +1,5 @@
 using System;
 using Modules.Common;
-using UnityEngine.UI;
 
 namespace Modules.Library {
 
@@ -12,24 +11,26 @@ namespace Modules.Library {
 
         IObservable<string> BookIdByTitle(string bookTitle);
         
-        IObservable<string> PageContents(string bookTitle);
+        IObservable<int> BookCount();
 
-        IObservable<ContentType> ContentType(string bookTitle);
+        IObservable<ContentType> BookType(string bookId);
+
+        IObservable<T> PageContents<T>(string bookId, int pageNb);
         
-        IObservable<string> PageCount(string bookTitle);
+        IObservable<int> PageCount(string bookId);
 
-        IObservable<string> Author(string bookTitle);
+        IObservable<string> Author(string bookId);
 
-        IObservable<string> Publisher(string bookTitle);
+        IObservable<string> Publisher(string bookId);
 
-        IObservable<string> Language(string bookTitle);
+        IObservable<string> Language(string bookId);
 
-        IObservable<string> Description(string bookTitle);
+        IObservable<string> Description(string bookId);
 
-        IObservable<string[]> Category(string bookTitle);
+        IObservable<string> Category(string bookId);
 
-        IObservable<string> Tags(string bookTitle);
+        IObservable<string[]> Tags(string bookId);
 
-        IObservable<string> PublicationDate(string bookTitle);
+        IObservable<DateTime> PublicationDate(string bookId);
     }
 }

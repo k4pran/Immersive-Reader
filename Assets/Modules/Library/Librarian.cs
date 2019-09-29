@@ -1,14 +1,11 @@
 using System;
 using System.Reactive.Linq;
-using Modules.Book;
 using Modules.Common;
 
 namespace Modules.Library {
 
     public class Librarian : ILibrarian {
-
-        private IBook<Page> book;
-
+        
         private readonly ILibrary library;
 
         public Librarian(ILibrary library) {
@@ -36,13 +33,55 @@ namespace Modules.Library {
                 .SingleAsync();
         }
 
+        public IObservable<int> BookCount() {
+            return library.GetBookCount();
+        }
+
         public IObservable<ContentType> BookType(string bookId) {
             return library.RetrieveBookManifest(bookId)
                 .Select(bookManifest => bookManifest.contentType);
         }
 
-        public IBook<Page> PageContents(string bookId) {
-            return new BasicBook(null, Binding.DOUBLE_PAGED, null);
+        public IObservable<T> PageContents<T>(string bookId, int pageNb) {
+            return library.ReadBookAsObject(bookId)
+                .Select(book => book.Page(pageNb))
+                .Select(page => page.Content<T>());
         }
+
+        public IObservable<int> PageCount(string bookId) {
+            return library.ReadBookAsObject(bookId)
+                .Select(book => book.PageCount());
+        }
+
+        public IObservable<string> Author(string bookId) {
+            return library.RetrieveBookMetaInfo(bookId)
+                .Select(metaInfo => metaInfo.author);
+        }
+
+        public IObservable<string> Publisher(string bookId) {
+            return library.RetrieveBookMetaInfo(bookId)
+                .Select(metaInfo => metaInfo.publisher);        }
+
+        public IObservable<string> Language(string bookId) {
+            return library.RetrieveBookMetaInfo(bookId)
+                .Select(metaInfo => metaInfo.language);        }
+
+        public IObservable<string> Description(string bookId) {
+            return library.RetrieveBookMetaInfo(bookId)
+                .Select(metaInfo => metaInfo.description);        }
+
+        public IObservable<string> Category(string bookId) {
+            return library.RetrieveBookMetaInfo(bookId)
+                .Select(metaInfo => metaInfo.category);        }
+
+        public IObservable<string[]> Tags(string bookId) {
+            return library.RetrieveBookMetaInfo(bookId)
+                .Select(metaInfo => metaInfo.tags);        }
+
+        public IObservable<DateTime> PublicationDate(string bookId) {
+            return library.RetrieveBookMetaInfo(bookId)
+                .Select(metaInfo => metaInfo.publicationDate);
+        }
+
     }
 }
