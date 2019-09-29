@@ -2,13 +2,14 @@ using System;
 using Modules.Common;
 
 namespace Modules.Book {
-    
-    public interface IDynamicContent {
-        
-        T getContent<T>();
 
-        Type getContentClassType();
-        
-        ContentType getContentType();
+    public interface IDynamicContent {
+
+        T Content<T>();
+
+        Type ContentClassType();
+
+        ContentType ContentType();
+
     }
 }

@@ -1,15 +1,16 @@
 using System;
 using Modules.Book;
+using Modules.Common;
 using NUnit.Framework;
 using UnityEngine;
 
 namespace Modules.Library.Tests {
-    
+
     public class BookBuilderTests {
 
         [Test]
-        public void buildBasicBook() {
-            BookMetaInfo bookMetaInfo = new BookMetaInfo();
+        public void BuildBasicBook() {
+            var bookMetaInfo = new BookMetaInfo();
             bookMetaInfo.title = "Dracula";
             bookMetaInfo.author = "Bram Stoker";
             bookMetaInfo.publisher = "Archibald Constable and Company (UK)";
@@ -20,17 +21,17 @@ namespace Modules.Library.Tests {
             bookMetaInfo.category = "Gothic horror";
             bookMetaInfo.tags = new[] {"gothic", "horror", "vampires", "classic"};
 
-            VirtualFileLibrary virtualFileLibrary = new VirtualFileLibrary();
-            Uri uri = new Uri(
+            var virtualFileLibrary = new VirtualFileLibrary();
+            var uri = new Uri(
                 "file:///Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Book/Tests/Resources/dracula.txt");
-            virtualFileLibrary.importBook(uri, bookMetaInfo).Subscribe(bookManifest => {
-                    virtualFileLibrary.readBookAsLines(bookManifest.bookId).Subscribe(content => {
-                        BasicBook basicBook = new BasicBookFactory.Builder(content, bookMetaInfo)
-                            .setLinesPerPage(27)
-                            .build();
-                        Assert.AreEqual(27, basicBook.linesPerPage);
-                        Assert.True(basicBook.pages.Count > 0);
-                    },
+            virtualFileLibrary.ImportBook(uri, bookMetaInfo, ContentType.TEXT_ONLY).Subscribe(bookManifest => {
+                    virtualFileLibrary.ReadBookAsLines(bookManifest.bookId).Subscribe(content => {
+                            var basicBook = new BasicBookFactory.Builder(content, bookMetaInfo)
+                                .SetLinesPerPage(27)
+                                .Build();
+                            Assert.AreEqual(27, basicBook.linesPerPage);
+                            Assert.True(basicBook.pages.Count > 0);
+                        },
                         error => Debug.Log(error));
                 },
                 error => Debug.Log(error));
@@ -38,10 +39,11 @@ namespace Modules.Library.Tests {
 
 
         [Test]
-        public void testPdfToSvg() {
-            Uri uri = new Uri(
+        public void TestPdfToSvg() {
+            var uri = new Uri(
                 "file:///Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Book/Tests/Resources/atari.pdf");
-            PdfConversion.toSvgs(uri.AbsolutePath, "/Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Library/Tests", "atari");
+            PdfConversion.ToSvgs(uri.AbsolutePath, "/Users/ryan/Documents/Unity/VReader_2/Assets/Modules/Library/Tests",
+                "atari");
         }
     }
 }

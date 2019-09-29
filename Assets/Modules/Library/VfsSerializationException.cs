@@ -1,12 +1,14 @@
 using System;
 
-namespace Modules.Library  {
-    
+namespace Modules.Library {
+
     public class VfsSerializationException : Exception {
-        
-        public VfsSerializationException() {}
+
+        public VfsSerializationException() {
+        }
 
         public VfsSerializationException(string message)
-            : base(message) {}
+            : base(message) {
+        }
     }
 }

@@ -1,28 +1,37 @@
 using System;
-using System.IO;
-using JetBrains.Annotations;
+using System.Collections.Generic;
 using Modules.Book;
+using Modules.Common;
 
 namespace Modules.Library {
-    
+
     public interface ILibrary {
-        
-        IObservable<LibraryManifest> retrieveLibraryManifest();
-        
-        IObservable<BookManifest> importBook(Uri bookInputPath, BookMetaInfo bookMetaInfo=null);
-        
-        IObservable<BookManifest> retrieveBookManifest(string bookID);
-        
-        IObservable<BookMetaInfo> retrieveBookMetaInfo(string bookId);
 
-        IObservable<Uri> retrievePhysicalFileLocation(string bookId);
+        IObservable<LibraryManifest> RetrieveLibraryManifest();
 
-        IObservable<string> readBookAsString(string bookId);
-        
-        IObservable<string[]> readBookAsLines(string bookId);
-        
-        IObservable<byte[]> readBookAsBytes(string bookId);
+        IObservable<BookManifest> ImportBook(Uri bookInputPath, BookMetaInfo bookMetaInfo, ContentType contentType,
+            params KeyValuePair<Option, object>[] options);
 
-        IObservable<int> getBookCount();
+        IObservable<BookManifest> RetrieveBookManifest(string bookId);
+
+        IObservable<BookMetaInfo> RetrieveBookMetaInfo(string bookId);
+
+        IObservable<Uri> RetrievePhysicalFileLocation(string bookId);
+
+        IObservable<IBook<Page>> RetrieveBookAsObject(string bookId);
+
+        IObservable<string> ReadBookAsString(string bookId);
+
+        IObservable<string[]> ReadBookAsLines(string bookId);
+
+        IObservable<byte[]> ReadBookAsBytes(string bookId);
+
+        IObservable<string> ReadPageAsString(string bookId, int pageNb);
+
+        IObservable<string[]> ReadPageAsLines(string bookId, int pageNb);
+
+        IObservable<byte[]> ReadPageAsBytes(string bookId, int pageNb);
+
+        IObservable<int> GetBookCount();
     }
 }

@@ -1,28 +1,27 @@
-
 using System;
 using Modules.Common;
 
 namespace Modules.Book {
-    
+
     public class SvgPage : Page {
-        
-        public string svg { get; }
-        
+
         public SvgPage(string pageName, int pageNb, string svg)
-            : base (pageName, pageNb) {
+            : base(pageName, pageNb) {
             this.svg = svg;
         }
 
-        public override T getContent<T>() {
+        public string svg { get; }
+
+        public override T Content<T>() {
             return (T) Convert.ChangeType(svg, typeof(T));
         }
 
-        public override Type getContentClassType() {
+        public override Type ContentClassType() {
             return typeof(string);
         }
 
-        public override ContentType getContentType() {
-            return ContentType.SVG;
+        public override ContentType ContentType() {
+            return Common.ContentType.SVG;
         }
     }
 }

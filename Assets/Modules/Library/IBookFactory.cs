@@ -1,10 +1,9 @@
 using Modules.Book;
 
 namespace Modules.Library {
-    
-    public interface IBookFactory<TBookType, TPageType> where TBookType : Book<TPageType> where TPageType : Page {
 
-        TBookType build();
-
+    public interface IBookFactory<TBookType, TPageType> where TBookType : IBook<TPageType> where TPageType : Page {
+        
+        TBookType Build();
     }
 }

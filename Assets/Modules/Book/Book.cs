@@ -1,43 +1,36 @@
 ﻿using System.Collections.Generic;
 
 namespace Modules.Book {
-    
+
     public abstract class Book<T> : IBook<T> where T : Page {
-        
-        private BookMetaInfo bookMetaInfo;
-        private Binding binding;
-        private BookFormat bookFormat;
-        
+
+        private readonly Binding binding;
+        private readonly BookFormat bookFormat;
+
+        private readonly BookMetaInfo bookMetaInfo;
+
         protected Book(BookMetaInfo bookMetaInfo, Binding binding, BookFormat bookFormat) {
             this.bookMetaInfo = bookMetaInfo;
             this.binding = binding;
             this.bookFormat = bookFormat;
         }
 
-        public BookMetaInfo getBookMetaInfo() {
+        public BookMetaInfo BookMetaInfo() {
             return bookMetaInfo;
         }
 
-        public Binding getBinding() {
+        public Binding Binding() {
             return binding;
         }
 
-        public BookFormat getBookFormat() {
+        public BookFormat BookFormat() {
             return bookFormat;
         }
 
-        public abstract T getPage(int pageNum);
+        public abstract T Page(int pageNum);
 
-        public abstract List<T> getPages();
+        public abstract IEnumerable<T> Pages();
 
-        public abstract int getPageCount();
-
-        public abstract void appendPage(T page);
-
-        public abstract void addPageAt(T page, int index);
-
-        public abstract bool removePage(T page);
-
-        public abstract void removePageAt(int index);
+        public abstract int PageCount();
     }
 }

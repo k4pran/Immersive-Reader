@@ -1,53 +1,37 @@
 using System.Collections.Generic;
 
 namespace Modules.Book {
-    
+
     public class BasicBook : Book<TextPage> {
 
         public static readonly int LINES_PER_PAGE_DEFAULT = 27;
         public static readonly int LINES_PER_PAGE_MIN = 12;
+        public int linesPerPage;
 
         public List<TextPage> pages;
-        public int linesPerPage;
-        
-        public BasicBook(BookMetaInfo bookMetaInfo, Binding binding, List<TextPage> pages) 
-            : base(bookMetaInfo, binding, BookFormat.TEXT) {
+
+        public BasicBook(BookMetaInfo bookMetaInfo, Binding binding, List<TextPage> pages)
+            : base(bookMetaInfo, binding, Book.BookFormat.TEXT) {
             this.pages = pages;
             linesPerPage = LINES_PER_PAGE_DEFAULT;
         }
 
-        public BasicBook(BookMetaInfo bookMetaInfo, Binding binding, BookFormat bookFormat, List<TextPage> pages, 
+        public BasicBook(BookMetaInfo bookMetaInfo, Binding binding, BookFormat bookFormat, List<TextPage> pages,
             int linesPerPage)
             : base(bookMetaInfo, binding, bookFormat) {
             this.pages = pages;
             this.linesPerPage = linesPerPage < LINES_PER_PAGE_MIN ? LINES_PER_PAGE_MIN : linesPerPage;
         }
 
-        public override void appendPage(TextPage page) {
-            pages.Add(page);
-        }
-
-        public override void addPageAt(TextPage page, int index) {
-            pages.Insert(index, page);
-        }
-
-        public override bool removePage(TextPage page) {
-            return pages.Remove(page);
-        }
-
-        public override void removePageAt(int index) {
-            pages.RemoveAt(index);
-        }
-
-        public override List<TextPage> getPages() {
+        public override IEnumerable<TextPage> Pages() {
             return pages;
         }
 
-        public override TextPage getPage(int pageNum) {
+        public override TextPage Page(int pageNum) {
             return pages[pageNum];
         }
 
-        public override int getPageCount() {
+        public override int PageCount() {
             return pages.Count;
         }
     }

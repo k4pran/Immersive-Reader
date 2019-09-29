@@ -4,10 +4,8 @@ using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace Modules.Library {
-    
+
     public class LibraryManifest {
-        
-        public Dictionary<string, BookManifest> bookManifests { get; private set; }
 
         public LibraryManifest() {
             bookManifests = new Dictionary<string, BookManifest>();
@@ -17,43 +15,50 @@ namespace Modules.Library {
             this.bookManifests = bookManifests;
         }
 
-        public void addEntry(BookManifest bookManifest) {
-            if (bookManifest.bookId.Length == 0) {
+        public Dictionary<string, BookManifest> bookManifests { get; }
+
+        public List<BookToken> GetBookTokens() {
+            var tokens = new List<BookToken>();
+            foreach (var keyValuePair in bookManifests)
+                tokens.Add(new BookToken(keyValuePair.Key, keyValuePair.Value.bookTitle));
+
+            return tokens;
+        }
+
+        public void AddEntry(BookManifest bookManifest) {
+            if (bookManifest.bookId.Length == 0)
                 throw new InvalidBookIdException("Found empty ID in book manifest. This is not allowed");
-            }
             bookManifests.Add(bookManifest.bookId, bookManifest);
         }
 
-        public bool bookIdExists(string bookId) {
+        public bool BookIdExists(string bookId) {
             return bookManifests.ContainsKey(bookId);
         }
 
-        public BookManifest getBookById(string bookId) {
-            if (bookIdExists(bookId)) {
-                return bookManifests[bookId];
-            }
+        public BookManifest GetBookById(string bookId) {
+            if (BookIdExists(bookId)) return bookManifests[bookId];
             throw new BookNotFoundException("Book with id " + bookId + " not found");
         }
 
-        public int getBookCount() {
+        public int GetBookCount() {
             return bookManifests.Count;
         }
 
-        public string serialize() {
-            Serializer serializer = new SerializerBuilder()
+        public string Serialize() {
+            var serializer = new SerializerBuilder()
                 .WithNamingConvention(new CamelCaseNamingConvention())
                 .JsonCompatible()
                 .Build();
-            
+
             return serializer.Serialize(this);
         }
 
-        public static LibraryManifest deserialize(string yaml) {
-            StringReader yamlInput = new StringReader(yaml);
-            Deserializer deserializer = new DeserializerBuilder()
+        public static LibraryManifest Deserialize(string yaml) {
+            var yamlInput = new StringReader(yaml);
+            var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(new CamelCaseNamingConvention())
                 .Build();
-            
+
             return deserializer.Deserialize<LibraryManifest>(yamlInput);
         }
     }
