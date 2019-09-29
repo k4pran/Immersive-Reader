@@ -14,7 +14,6 @@ namespace Modules.Library.Tests {
             bookMetaInfo.title = "Dracula";
             bookMetaInfo.author = "Bram Stoker";
             bookMetaInfo.publisher = "Archibald Constable and Company (UK)";
-            bookMetaInfo.pageCount = 368;
             bookMetaInfo.language = "English";
             bookMetaInfo.description = "Dracula is an 1897 Gothic horror novel by Irish author Bram Stoker";
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
@@ -39,7 +38,6 @@ namespace Modules.Library.Tests {
             bookMetaInfo.title = "Dracula";
             bookMetaInfo.author = "Bram Stoker";
             bookMetaInfo.publisher = "Archibald Constable and Company (UK)";
-            bookMetaInfo.pageCount = 368;
             bookMetaInfo.language = "English";
             bookMetaInfo.description = "Dracula is an 1897 Gothic horror novel by Irish author Bram Stoker";
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
@@ -61,7 +59,6 @@ namespace Modules.Library.Tests {
             bookMetaInfo.title = "Dracula";
             bookMetaInfo.author = "Bram Stoker";
             bookMetaInfo.publisher = "Archibald Constable and Company (UK)";
-            bookMetaInfo.pageCount = 368;
             bookMetaInfo.language = "English";
             bookMetaInfo.description = "Dracula is an 1897 Gothic horror novel by Irish author Bram Stoker";
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
@@ -87,7 +84,6 @@ namespace Modules.Library.Tests {
             bookMetaInfo.title = "Dracula";
             bookMetaInfo.author = "Bram Stoker";
             bookMetaInfo.publisher = "Archibald Constable and Company (UK)";
-            bookMetaInfo.pageCount = 368;
             bookMetaInfo.language = "English";
             bookMetaInfo.description = "Dracula is an 1897 Gothic horror novel by Irish author Bram Stoker";
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);
@@ -113,7 +109,6 @@ namespace Modules.Library.Tests {
             bookMetaInfo.title = "Dracula";
             bookMetaInfo.author = "Bram Stoker";
             bookMetaInfo.publisher = "Archibald Constable and Company (UK)";
-            bookMetaInfo.pageCount = 368;
             bookMetaInfo.language = "English";
             bookMetaInfo.description = "Dracula is an 1897 Gothic horror novel by Irish author Bram Stoker";
             bookMetaInfo.publicationDate = new DateTime(1987, 5, 26);

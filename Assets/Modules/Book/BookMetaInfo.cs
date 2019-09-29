@@ -23,7 +23,6 @@ namespace Modules.Book {
             this.category = category;
             this.tags = tags;
             this.publicationDate = publicationDate;
-            this.pageCount = pageCount;
         }
 
         public string title { get; set; }
@@ -34,7 +33,6 @@ namespace Modules.Book {
         public string category { get; set; }
         public string[] tags { get; set; }
         public DateTime publicationDate { get; set; }
-        public int pageCount { get; set; }
 
         public string CollapseTags() {
             return string.Join(COLLAPSE_DELIMITER.ToString(), tags);
