@@ -6,6 +6,8 @@ using YamlDotNet.Serialization.NamingConventions;
 namespace Modules.Library {
 
     public class LibraryManifest {
+        
+        public Dictionary<string, BookManifest> bookManifests { get; private set; }
 
         public LibraryManifest() {
             bookManifests = new Dictionary<string, BookManifest>();
@@ -14,9 +16,7 @@ namespace Modules.Library {
         public LibraryManifest(Dictionary<string, BookManifest> bookManifests) {
             this.bookManifests = bookManifests;
         }
-
-        public Dictionary<string, BookManifest> bookManifests { get; }
-
+        
         public List<BookToken> GetBookTokens() {
             var tokens = new List<BookToken>();
             foreach (var keyValuePair in bookManifests)

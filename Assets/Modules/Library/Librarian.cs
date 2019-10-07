@@ -53,6 +53,11 @@ namespace Modules.Library {
                 .Select(book => book.PageCount());
         }
 
+        public IObservable<string> Title(string bookId) {
+            return library.RetrieveBookMetaInfo(bookId)
+                .Select(book => book.title);
+        }
+
         public IObservable<string> Author(string bookId) {
             return library.RetrieveBookMetaInfo(bookId)
                 .Select(metaInfo => metaInfo.author);

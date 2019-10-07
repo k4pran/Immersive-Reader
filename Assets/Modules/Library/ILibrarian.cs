@@ -18,6 +18,8 @@ namespace Modules.Library {
         IObservable<T> PageContents<T>(string bookId, int pageNb);
         
         IObservable<int> PageCount(string bookId);
+        
+        IObservable<string> Title(string bookId);
 
         IObservable<string> Author(string bookId);
 

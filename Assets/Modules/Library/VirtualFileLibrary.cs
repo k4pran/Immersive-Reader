@@ -323,6 +323,8 @@ namespace Modules.Library {
         }
 
         private UPath GetRootDir() {
+            Debug.Log(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                applicationName, rootDirName));
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 applicationName, rootDirName);
         }

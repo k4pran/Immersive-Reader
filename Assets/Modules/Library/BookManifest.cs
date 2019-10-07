@@ -21,13 +21,13 @@ namespace Modules.Library {
             this.fileType = fileType;
         }
 
-        public string bookId { get; }
-        public string bookTitle { get; }
-        public string bookLocation { get; }
-        public string originalLocation { get; }
-        public string metaInfoLocation { get; }
-        public ContentType contentType { get; }
-        public FileType fileType { get; }
+        public string bookId { get; private set; }
+        public string bookTitle { get; private set; }
+        public string bookLocation { get; private set; }
+        public string originalLocation { get; private set; }
+        public string metaInfoLocation { get; private set; }
+        public ContentType contentType { get; private set; }
+        public FileType fileType { get; private set; }
 
         public string Serialize() {
             Debug.Log("Serializing book manifest: [" + bookTitle + " : " + bookId + "]");
