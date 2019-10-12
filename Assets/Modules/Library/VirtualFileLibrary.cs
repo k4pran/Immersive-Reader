@@ -8,6 +8,7 @@ using Modules.Common;
 using UnityEngine;
 using Zio;
 using Zio.FileSystems;
+using Logger = Modules.Common.Logger;
 
 namespace Modules.Library {
 
@@ -71,7 +72,7 @@ namespace Modules.Library {
         public IObservable<BookMetaInfo> RetrieveBookMetaInfo(string bookId) {
             return Observable.Create<BookMetaInfo>(observer => {
                 try {
-                    ReadBookMetaInfoFromVfs(bookId);
+                    observer.OnNext(ReadBookMetaInfoFromVfs(bookId));
                 }
                 catch (Exception e) {
                     observer.OnError(e);
@@ -244,23 +245,24 @@ namespace Modules.Library {
         }
 
         private void Setup() {
+            Logger.Info(String.Format("Setting up physical file system at root {0}", GetRootDir()));
             physicalFileSystem.CreateDirectory(GetRootDir());
             physicalFileSystem.CreateDirectory(GetBookLibDir());
             InitializeLibrary();
         }
 
         private void InitializeLibrary() {
-            Debug.Log("Initializing library...");
+            Logger.Info(String.Format("Initializing library at {0}", GetLibraryManifestPath()));
             if (physicalFileSystem.FileExists(GetLibraryManifestPath())) {
-                Debug.Log("Library exists at " + GetLibraryManifestPath());
+                Logger.Debug(String.Format("Library already exists at {0}", GetLibraryManifestPath()));
                 LoadExistingLibrary();
             }
             else {
-                Debug.Log("No library found. Creating now...");
+                Logger.Debug("No library found. Creating now");
                 CreateNewLibrary();
             }
 
-            Debug.Log("Library ready");
+            Logger.Info("Library ready");
         }
 
         private void LoadExistingLibrary() {
@@ -386,7 +388,7 @@ namespace Modules.Library {
 
         private BookManifest CreateBookEntry(UPath vfsBookPath, Uri originalPath, UPath bookMetaInfoPath,
             BookMetaInfo bookMetaInfo, ContentType contentType) {
-            var ext = FileUtils.FileExtFromPath(originalPath.AbsolutePath);
+            var ext = FileUtils.FileExtFromPath(originalPath.AbsolutePath, withDot: false);
             FileType fileType;
             var success = Enum.TryParse(ext, true, out fileType);
 
@@ -442,6 +444,8 @@ namespace Modules.Library {
         private void SaveFile(Stream fileInputStream, UPath destinationPath) {
             var outputStream = physicalFileSystem.CreateFile(destinationPath);
             fileInputStream.CopyTo(outputStream);
+            fileInputStream.Close();
+            outputStream.Close();
         }
 
         private UPath AsUpath(string path) {
