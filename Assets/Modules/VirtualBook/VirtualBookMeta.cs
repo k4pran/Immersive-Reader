@@ -29,7 +29,5 @@ namespace Modules.VirtualBook {
         public string[] tags { get; set; }
         public DateTime publicationDate { get; set; }
         public int pageCount { get; set; }
-
     }
-
 }

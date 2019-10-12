@@ -5,5 +5,4 @@ namespace Modules.VirtualBook {
     public class ReadOnlyAttribute : PropertyAttribute {
 
     }
-
 }

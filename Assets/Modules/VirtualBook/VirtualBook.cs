@@ -13,7 +13,8 @@ namespace Modules.VirtualBook {
 
         private static ILibrarian librarian;
 
-        [FormerlySerializedAs("virtualPage")] public List<VirtualPage> virtualPages;
+        [FormerlySerializedAs("virtualPage")]
+        public List<VirtualPage> virtualPages;
         [FormerlySerializedAs("currentPage")] public VirtualPage currentPage;
         public int currentPageNumber;
 
@@ -29,17 +30,23 @@ namespace Modules.VirtualBook {
             librarian = new Librarian(library);
         }
         
-        public void createFromId(string bookId) {
-            IObservable<VirtualBook> virtualBook = createVirtualBook(bookId);
+        public static IObservable<VirtualBook> createFromId(string bookId) {
+            return createVirtualBook(bookId);
+        }
+        
+        public static IObservable<VirtualBook> createFromTitle(string title) {
+            return librarian.BookIdByTitle(title)
+                .Select(bookId => createVirtualBook(bookId))
+                .Concat();
         }
 
-        private IObservable<VirtualBook> createVirtualBook(string bookId) {
+        public static IObservable<VirtualBook> createVirtualBook(string bookId) {
             return librarian.Title(bookId)
                 .Select(title => BookCreateUtils.GetVirtualBookPrefab(title))
                 .Select(virtualBookPrefab => virtualBookPrefab.GetComponent<VirtualBook>());
         }
 
-        private IObservable<VirtualPage[]> createPages(string bookId) {
+        public static IObservable<VirtualPage[]> createPages(string bookId) {
             return librarian.PageCount(bookId)
                 .Select(pageCount => Enumerable.Range(0, pageCount))
                 .SelectMany(pageNb => pageNb)
@@ -48,7 +55,7 @@ namespace Modules.VirtualBook {
                 .ToArray();
         }
 
-        private IObservable<VirtualPage> createPage(string bookId, int pageNb) {
+        public static IObservable<VirtualPage> createPage(string bookId, int pageNb) {
             return librarian.PageContents<string>(bookId, pageNb)
                 .Select(text => TextContent.tmpGuiFromText(text))
                 .Select(tmpGui => VirtualPage.CreateVirtualPaper(null, pageNb.ToString()))
@@ -60,7 +67,7 @@ namespace Modules.VirtualBook {
                 });
         }
 
-        private IObservable<TextMeshProUGUI> createTmpGui(string bookId, int pageNb) {
+        public static IObservable<TextMeshProUGUI> createTmpGui(string bookId, int pageNb) {
             return librarian.PageContents<string>(bookId, pageNb)
                 .Select(text => TextContent.tmpGuiFromText(text))
                 .Concat();
