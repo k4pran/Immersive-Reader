@@ -1,0 +1,17 @@
+{
+    "name": "Book",
+    "references": [
+        "Common",
+        "PdfReader",
+        "YamlDotNet"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
