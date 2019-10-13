@@ -14,7 +14,6 @@ namespace Modules.VirtualBook {
         private static ILibrarian librarian;
 
         public List<VirtualPage> virtualPages;
-        public int currentPageNumber;
 
         public string bookId;
         
