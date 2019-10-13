@@ -5,72 +5,144 @@ using System.Reactive.Linq;
 using Modules.Library;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Logger = Modules.Common.Logger;
 
 namespace Modules.VirtualBook {
         
-    public class VirtualBook : MonoBehaviour {
+    public class VirtualBook : MonoBehaviour, IBookController {
 
         private static ILibrarian librarian;
 
-        [FormerlySerializedAs("virtualPage")]
         public List<VirtualPage> virtualPages;
-        [FormerlySerializedAs("currentPage")] public VirtualPage currentPage;
         public int currentPageNumber;
 
         public string bookId;
         
         [ReadOnly] 
         public string title;
-        [ReadOnly] 
+
         public int pageCount;
 
+        public int currentPageNb;
+
+        void Start() {
+            InitPageCount();
+            InitTitle();
+        }
+
+        void Update() {
+        }
+
+        private void InitPageCount() {
+            librarian.PageCount(bookId)
+                .Subscribe(
+                    fetchedPageCount => pageCount = fetchedPageCount,
+                    error => Logger.Error(error));
+        }
+        
+        private void InitTitle() {
+            librarian.Title(bookId)
+                .Subscribe(
+                    fetchedTitle => title = fetchedTitle,
+                    error => Logger.Error(error));
+        }
+        
         static VirtualBook() {
             ILibrary library = new VirtualFileLibrary();
             librarian = new Librarian(library);
         }
         
-        public static IObservable<VirtualBook> createFromId(string bookId) {
-            return createVirtualBook(bookId);
+        public static IObservable<VirtualBook> CreateFromId(string bookId) {
+            return CreateVirtualBook(bookId)
+                .Do(book => book.bookId = bookId);
         }
         
-        public static IObservable<VirtualBook> createFromTitle(string title) {
+        public static IObservable<VirtualBook> CreateFromTitle(string title) {
             return librarian.BookIdByTitle(title)
-                .Select(bookId => createVirtualBook(bookId))
+                .Select(bookId => CreateFromId(bookId))
                 .Concat();
         }
 
-        public static IObservable<VirtualBook> createVirtualBook(string bookId) {
+        public static IObservable<VirtualBook> CreateVirtualBook(string bookId) {
             return librarian.Title(bookId)
                 .Select(title => BookCreateUtils.GetVirtualBookPrefab(title))
                 .Select(virtualBookPrefab => virtualBookPrefab.GetComponent<VirtualBook>());
         }
 
-        public static IObservable<VirtualPage[]> createPages(string bookId) {
+        public IObservable<VirtualPage[]> CreatePages() {
             return librarian.PageCount(bookId)
                 .Select(pageCount => Enumerable.Range(0, pageCount))
                 .SelectMany(pageNb => pageNb)
-                .Select(pageNb => createPage(bookId, pageNb))
+                .Select(pageNb => CreatePage(bookId, pageNb))
                 .Concat()
                 .ToArray();
         }
 
-        public static IObservable<VirtualPage> createPage(string bookId, int pageNb) {
+        public IObservable<VirtualPage> CreatePage(string bookId, int pageNb) {
             return librarian.PageContents<string>(bookId, pageNb)
                 .Select(text => TextContent.tmpGuiFromText(text))
                 .Select(tmpGui => VirtualPage.CreateVirtualPaper(null, pageNb.ToString()))
                 .Select(pageGameObject => pageGameObject.GetComponent<VirtualPage>())
-                .Zip(createTmpGui(bookId, pageNb), (virtualPage, textMeshGui) => {
+                .Zip(CreateTmpGui(bookId, pageNb), (virtualPage, textMeshGui) => {
                     bool isLeft = pageNb % 2 == 1;
                     virtualPage.AddContent(textMeshGui.gameObject, isLeft);
                     return virtualPage;
                 });
         }
 
-        public static IObservable<TextMeshProUGUI> createTmpGui(string bookId, int pageNb) {
+        public IObservable<TextMeshProUGUI> CreateTmpGui(string bookId, int pageNb) {
             return librarian.PageContents<string>(bookId, pageNb)
                 .Select(text => TextContent.tmpGuiFromText(text))
                 .Concat();
+        }
+
+        public int CurrentPageNb() {
+            return currentPageNb;
+        }
+
+        public int Next() {
+            if (currentPageNb >= GoToEnd() - 2) {
+                currentPageNb = GoToEnd();
+                return CurrentPageNb();
+            }
+
+            currentPageNb += 2;
+            return CurrentPageNb();
+        }
+
+        public int Previous() {
+            if (currentPageNb <= 1) {
+                currentPageNb = GoToStart();
+                return CurrentPageNb();
+            }
+
+            currentPageNb -= 2;
+            return CurrentPageNb();
+        }
+
+        public int GoTo(int pageNb) {
+            if (pageNb < GoToStart()) {
+                currentPageNb = GoToStart();
+                return CurrentPageNb();
+            }
+
+            if (pageNb > GoToEnd()) {
+                currentPageNb = GoToEnd();
+                return CurrentPageNb();
+            }
+
+            currentPageNb = pageNb;
+            return CurrentPageNb();
+        }
+
+        public int GoToStart() {
+            currentPageNb = 0;
+            return CurrentPageNb();
+        }
+
+        public int GoToEnd() {
+            currentPageNb = pageCount - 1;
+            return CurrentPageNb();
         }
     }
 }

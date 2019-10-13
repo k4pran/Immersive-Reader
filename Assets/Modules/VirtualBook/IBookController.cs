@@ -10,8 +10,8 @@ namespace Modules.VirtualBook {
 
         int GoTo(int pageNb);
 
-        int Start();
+        int GoToStart();
 
-        int End();
+        int GoToEnd();
     }
 }

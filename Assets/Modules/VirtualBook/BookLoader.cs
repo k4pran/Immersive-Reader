@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Modules.Library;
 using UnityEngine;
+using Logger = Modules.Common.Logger;
 
 namespace Modules.VirtualBook {
 
@@ -21,24 +22,25 @@ namespace Modules.VirtualBook {
             availableBooks = new List<BookInspectorElement>();
         }
 
-        public void loadBookFromId() {
+        public void LoadBookFromId() {
             Debug.Log("Loading book with id " + bookId + "...");
-            VirtualBook.createFromId(bookId).Subscribe(
+            VirtualBook.CreateFromId(bookId).Subscribe(
                 book => {
                     Debug.Log("Book successfully loaded");
                 },
                 error => Debug.Log(error));
         }
 
-        public void loadBookFromTitle() {
-            VirtualBook.createFromTitle(bookTitle).Subscribe(
+        public void LoadBookFromTitle() {
+            VirtualBook.CreateFromTitle(bookTitle)
+                .Subscribe(
                 book => {
                     Debug.Log("Book successfully loaded");
                 },
-                error => Debug.Log("ERROR"));
+                error => Logger.Error(error));
         }
 
-        public void populateBooks() {
+        public void PopulateBooks() {
             Debug.Log("Populating books...");
             availableBooks = new List<BookInspectorElement>();
             librarian.BookCount().Subscribe(bookCount => { Debug.Log(bookCount + " books found"); });
