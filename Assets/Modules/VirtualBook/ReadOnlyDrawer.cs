@@ -18,7 +18,5 @@ namespace Modules.VirtualBook {
             EditorGUI.PropertyField(position, property, label, true);
             GUI.enabled = true;
         }
-
     }
-
 }

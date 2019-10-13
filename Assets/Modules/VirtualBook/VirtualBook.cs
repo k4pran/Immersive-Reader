@@ -15,13 +15,16 @@ namespace Modules.VirtualBook {
 
         public List<VirtualPage> virtualPages;
 
+        [ReadOnly]
         public string bookId;
         
         [ReadOnly] 
         public string title;
 
+        [ReadOnly]
         public int pageCount;
 
+        [LabelOverride("Current Page Number", false)]
         public int currentPageNb;
 
         void Start() {
