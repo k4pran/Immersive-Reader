@@ -9,8 +9,8 @@ namespace Modules.VirtualBook {
 
     public class TextContent : IPageContent {
 
-        public static IObservable<TextMeshProUGUI> tmpGuiFromText(string text) {
-            return Observable.Create<TextMeshProUGUI>(observable => {
+        public static IObservable<GameObject> tmpGuiFromText(string text) {
+            return Observable.Create<GameObject>(observable => {
                 GameObject gameObject = new GameObject();
                 TextMeshProUGUI textMesh = gameObject.AddComponent<TextMeshProUGUI>();
                 textMesh.fontSizeMin = 8;
@@ -19,13 +19,13 @@ namespace Modules.VirtualBook {
                 textMesh.enableAutoSizing = true;
 
                 textMesh.text = text;
-                observable.OnNext(textMesh);
+                observable.OnNext(gameObject);
                 observable.OnCompleted();
                 return Disposable.Empty;
             });
         }
         
-        public static IObservable<TextMeshProUGUI> tmpGuiFromText(string[] lines) {
+        public static IObservable<GameObject> tmpGuiFromText(string[] lines) {
             return tmpGuiFromText(string.Join("\n", lines));
         }
     }

@@ -6,7 +6,7 @@ namespace Modules.VirtualBook {
 
         public static GameObject GetVirtualBookPrefab(string bookName, Transform parentTransform = null, float posX = 0,
             float posY = 0, float posZ = 0) {
-            var virtualBookPrefab = (GameObject) Resources.Load("Prefabs/VirtualBook", typeof(GameObject));
+            var virtualBookPrefab = (GameObject) Resources.Load("Prefabs/VirtualBasicBook", typeof(GameObject));
             var virtualBook = Instantiate(virtualBookPrefab, new Vector3(0, 0, 0), Quaternion.identity,
                 parentTransform);
             virtualBook.name = bookName;
@@ -21,7 +21,7 @@ namespace Modules.VirtualBook {
             return page;
         }
 
-        public static void fitPageContainer(GameObject parent, GameObject pageContainer, bool isLeftPage,
+        public static void FitPageContainer(GameObject parent, GameObject pageContainer, bool isLeftPage,
             float marginTop = 0, float marginRight = 0, float marginBottom = 0, float marginLeft = 0,
             float zOffset = -30) {
             var pageRect = pageContainer.GetComponent<RectTransform>();

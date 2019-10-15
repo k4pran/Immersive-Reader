@@ -24,7 +24,7 @@ namespace Modules.VirtualBook {
 
         public void LoadBookFromId() {
             Debug.Log("Loading book with id " + bookId + "...");
-            VirtualBook.CreateFromId(bookId).Subscribe(
+            VirtualBasicBook.CreateFromId(bookId).Subscribe(
                 book => {
                     Debug.Log("Book successfully loaded");
                 },
@@ -32,7 +32,7 @@ namespace Modules.VirtualBook {
         }
 
         public void LoadBookFromTitle() {
-            VirtualBook.CreateFromTitle(bookTitle)
+            VirtualBasicBook.CreateFromTitle(bookTitle)
                 .Subscribe(
                 book => {
                     Debug.Log("Book successfully loaded");
