@@ -13,7 +13,7 @@ namespace Modules.VirtualBook {
             EditorGUILayout.BeginHorizontal();
             bookLoader.bookId = EditorGUILayout.TextField("Book ID", bookLoader.bookId);
             if (GUILayout.Button("Load from id")) {
-                bookLoader.loadBookFromId();
+                bookLoader.LoadBookFromId();
             }
             EditorGUILayout.EndHorizontal();
             
@@ -22,7 +22,7 @@ namespace Modules.VirtualBook {
             EditorGUILayout.BeginHorizontal();
             bookLoader.bookTitle = EditorGUILayout.TextField("Book title", bookLoader.bookTitle);
             if (GUILayout.Button("Load from title")) {
-                bookLoader.loadBookFromTitle();
+                bookLoader.LoadBookFromTitle();
             }
             EditorGUILayout.EndHorizontal();
             
@@ -30,7 +30,7 @@ namespace Modules.VirtualBook {
 
             
             if (GUILayout.Button("Populate books")) {
-                bookLoader.populateBooks();
+                bookLoader.PopulateBooks();
             }
             
             EditorGUILayout.PropertyField(serializedObject.FindProperty("availableBooks"), true);

@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Modules.Common {
 
-    public class Logger {
+    public static class Logger {
 
         private static readonly string TRACE_COLOR = "brown";
         private static readonly string DEBUG_COLOR = "blue";
@@ -57,13 +57,15 @@ namespace Modules.Common {
             string origin = BuildCallerOrigin(callerPath, memberName, callerLineNumber.ToString());
             LogError(message, origin);
         }
-
-        private static string BuildCallerOrigin(string callerPath, string memberName, string lineNumber) {
-            string relCallerPath = FileUtils.absToRelativePath(callerPath);
-            return String.Format("<color={0}>{1} {2}:{3}</color>", CALLER_ORIGIN_COLOR, 
-                relCallerPath, memberName, lineNumber);
-        }
         
+        public static void Error(Exception exception,
+            [CallerFilePathAttribute] string callerPath = "", 
+            [CallerMemberName] string memberName = "", 
+            [CallerLineNumber] int callerLineNumber = 0) {
+            string origin = BuildCallerOrigin(callerPath, memberName, callerLineNumber.ToString());
+            LogError(exception.Message, origin);
+        }
+
         private static void LogTrace(string message, string origin) {
             UnityEngine.Debug.Log(BuildLog(message, origin, TRACE_COLOR, LogLevel.TRACE));
         }
@@ -88,13 +90,18 @@ namespace Modules.Common {
             StringBuilder sb = new StringBuilder();
             sb.Append(String.Format("<i>{0}</i>", CurrentDateTime()));
             sb.Append("  ");
-            sb.Append(String.Format("<color={0}>{1}</color>", color, rightPadString(logLevel.ToString(), 15)));
+            sb.Append(String.Format("<color={0}>{1}</color>", color, RightPadString(logLevel.ToString(), 15)));
             sb.Append("  ");
             sb.Append(String.Format("<color={0}>{1}</color>", THREAD_NAME_COLOR, CurrentThreadId()));
             sb.Append(" --- ");
             sb.Append(String.Format("{0} : ", origin));
             sb.Append(String.Format("<b>{0}</b>", message));
             return sb.ToString();
+        }
+        
+        private static string BuildCallerOrigin(string callerPath, string memberName, string lineNumber) {
+            return String.Format("<color={0}>{1} {2}:{3}</color>", CALLER_ORIGIN_COLOR, 
+                callerPath, memberName, lineNumber);
         }
 
         private static string CurrentDateTime() {
@@ -105,7 +112,7 @@ namespace Modules.Common {
             return Thread.CurrentThread.ManagedThreadId.ToString();
         }
 
-        private static string rightPadString(string originalString, int paddedLength) {
+        private static string RightPadString(string originalString, int paddedLength) {
             return originalString.PadRight(paddedLength, ' ').Substring(0, paddedLength);
         }
 

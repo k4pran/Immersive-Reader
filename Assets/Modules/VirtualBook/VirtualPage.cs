@@ -1,18 +1,28 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using UnityEngine;
 
 namespace Modules.VirtualBook {
 
     public class VirtualPage : MonoBehaviour {
+        public bool isLeft;
 
-        public GameObject content { get; private set; }
-        public bool isLeft { get; private set; }
+        public static IObservable<GameObject> CreateVirtualPaper(Transform parentTransform, string pageName) {
+            return Observable.Create<GameObject>(observer => {
+                try {
+                    GameObject virtualPageObj = BookCreateUtils.GetPagePrefab(
+                        "Virtual Page - [" + pageName + "]", parentTransform);
 
-        public static GameObject CreateVirtualPaper(Transform parentTransform, string pageName) {
-            GameObject virtualPageObj = BookCreateUtils.GetPagePrefab(
-                "Virtual Page - [" + pageName + "]", parentTransform);
-
-            virtualPageObj.transform.parent = parentTransform;
-            return virtualPageObj;
+                    virtualPageObj.transform.parent = parentTransform;
+                    observer.OnNext(virtualPageObj);
+                }
+                catch (Exception e) {
+                    observer.OnError(e);
+                }
+                
+                return Disposable.Empty;
+            });
         }
 
         public static GameObject CreateBlank(Transform parentTransform) {
@@ -23,16 +33,13 @@ namespace Modules.VirtualBook {
             return virtualPageObj;
         }
 
-        public IPageContent AddContent(GameObject contentPrefab, bool isLeft = true) {
-            content = Instantiate(contentPrefab, transform);
-            content.name = "content";
+        public void AddContent(GameObject contentGameObj, bool isLeft = true) {
+            contentGameObj.transform.parent = gameObject.transform;
+            contentGameObj.name = "content";
+            
+            BookCreateUtils.stretchToParent(contentGameObj, 20, 20, 20, 20);
+            BookCreateUtils.FitPageContainer(transform.parent.gameObject, gameObject, isLeft);
             this.isLeft = isLeft;
-            return content.GetComponent<IPageContent>();
-        }
-
-        public void SetPositions(GameObject parent) {
-            BookCreateUtils.stretchToParent(content);
-            BookCreateUtils.fitPageContainer(parent, gameObject, isLeft);
         }
     }
 }
