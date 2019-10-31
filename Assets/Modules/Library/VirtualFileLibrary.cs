@@ -427,45 +427,48 @@ namespace Modules.Library {
         }
 
         private string ReadFileAsStringFromVfs(UPath uPath) {
+            Logger.Debug($"Reading file as string at {uPath}");
             if (physicalFileSystem.FileExists(uPath)) 
                 return physicalFileSystem.ReadAllText(uPath);
             throw new FileNotFoundException($"File {uPath} not found in virtual file system");
         }
 
         private string[] ReadFileAsLinesFromVfs(UPath uPath) {
+            Logger.Debug($"Reading file as lines at {uPath}");
             if (physicalFileSystem.FileExists(uPath)) 
                 return physicalFileSystem.ReadAllLines(uPath);
             throw new FileNotFoundException($"File {uPath} not found in virtual file system");
         }
 
         private byte[] ReadFileAsBytesFromVfs(UPath uPath) {
+            Logger.Debug($"Reading file as bytes at {uPath}");
             if (physicalFileSystem.FileExists(uPath)) 
                 return physicalFileSystem.ReadAllBytes(uPath);
             throw new FileNotFoundException($"File {uPath} not found in virtual file system");
         }
 
         private string ReadFileAsStringFromNative(Uri path) {
+            Logger.Debug($"Reading file as string at {path}");
             if (path.IsFile && File.Exists(path.AbsolutePath)) 
                 return File.ReadAllText(path.AbsolutePath);
             throw new FileNotFoundException($"File {path} not found in native file system");
         }
 
         private bool BookExists(UPath uPath) {
+            Logger.Trace($"Checking book exists at {uPath}");
             return physicalFileSystem.FileExists(uPath);
         }
 
         private void SaveFile(Stream fileInputStream, UPath destinationPath) {
+            Logger.Debug($"Saving file input stream to {destinationPath}");
             Stream outputStream = physicalFileSystem.CreateFile(destinationPath);
             fileInputStream.CopyTo(outputStream);
             fileInputStream.Close();
             outputStream.Close();
         }
 
-        private UPath AsUpath(string path) {
-            return new UPath(path);
-        }
-
         public string GenerateId() {
+            Logger.Trace("Generating new book id");
             return Guid.NewGuid().ToString("D");
         }
 

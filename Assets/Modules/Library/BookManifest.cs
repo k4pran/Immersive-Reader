@@ -40,6 +40,7 @@ namespace Modules.Library {
         }
 
         public static BookManifest Deserialize(string yaml) {
+            Debug.Log("Deserializing book manifest");
             var yamlInput = new StringReader(yaml);
             var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(new CamelCaseNamingConvention())

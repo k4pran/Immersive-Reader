@@ -60,64 +60,64 @@ namespace Modules.Library {
 
         public IObservable<int> PageCount(string bookId) {
             return library.ReadBookAsObject(bookId)
-                .Do(_ => Logger.Debug($"Counting pages in book {bookId}"))
+                .Do(_ => Logger.Trace($"Counting pages in book {bookId}"))
                 .Select(book => book.PageCount())
-                .Do(pageCount => Logger.Debug($"Found {pageCount} pages in book {bookId}"));
+                .Do(pageCount => Logger.Trace($"Found {pageCount} pages in book {bookId}"));
         }
 
         public IObservable<string> Title(string bookId) {
             return library.RetrieveBookMetaInfo(bookId)
-                .Do(_ => Logger.Debug($"Fetching title for book {bookId}"))
+                .Do(_ => Logger.Trace($"Fetching title for book {bookId}"))
                 .Select(book => book.title)
-                .Do(title => Logger.Debug($"Book title determined as {title} for {bookId}"));
+                .Do(title => Logger.Trace($"Book title determined as {title} for {bookId}"));
         }
 
         public IObservable<string> Author(string bookId) {
             return library.RetrieveBookMetaInfo(bookId)
-                .Do(_ => Logger.Debug($"Fetching author for book {bookId}"))
+                .Do(_ => Logger.Trace($"Fetching author for book {bookId}"))
                 .Select(metaInfo => metaInfo.author)
-                .Do(author => Logger.Debug($"Book title determined as {author} for {bookId}"));
+                .Do(author => Logger.Trace($"Book title determined as {author} for {bookId}"));
         }
 
         public IObservable<string> Publisher(string bookId) {
             return library.RetrieveBookMetaInfo(bookId)
-                .Do(_ => Logger.Debug($"Fetching publisher for book {bookId}"))
+                .Do(_ => Logger.Trace($"Fetching publisher for book {bookId}"))
                 .Select(metaInfo => metaInfo.publisher)
-                .Do(publisher => Logger.Debug($"Book publisher determined as {publisher} for {bookId}"));
+                .Do(publisher => Logger.Trace($"Book publisher determined as {publisher} for {bookId}"));
         }
 
         public IObservable<string> Language(string bookId) {
             return library.RetrieveBookMetaInfo(bookId)
-                .Do(_ => Logger.Debug($"Fetching language for book {bookId}"))
+                .Do(_ => Logger.Trace($"Fetching language for book {bookId}"))
                 .Select(metaInfo => metaInfo.language)
-                .Do(language => Logger.Debug($"Book language determined as {language} for {bookId}"));
+                .Do(language => Logger.Trace($"Book language determined as {language} for {bookId}"));
         }
 
         public IObservable<string> Description(string bookId) {
             return library.RetrieveBookMetaInfo(bookId)
-                .Do(_ => Logger.Debug($"Fetching description for book {bookId}"))
+                .Do(_ => Logger.Trace($"Fetching description for book {bookId}"))
                 .Select(metaInfo => metaInfo.description);
             
         }
 
         public IObservable<string> Category(string bookId) {
             return library.RetrieveBookMetaInfo(bookId)
-                .Do(_ => Logger.Debug($"Fetching categories for book {bookId}"))
+                .Do(_ => Logger.Trace($"Fetching categories for book {bookId}"))
                 .Select(metaInfo => metaInfo.category);        
         }
 
         public IObservable<string[]> Tags(string bookId) {
             return library.RetrieveBookMetaInfo(bookId)
-                .Do(_ => Logger.Debug($"Fetching tags for book {bookId}"))
+                .Do(_ => Logger.Trace($"Fetching tags for book {bookId}"))
                 .Select(metaInfo => metaInfo.tags);       
         }
 
         public IObservable<DateTime> PublicationDate(string bookId) {
             return library.RetrieveBookMetaInfo(bookId)
-                .Do(_ => Logger.Debug($"Fetching publication date for book {bookId}"))
+                .Do(_ => Logger.Trace($"Fetching publication date for book {bookId}"))
                 .Select(metaInfo => metaInfo.publicationDate)
                 .Do(publicationDate => 
-                    Logger.Debug($"Book publication date determined as {publicationDate} for {bookId}"));
+                    Logger.Trace($"Book publication date determined as {publicationDate} for {bookId}"));
         }
     }
 }
