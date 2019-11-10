@@ -52,16 +52,13 @@ namespace Modules.Library {
         }
 
         public IObservable<T> PageContents<T>(string bookId, int pageNb) {
-            return library.ReadBookAsObject(bookId)
-                .Do(_ => Logger.Debug($"Fetching page {pageNb} of book {bookId}"))
-                .Select(book => book.Page(pageNb))
-                .Select(page => page.Content<T>());
+            return library.ReadPage<T>(bookId, pageNb)
+                .Do(_ => Logger.Debug($"Fetching page {pageNb} of book {bookId}"));
         }
 
         public IObservable<int> PageCount(string bookId) {
-            return library.ReadBookAsObject(bookId)
-                .Do(_ => Logger.Trace($"Counting pages in book {bookId}"))
-                .Select(book => book.PageCount())
+            Logger.Trace($"Counting pages in book {bookId}");
+            return library.GetBookPageCount(bookId)
                 .Do(pageCount => Logger.Trace($"Found {pageCount} pages in book {bookId}"));
         }
 

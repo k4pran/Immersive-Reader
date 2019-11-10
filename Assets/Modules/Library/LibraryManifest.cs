@@ -46,6 +46,16 @@ namespace Modules.Library {
             if (BookIdExists(bookId)) return bookManifests[bookId];
             throw new BookNotFoundException("Book with id " + bookId + " not found");
         }
+        
+        public BookManifest GetBookByTitle(string title) {
+            Logger.Trace($"Fetching book {title} from library manifest");
+            BookToken bookToken = GetBookTokens().Find(token => token.bookTitle == title);
+            if (bookToken == null) {
+                throw new BookNotFoundException("Book with title " + title + " not found");
+            }
+
+            return GetBookById(bookToken.bookId);
+        }
 
         public int GetBookCount() {
             return bookManifests.Count;

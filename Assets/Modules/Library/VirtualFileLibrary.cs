@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Modules.Book;
 using Modules.Common;
-using UnityEngine;
 using Zio;
 using Zio.FileSystems;
 using Logger = Modules.Common.Logger;
@@ -81,6 +81,15 @@ namespace Modules.Library {
                 return Disposable.Empty;
             });
         }
+        
+        public IObservable<int> GetBookPageCount(string bookId) {
+            return Observable.Create<int>(observer => {
+                UPath pagesDir = GetPagesDir(libraryManifest.bookManifests[bookId].bookTitle);
+                observer.OnNext(physicalFileSystem.EnumerateFiles(pagesDir).Count());
+                observer.OnCompleted();
+                return Disposable.Empty;
+            });
+        }
 
         public IObservable<int> GetBookCount() {
             return Observable.Create<int>(observer => {
@@ -95,6 +104,10 @@ namespace Modules.Library {
             return Observable.Create<BookManifest>(observer => {
                 try {
                     // Save book
+                    if (BookExists(bookMetaInfo.title)) {
+                        observer.OnNext(libraryManifest.GetBookByTitle(bookMetaInfo.title));
+                        return Disposable.Empty;
+                    }
                     string filename = FileUtils.FileNameFromPath(bookInputPath.AbsolutePath);
                     UPath bookDirPath = CreateBookDir(bookMetaInfo.title);
                     Uri bookOutputPath = new Uri(Path.Combine(bookDirPath.ToString(), filename));
@@ -168,6 +181,35 @@ namespace Modules.Library {
                     observer.OnError(e);
                 }
 
+                return Disposable.Empty;
+            });
+        }
+
+        public IObservable<T> ReadPage<T>(string bookId, int pageNb) {
+            return Observable.Create<T>(observer => {
+                try {
+                    BookManifest bookManifest = libraryManifest.bookManifests[bookId];
+                    switch (bookManifest.contentType) {
+                        case ContentType.TEXT_ONLY:
+                            string bookTitle = bookManifest.bookTitle;
+                            string[] lines =
+                                ReadFileAsLinesFromVfs(GetPagePath(bookTitle, pageNb, bookManifest.fileType));
+                            observer.OnNext(new TextPage(pageNb.ToString(), pageNb, lines).Content<T>());
+                            break;
+                        
+                        case ContentType.SVG:
+                            break;
+
+                        default:
+                            observer.OnError(new ContentTypeException(
+                                $"Content type {bookManifest.contentType} not recognised for book {bookId}"));
+                            return Disposable.Empty;
+                    }
+                }
+                catch (Exception e) {
+                    observer.OnError(e);
+                }
+                observer.OnCompleted();
                 return Disposable.Empty;
             });
         }
@@ -457,6 +499,11 @@ namespace Modules.Library {
         private bool BookExists(UPath uPath) {
             Logger.Trace($"Checking book exists at {uPath}");
             return physicalFileSystem.FileExists(uPath);
+        }
+
+        private bool BookExists(string title) {
+            UPath bookDir = GetBookDir(title);
+            return BookExists(bookDir);
         }
 
         private void SaveFile(Stream fileInputStream, UPath destinationPath) {
