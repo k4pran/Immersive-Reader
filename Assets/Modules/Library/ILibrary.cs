@@ -25,12 +25,16 @@ namespace Modules.Library {
         IObservable<string[]> ReadBookAsLines(string bookId);
 
         IObservable<byte[]> ReadBookAsBytes(string bookId);
+        
+        IObservable<T> ReadPage<T>(string bookId, int pageNb);
 
         IObservable<string> ReadPageAsString(string bookId, int pageNb);
 
         IObservable<string[]> ReadPageAsLines(string bookId, int pageNb);
 
         IObservable<byte[]> ReadPageAsBytes(string bookId, int pageNb);
+        
+        IObservable<int> GetBookPageCount(string bookId);
 
         IObservable<int> GetBookCount();
     }

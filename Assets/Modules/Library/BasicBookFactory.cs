@@ -63,7 +63,6 @@ namespace Modules.Library {
                 var lines = pageContent.ToArray();
                 return new TextPage(pageName, pageNb, lines);
             }
-
         }
     }
 }
