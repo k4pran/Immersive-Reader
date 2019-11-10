@@ -20,8 +20,11 @@ namespace Modules.Library {
             }
 
             public BasicBook Build() {
+                Logger.Debug($"Building basic book {bookMetaInfo.title}");
                 var pages = GeneratePages();
-                return new BasicBook(bookMetaInfo, binding, pages);
+                BasicBook basicBook = new BasicBook(bookMetaInfo, binding, pages);
+                Logger.Debug("Finished building basic book");
+                return basicBook;
             }
 
             public Builder SetLinesPerPage(int linesPerPage) {
@@ -37,15 +40,18 @@ namespace Modules.Library {
             }
 
             private List<TextPage> GeneratePages() {
+                Logger.Debug($"Generating pages for basic book {bookMetaInfo.title}");
                 var pages = new List<TextPage>();
                 var pageNb = 1;
                 for (var i = 0; i < content.Length; i += linesPerPage) {
+                    Logger.Trace($"Generating page {pageNb} for book {bookMetaInfo.title}");
                     SubArray<string> pageContent;
                     if (i + linesPerPage >= content.Length)
                         pageContent = new SubArray<string>(content, i, content.Length - i);
                     else
                         pageContent = new SubArray<string>(content, i, linesPerPage);
                     pages.Add(GeneratePage(pageNb, pageContent));
+                    Logger.Trace("Page generated");
                     pageNb++;
                 }
 

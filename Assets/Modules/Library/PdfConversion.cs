@@ -12,6 +12,8 @@ namespace Modules.Library {
         private static readonly string SVG_EXECUTABLE_NAME = "pdf2svg";
 
         public static void ToJpegs(string inputPath, string outputPath) {
+            Logger.Debug($"Running executable to convert pdf at {inputPath} " +
+                         $"to jpegs at destination {outputPath}");
             var absBinPath = ResolvePath(Path.Combine(BINARY_DIR, JPEG_EXECUTABLE_NAME));
             // Handle pdfcairo quirk by adding dir name twice - one for directory and second for file naming
             var absOutPath = ResolvePath(outputPath) + "/" + FileUtils.FileNameFromPath(outputPath);
@@ -19,6 +21,8 @@ namespace Modules.Library {
         }
 
         public static void ToSvgs(string inputPath, string outputDir, string bookTitle) {
+            Logger.Debug($"Running executable to convert pdf at {inputPath} " +
+                         $"to svgs at destination directory {outputDir} for book {bookTitle}");
             var absPath = ResolvePath(Path.Combine(BINARY_DIR, SVG_EXECUTABLE_NAME));
             Convert(absPath, inputPath, "'" + inputPath + "' '" + outputDir + "/" + bookTitle + "-%d.svg' all");
         }
@@ -42,7 +46,7 @@ namespace Modules.Library {
             }
 
             else {
-                Debug.Log("File " + inputPath + " does not exist");
+                Logger.Error($"File {inputPath} does not exist");
             }
         }
 

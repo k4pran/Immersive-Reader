@@ -23,8 +23,10 @@ namespace Modules.Library {
             }
 
             public SvgBook Build() {
+                Logger.Debug($"Building svg book {bookMetaInfo.title}");
                 if (fileType == FileType.PDF) BuildFromPdf();
 
+                Logger.Debug("Finished building svg book");
                 throw new NotImplementedException();
             }
 
@@ -57,10 +59,15 @@ namespace Modules.Library {
             }
 
             private List<SvgPage> GeneratePages(string[] svgs) {
+                Logger.Debug($"Generating pages for svg book {bookMetaInfo.title}");
                 var pages = new List<SvgPage>();
-                for (var pageNumber = 0; pageNumber < svgs.Length; pageNumber++) {
-                    var pageName = string.Format("Page {0}", pageNumber);
-                    pages.Add(new SvgPage(pageName, pageNumber, svgs[pageNumber]));
+                int pageNumber = 1;
+                for (int i = 0; i < svgs.Length; i++) {
+                    Logger.Trace($"Generating page {pageNumber} for book {bookMetaInfo.title}");
+                    string pageName = string.Format($"Page {pageNumber}");
+                    pages.Add(new SvgPage(pageName, pageNumber, svgs[i]));
+                    Logger.Trace("Page generated");
+                    pageNumber++;
                 }
 
                 return pages;

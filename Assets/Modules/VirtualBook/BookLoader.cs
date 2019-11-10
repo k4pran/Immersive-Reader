@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 using Modules.Library;
 using UnityEngine;
 using Logger = Modules.Common.Logger;
@@ -23,21 +24,18 @@ namespace Modules.VirtualBook {
         }
 
         public void LoadBookFromId() {
-            Debug.Log("Loading book with id " + bookId + "...");
-            VirtualBasicBook.CreateFromId(bookId).Subscribe(
-                book => {
-                    Debug.Log("Book successfully loaded");
-                },
-                error => Debug.Log(error));
+            Debug.Log("Loading book with id " + bookId);
+            librarian.Title(bookId).Select(derivedTitle => createBookCore(bookId, derivedTitle));
         }
 
         public void LoadBookFromTitle() {
-            VirtualBasicBook.CreateFromTitle(bookTitle)
-                .Subscribe(
-                book => {
-                    Debug.Log("Book successfully loaded");
+            Debug.Log("Loading book with title " + bookTitle);
+            librarian.BookIdByTitle(bookTitle)
+                .Select(derivedBookId => createBookCore(derivedBookId, bookTitle))
+                .Subscribe(book => {
+                    Logger.Info("Book created");
                 },
-                error => Logger.Error(error));
+                    error => Logger.Error(error));
         }
 
         public void PopulateBooks() {
@@ -50,6 +48,11 @@ namespace Modules.VirtualBook {
             });
         }
 
+        private BookCore createBookCore(string bookId, string title) {
+            BookCore bookCore = new GameObject($"{title}").gameObject.AddComponent<BookCore>();
+            bookCore.InitBookIdAs(bookId);
+            bookCore.InitTitleAs(title);
+            return bookCore;
+        }
     }
-
 }

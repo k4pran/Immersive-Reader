@@ -25,10 +25,13 @@ namespace Modules.Library {
         }
 
         private static void indexAsTxts(Uri inputPath, Uri outputDir, string bookTitle, int linesPerPage) {
+            Logger.Debug($"Indexing book {bookTitle} from {inputPath} " +
+                         $"to destination {outputDir} as .txt files");
             var content = File.ReadAllLines(inputPath.AbsolutePath);
 
             var pageNb = 1;
             for (var i = 0; i < content.Length; i += linesPerPage) {
+                Logger.Trace($"Indexing page {pageNb}");
                 SubArray<string> pageContent;
                 if (i + linesPerPage >= content.Length)
                     pageContent = new SubArray<string>(content, i, content.Length - i);
@@ -38,20 +41,14 @@ namespace Modules.Library {
                 var filename = string.Format("Page{0}.txt", pageNb);
                 var outputPath = Path.Combine(outputDir.AbsolutePath, filename);
                 File.WriteAllLines(outputPath, pageContent.ToArray());
+                Logger.Trace("Page indexed");
                 pageNb++;
             }
         }
 
-        private void generatePages(Uri inputPath, string outputDir) {
-        }
-
-        private TextPage generatePage(int pageNb, SubArray<string> pageContent) {
-            var pageName = string.Format("Page {0}", pageNb);
-            var lines = pageContent.ToArray();
-            return new TextPage(pageName, pageNb, lines);
-        }
-
         private static void indexAsSvgs(Uri inputPath, Uri outputDir, string bookTitle) {
+            Logger.Debug($"Indexing book {bookTitle} from {inputPath} " +
+                         $"to destination {outputDir} as .svg files");
             BookConverter.PdfToSvgs(inputPath, outputDir, bookTitle);
         }
 

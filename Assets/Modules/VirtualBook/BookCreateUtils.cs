@@ -3,11 +3,12 @@ using UnityEngine;
 namespace Modules.VirtualBook {
 
     public class BookCreateUtils : MonoBehaviour {
-
+        
         public static GameObject GetVirtualBookPrefab(string bookName, Transform parentTransform = null, float posX = 0,
             float posY = 0, float posZ = 0) {
-            var virtualBookPrefab = (GameObject) Resources.Load("Prefabs/VirtualBasicBook", typeof(GameObject));
-            var virtualBook = Instantiate(virtualBookPrefab, new Vector3(0, 0, 0), Quaternion.identity,
+            var virtualBookPrefab = (GameObject) Resources.Load(
+                PrefabsManifest.VIRTUAL_BASIC_BOOK_PREFAB, typeof(GameObject));
+            var virtualBook = Instantiate(virtualBookPrefab, new Vector3(posX, posY, posZ), Quaternion.identity,
                 parentTransform);
             virtualBook.name = bookName;
             return virtualBook;
@@ -15,7 +16,8 @@ namespace Modules.VirtualBook {
 
         public static GameObject GetPagePrefab(string pageName, Transform parentTransform, float posX = 0,
             float posY = 0, float posZ = 0) {
-            GameObject pagePrefab = (GameObject) Resources.Load("Prefabs/VirtualPage", typeof(GameObject));
+            GameObject pagePrefab = (GameObject) Resources.Load(
+                PrefabsManifest.VIRTUAL_PAGE_PREFAB, typeof(GameObject));
             GameObject page = Instantiate(pagePrefab, new Vector3(posX, posY, posZ), Quaternion.identity, parentTransform);
             page.name = pageName;
             return page;
